@@ -1,0 +1,580 @@
+{
+  "type": "object",
+  "properties": {
+    "SenderRelationId": {
+      "description": "Identification of the party that submits the receipt message.",
+      "type": "string",
+      "maxLength": 40
+    },
+    "OrderingPartyRelationId": {
+      "description": "Identification of the party on whose behalf the articles have to be received.",
+      "type": "string",
+      "maxLength": 40
+    },
+    "Order": {
+      "description": "An order to receive goods (stock). A receipt consists of two parts that can be registered simultaneously or separately: - Purchase/return order (PO/RMA); the order from the ordering party to receive goods; these are goods that the ordering party has purchased from suppliers or is taking back as returns from buyers/recipients. - Shipment; a shipment to be supplied by a supplier or buyer/recipient for a purchase/return order. - By default it is assumed that the purchase/return order and the shipment are the same. This means that it is sufficient to specify the purchase/return order without specifying shipments. The submitted purchase/return order is automatically regarded as the shipment to be received (in terms of the contents, the shipment is the same as the purchase/return order).\n",
+      "type": "object",
+      "properties": {
+        "Id": {
+          "description": "The identification that the ordering party uses for the order. Based on this identification, Modexpress checks whether the registered order already exists for the ordering party. Cancelled orders or executed orders on which nothing has been received, are not taken into consideration. If an order already exists, the registration is rejected.\\r\\n\\r\\nIf purchase/return orders and shipments are registered separately, this identification is used to link the shipment to a purchase/return order that was reported earlier.\n",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 25
+        },
+        "PurchaseOrder": {
+          "type": "object",
+          "properties": {
+            "Type": {
+              "description": "Designation of the order type. Only the types indicated by Modexpress are permitted. Type XDOCKLOT can only be used if this has been agreed upon. For return orders there also can be automatic return orders. These are created automatically on the basis of executed shipments and are therefore not submitted by means of this message but will be reported back as such using the RCP-exec message.\n",
+              "type": "string",
+              "maxLength": 20,
+              "enum": [
+                "PURCHASE",
+                "RETURN",
+                "XDOCKLOT"
+              ]
+            },
+            "Subtype": {
+              "description": "A subdivision of the order type. For example `RETAIL` returns versus `WHOLESALE` returns. Only types coordinated with Modexpress are permitted.\n",
+              "type": "string",
+              "maxLength": 20,
+              "enum": [
+                "RETAIL",
+                "WHOLESALE"
+              ]
+            },
+            "Reference": {
+              "description": "Reference for the order used by the ordering party.",
+              "type": "string",
+              "maxLength": 20
+            },
+            "SenderInternalId": {
+              "description": "Identification of the party that delivers the goods for the order. The party must be known to Modexpress by the relevant Id.  **Note**: Id assigned by Modexpress\n",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9999999
+            },
+            "SenderExternalId": {
+              "description": "Identification of the party that delivers the goods for the order. The party is not known to Modexpress by the relevant Id.",
+              "type": "string",
+              "maxLength": 20
+            },
+            "SenderName": {
+              "title": "Name/description of the party that delivers the goods for the order.",
+              "maxLength": 70
+            },
+            "Date": {
+              "description": "Date that the ordering party uses for the order. For example, this can be the date on which the order was created by the ordering party. This date is reported back in the execution result of the order. This date can be used to make the order recognisable.\nFor example, if the ordering party has any questions concerning the status of the order and that order cannot be identified by means of a unique id.\n",
+              "type": "string",
+              "format": "date"
+            },
+            "Parties": {
+              "type": "object",
+              "properties": {
+                "Party": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Type": {
+                        "description": "Designation of a party/address that applies to the order: - ShipperAddress; the shipper/seller of the shipment (is required in case of customs declaration)\n",
+                        "type": "string",
+                        "maxLength": 20,
+                        "enum": [
+                          "ShipperAddress"
+                        ]
+                      },
+                      "ExternalId": {
+                        "description": "The Id that is used as the identification of the party/address.",
+                        "type": "string",
+                        "maxLength": 35
+                      },
+                      "Name1": {
+                        "description": "The name of the party.",
+                        "type": "string",
+                        "maxLength": 80
+                      },
+                      "Name2": {
+                        "description": "The parties 'For attention of'.",
+                        "type": "string",
+                        "maxLength": 55
+                      },
+                      "AddressLine1": {
+                        "description": "The street that applies to the party.",
+                        "type": "string",
+                        "maxLength": 50
+                      },
+                      "HouseNumber": {
+                        "description": "The house number that applies to the party.",
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 999999
+                      },
+                      "HouseNumberExtension": {
+                        "description": "The house number addition that applies to the party.",
+                        "type": "string",
+                        "maxLength": 10
+                      },
+                      "PostalCode": {
+                        "description": "The postal code / ZIP code that applies to the party.",
+                        "type": "string",
+                        "maxLength": 20
+                      },
+                      "City": {
+                        "description": "The town/city that applies to the party.",
+                        "type": "string",
+                        "maxLength": 40
+                      },
+                      "Country": {
+                        "description": "The country that applies to the party. The designation should be made according to iso2 code.",
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 2
+                      }
+                    },
+                    "required": [
+                      "Type",
+                      "ExternalId"
+                    ]
+                  }
+                }
+              }
+            },
+            "Instructions": {
+              "type": "object",
+              "properties": {
+                "Instruction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "SequenceNumber": {
+                        "description": "A sequence number indicating the order of execution of the instruction.",
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 999999
+                      },
+                      "Code": {
+                        "description": "Indication of the instruction by means of a code.",
+                        "type": "string",
+                        "maxLength": 10
+                      },
+                      "Description": {
+                        "description": "Indication of the instruction by means of a description.",
+                        "type": "string",
+                        "maxLength": 70
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "PurchaseOrderLines": {
+              "type": "object",
+              "properties": {
+                "PurchaseOrderLine": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Id": {
+                        "description": "The identification that the ordering party uses for the order line (unique in the PurchaseOrder). ",
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 250
+                      },
+                      "Quantity": {
+                        "description": "The number of items of the article that must be received.",
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 999999999
+                      },
+                      "Reference": {
+                        "description": "The reference the ordering party uses for the order line and that the ordering party can use to recognise the line.",
+                        "type": "string",
+                        "maxLength": 10
+                      },
+                      "StockType": {
+                        "description": "Designation of the type of stock that must be received. By stock type, it is possible to differentiate into different types of stock to be kept separately for an article (both in the operation and administratively).\r\n\r\nThe standaard stock types are (other types are possible):\r\n- RGL - regular or A-choice stock\r\n- RGLRJC - regular reject or B-choice stock\r\n\r\nIf no StockType is indicated the receipt is assumed to be regular stock (RGL).",
+                        "$comment": "RGL,\r\nRGLRJC,\r\n\r\nOther types assigned by Modexpress",
+                        "type": "string",
+                        "maxLength": 10
+                      },
+                      "Instructions": {
+                        "type": "object",
+                        "properties": {
+                          "Instruction": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "SequenceNumber": {
+                                  "description": "A sequence number indicating the order of execution of the instruction.",
+                                  "type": "integer",
+                                  "minimum": 1,
+                                  "maximum": 999
+                                },
+                                "Code": {
+                                  "description": "Indication of the instruction by means of a code.",
+                                  "type": "string",
+                                  "maxLength": 10
+                                },
+                                "Description": {
+                                  "description": "Indication of the instruction by means of a description.",
+                                  "type": "string",
+                                  "maxLength": 70
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "Article": {
+                        "type": "object",
+                        "properties": {
+                          "Id": {
+                            "description": "The identification that the owner uses for the SKU to be received. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.",
+                            "$comment": "WMS A24",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 250
+                          }
+                        },
+                        "required": [
+                          "Id"
+                        ]
+                      },
+                      "Owner": {
+                        "type": "object",
+                        "properties": {
+                          "RelationId": {
+                            "description": "Identification of the party that is the owner of the article to be received.",
+                            "$comment": "Id assigned by Modexpress",
+                            "type": "string",
+                            "maxLength": 40
+                          },
+                          "RelationType": {
+                            "description": "Indication whether the Relation_Id is an internal or external id. - internal id: the id assigned and used by Modexpress - external id: the id assigned and used by the ordering party.\n",
+                            "type": "string",
+                            "minLength": 3,
+                            "maxLength": 3,
+                            "enum": [
+                              "EXT",
+                              "INT"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "required": [
+                      "Id",
+                      "Quantity",
+                      "Article"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "Type",
+            "PurchaseOrderLines"
+          ]
+        },
+        "Shipment": {
+          "description": "The registration of a shipment to be supplied for a purchase/return order by a supplier or buyer/recipient. There are four possibilities: 1. the shipment(s) for a purchase order from an ordering party is/are provided separately by the supplier (not yet implemented) 2. the shipment(s) for a purchase order is/are provided by the ordering party itself together with the purchase order 3. the shipment(s) for a purchase order is/are provided by the ordering party itself separately from the purchase order (not yet implemented) 4. no shipment(s) are provided for a purchase order, each purchase order automatically results in a corresponding shipment that is the same as the purchase order in terms of its contents.\nPay attention; a combination of 2 and 4 is not possible. So, if ShipmentLines are provided for the PurchaseOrderLines, it is necessary that every PurchaseOrderLine has a ShipmentLine and the Quantity in both lines has to be the same. When a shipment is provided separately, a reference to the purchase/return order is required; this is done using the 'id' of the order. Moreover, the purchase/return order must then be registered/provided before the shipment is registered/provided.\"\n",
+          "type": "object",
+          "properties": {
+            "Reference": {
+              "description": "Reference used by the supplier for the shipment.",
+              "type": "string",
+              "maxLength": 25
+            },
+            "Type": {
+              "description": "Designation of the order type. Only the types indicated by Modexpress are permitted.",
+              "type": "string",
+              "maxLength": 20,
+              "enum": [
+                "STANDARD",
+                "PREORDER",
+                "REORDER"
+              ]
+            },
+            "ArrivalDateTime": {
+              "description": "The delivery date/time of the shipment expected by the supplier at Modexpress.",
+              "type": "string",
+              "format": "date-time"
+            },
+            "Carrier": {
+              "description": "The identification of the shipper that will deliver the shipment",
+              "type": "string",
+              "maxLength": 70
+            },
+            "CarrierInfo": {
+              "description": "Information about the shipper that will deliver the shipment, for example contact data.",
+              "type": "string",
+              "maxLength": 70
+            },
+            "CountryOfDeparture": {
+              "description": "The country of origin of the shipment (Country of departure).",
+              "$comment": "iso2 country code",
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2
+            },
+            "IncoTerm": {
+              "description": "A pre-defined commercial term published by the International Chamber of Commerce (ICC) relating to international commercial law. The Incoterms rules are intended primarily to clearly communicate the tasks, costs, and risks associated with the transportation and delivery of goods. - CFR - Cost and Freight - CIF - Cost, Insurance and Freight - CIP - Carriage and Insurance Paid - CPT - Carriage Paid To - DAF - Delivered At Frontier - DAP - Delivered At Place - DAT - Delivered At Terminal - DDP - Delivered Duty Paid - DDU - Delivered Duty Unpaid - DEQ - Delivered Ex Quay - DES - Delivered Ex Ship - EXW - Ex Works - FAS - Free Alongside Ship - FCA - Free Carrier - FOB - Free On Board - FOP - Free On Plane - FOR - Free on Rail - FOT - Free On Truck\n",
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3,
+              "enum": [
+                "CFR",
+                "CIF",
+                "CIP",
+                "CPT",
+                "DAF",
+                "DAP",
+                "DAT",
+                "DDP",
+                "DDU",
+                "DEQ",
+                "DES",
+                "EXW",
+                "FAS",
+                "FCA",
+                "FOB",
+                "FOP",
+                "FOR",
+                "FOT"
+              ]
+            },
+            "IncoTermPlace": {
+              "description": "The agreed place of delivery/destination.",
+              "type": "string",
+              "maxLength": 50
+            },
+            "FreightReference": {
+              "description": "An unique delivery number/reference for the customs declaration of the shipment.",
+              "type": "string",
+              "maxLength": 14
+            },
+            "AdditionalFinInfo": {
+              "type": "object",
+              "properties": {
+                "FinInfo": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "InfoType": {
+                        "description": "Indication of the type of financial information: - Type 'Invoice' is used for customs declaration - Type ´Freightcost´ is used for customs declaration - Type ´Insurancecost´ is used for customs declaration\n",
+                        "type": "string",
+                        "maxLength": 15,
+                        "enum": [
+                          "Invoice",
+                          "Freightcost",
+                          "Insurancecost"
+                        ]
+                      },
+                      "Description": {
+                        "description": "A relevant description for the type of financial information. In case of type 'Invoice', this concerns the invoice number (for customs declaration, the invoice number is limited to format A35).\n",
+                        "type": "string",
+                        "maxLength": 40
+                      },
+                      "Date": {
+                        "description": "A relevant date for the type of financial information. In case of 'Invoice', this concerns the invoice date.\n",
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "Amount": {
+                        "description": "The amount that applies to the type of financial information (so the invoice amount, the freight cost, the insurance cost).\n",
+                        "type": "number"
+                      },
+                      "CurrencyCode": {
+                        "description": "Code indicating the currency in which the amount is expressed.",
+                        "$comment": "iso 4217",
+                        "type": "string",
+                        "minLength": 3,
+                        "maxLength": 3
+                      }
+                    },
+                    "required": [
+                      "InfoType"
+                    ]
+                  }
+                }
+              }
+            },
+            "ShipmentLines": {
+              "type": "object",
+              "properties": {
+                "ShipmentLine": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Id": {
+                        "description": "Reference to the PurchaseOrderLine (Id) for which this shipment line indicates the delivery.",
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 250
+                      },
+                      "Quantity": {
+                        "description": "The number of items of the article that will be delivered.",
+                        "type": "number",
+                        "minimum": 1,
+                        "maximum": 999999999
+                      },
+                      "CountryOfOrigin": {
+                        "description": "The country of origin of the article to be delivered (country of production).",
+                        "$comment": "iso2 country code",
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 2
+                      },
+                      "Prepacked": {
+                        "description": "Indication whether the delivered article, together with other articles, has been packed in secondary packaging (for example, size curve box) and must be removed from this packaging when it arrives.",
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1,
+                        "enum": [
+                          "Y",
+                          "N"
+                        ]
+                      },
+                      "LotNumber": {
+                        "description": "The lot/batch number of the SKU to be received.\r\nIt is possible to have different types of stock for a SKU (attribute StockType). In addition, there may be a distinction between different lots/batches for the stock regarding a type (both in the operation and administratively).",
+                        "type": "string",
+                        "maxLength": 20
+                      },
+                      "AdditionalLineFinInfo": {
+                        "type": "object",
+                        "properties": {
+                          "LineFinInfo": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "InfoType": {
+                                  "description": "Indication of the type of financial information: - Type 'Invoice' is used for customs declaration\n",
+                                  "type": "string",
+                                  "maxLength": 15,
+                                  "enum": [
+                                    "Invoice"
+                                  ]
+                                },
+                                "Description": {
+                                  "description": "A relevant description for the type of financial information.\r\nIn case of type 'Invoice', this concerns the invoice number (for customs declaration, the invoice number is limited to format A35).",
+                                  "type": "string",
+                                  "maxLength": 35
+                                },
+                                "Date": {
+                                  "description": "A relevant date for the type of financial information. In case of 'Invoice', this concerns the invoice date.\n",
+                                  "type": "string",
+                                  "format": "date"
+                                },
+                                "Amount": {
+                                  "description": "The amount that applies to the type of financial information (so the invoice amount).",
+                                  "type": "number"
+                                },
+                                "CurrencyCode": {
+                                  "description": "Code indicating the currency in which the amount is expressed.",
+                                  "$comment": "iso 4217",
+                                  "type": "string",
+                                  "minLength": 3,
+                                  "maxLength": 3
+                                }
+                              },
+                              "required": [
+                                "InfoType"
+                              ]
+                            }
+                          }
+                        }
+                      },
+                      "Prices": {
+                        "type": "object",
+                        "properties": {
+                          "Price": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "Type": {
+                                  "description": "The indication of a price that is relevant for the SKU.",
+                                  "type": "string",
+                                  "maxLength": 15,
+                                  "enum": [
+                                    "Purchase",
+                                    "Sale",
+                                    "Custom"
+                                  ]
+                                },
+                                "Amount": {
+                                  "description": "The amount indicating the price (regarding 1 single unit of the SKU).\r\n(N9,2 = Up to 7 digits before the comma and 2 decimals)",
+                                  "type": "number"
+                                },
+                                "CurrencyCode": {
+                                  "description": "Code indicating the currency in which the price is expressed.",
+                                  "$comment": "iso 4217",
+                                  "type": "string",
+                                  "minLength": 3,
+                                  "maxLength": 3
+                                },
+                                "Country": {
+                                  "description": "Code indicating the country for which the price is valid.",
+                                  "$comment": "iso2 country code",
+                                  "type": "string",
+                                  "minLength": 2,
+                                  "maxLength": 2
+                                },
+                                "Region": {
+                                  "description": "Code indicating the region for which the price is valid (for example: EU)",
+                                  "type": "string",
+                                  "maxLength": 25
+                                },
+                                "VATCode": {
+                                  "description": "Code that indicates whether the amount/price is including (I) or excluding (E) VAT.\r\nFor customs usage the prices are exclusive of VAT.",
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 1,
+                                  "enum": [
+                                    "I",
+                                    "E"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "Type",
+                                "Amount",
+                                "CurrencyCode"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": [
+                      "Quantity"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "Type"
+          ]
+        }
+      },
+      "required": [
+        "Id",
+        "PurchaseOrder"
+      ]
+    }
+  },
+  "required": [
+    "Order"
+  ],
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

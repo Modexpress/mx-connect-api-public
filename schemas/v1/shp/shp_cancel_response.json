@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "Message": {
+      "required": [
+        "MessageCode",
+        "MessageText",
+        "MessageType"
+      ],
+      "type": "object",
+      "properties": {
+        "MessageType": {
+          "type": "string",
+          "description": "Notification type",
+          "enum": [
+            "E",
+            "I"
+          ]
+        },
+        "MessageCode": {
+          "type": "string",
+          "description": "Notification code"
+        },
+        "MessageText": {
+          "type": "string",
+          "description": "Notification text"
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

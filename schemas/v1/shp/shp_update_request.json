@@ -1,0 +1,165 @@
+{
+  "required": [
+    "Id",
+    "Parties"
+  ],
+  "type": "object",
+  "properties": {
+    "SenderRelationId": {
+      "type": "string",
+      "description": "The party that submits the order."
+    },
+    "OrderingPartyRelationId": {
+      "type": "string",
+      "description": "The party on whose behalf the goods in the order have to be delivered."
+    },
+    "Id": {
+      "type": "string",
+      "description": "The identification that the ordering party uses for the order. On the basis of this identification Modexpress checks whether the order exists for the ordering party. If so the order will be updated."
+    },
+    "ShipmentCode": {
+      "type": "string",
+      "description": "Designation of the desired transport for the order. A customer can agree to a default means of transport. This means of transport will then be used if no means of transport has been specified. If a means of transport has indeed been specified, it overrules the default means of transport. Possible values:\n  - D01: DPD General account CB Fashion\n  - T06: PostNL General account CB Fashion\n  - U01: UPS General account CB Fashion\n  - DHL: DHL customer account\n  - CBFC: CBF Self Collector\n  - CBFF: CBF Standard (CBF arranges transport)\n  - CBFR: CBF Reservation order with storage (Pack and Hold / postponement of shipment for a (non-) specific longer time)\n  - CBFS: CBF Special customer with buffering on shipping floor (postponement of shipment for a short time)\n  - CBFU: CBF UPS account customer\n  - CBFX: CBF pre-advise customers (CBF will contact the recipient)\n"
+    },
+    "ShipmentService": {
+      "type": "string",
+      "description": "A non-standard service level to be used for transport (instead of the standard agreed transport) – for example, insured transport or transport with delivery instructions. The services/products are carrier-dependent. A choice can be made from the options offered by the carrier."
+    },
+    "ReturnShipmentCode": {
+      "type": "string",
+      "description": "Designation of the desired return transport for the order. Relevant in case the delivery has to contain a return label."
+    },
+    "ReturnShipmentService": {
+      "type": "string",
+      "description": "A non-standard service level to be used for return transport (instead of the standard agreed transport). Relevant in case the delivery has to contain a return label."
+    },
+    "Parties": {
+      "required": [
+        "Party"
+      ],
+      "type": "object",
+      "properties": {
+        "Party": {
+          "type": "array",
+          "items": {
+            "required": [
+              "Type"
+            ],
+            "type": "object",
+            "properties": {
+              "Type": {
+                "type": "string",
+                "description": "A type of party/address that applies to the order:\n- BuyerId; buyer, (known to Modexpress as a business relation based on **Id** or **ExternId** of the party, only for the placeOrder operation)\n- ReceiverId; receiver/recipient/consignee, (known to Modexpress as a business relation based on 'Id' of the party, only for the placeOrder operation)\n- ReceiverAddress; receiver/recipient/consignee address,\n- SellerAddress; Seller/Shipper address (only for the placeOrder operation)\n- BuyerAddress; buyer address (only for the placeOrder operation)\n- InvoiceAddress; invoice address (only for the placeOrder operation)\n- DropSiteAddress; drop site address / pick up point address\n",
+                "enum": [
+                  "ReceiverAddress",
+                  "SellerAddress",
+                  "BuyerAddress",
+                  "InvoiceAddress",
+                  "DropSiteAddress",
+                  "BuyerId",
+                  "ReceiverId"
+                ],
+                "maxLength": 28
+              },
+              "Id": {
+                "type": "integer",
+                "description": "The party that must be regarded as the buyer or receiver of the order and that is known/registered at Modexpress as a business relation with an address.\nThe party is indicated by means of an Id assigned by Modexpress. These types of parties must have been registered in advance with Modexpress, and no address can be indicated in the order.\nThe Id can only be used for parties of type BuyerId or ReceiverId.\n",
+                "minimum": 0,
+                "maximum": 9999999
+              },
+              "ExternalId": {
+                "type": "string",
+                "description": "A party involved with the order that is identified with an Id used by the ordering party/sender.\nFor type BuyerId it is possible to indicate parties with an ExternalId if they are registered as a Modexpress business relation with an address (receiver address).\nThese types of parties must have been registered in advance with Modexpress, and no address can be included in the order. For %Address types the ExternalId can be included as a reference in the order.\nFor these parties, the applicable address must also be specified in the order. In case of a DropSiteAddress the ExternalId can be used for the pickuppoint-id/number.\n",
+                "maxLength": 35
+              },
+              "Name1": {
+                "type": "string",
+                "description": "The name of the party. Order of display on documents: line 1.\nOnly applicable for the %Address party types. Mandatory for the %Address party types.\n",
+                "minLength": 1,
+                "maxLength": 50
+              },
+              "Name2": {
+                "type": "string",
+                "description": "The parties **For attention of**. Order of display on documents: line 2. Only applicable for the %Address party types.\n",
+                "minLength": 1,
+                "maxLength": 50
+              },
+              "AddressLine1": {
+                "type": "string",
+                "description": "The street that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types. Mandatory for the %Address party types.\n",
+                "maxLength": 50
+              },
+              "AddressLine2": {
+                "type": "string",
+                "description": "A free/extra text line for the party that is part of the address. Order of display on documents: line 5. Only applicable for the %Address party types.\n",
+                "maxLength": 50
+              },
+              "HouseNumber": {
+                "type": "integer",
+                "description": "The house number that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types.\n",
+                "format": "int32",
+                "minimum": -2147483648,
+                "maximum": 2147483647
+              },
+              "HouseNumberExtension": {
+                "type": "string",
+                "description": "The house number addition that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types.\n",
+                "maxLength": 10
+              },
+              "DeliveryInstruction": {
+                "type": "string",
+                "description": "An instruction for the delivery. Order of display on documents: line 3. Only applicable for the %Address party types.\n",
+                "maxLength": 30
+              },
+              "PostalCode": {
+                "type": "string",
+                "description": "The postal code / ZIP code that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.\n",
+                "maxLength": 20
+              },
+              "City": {
+                "type": "string",
+                "description": "The town/city that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.\n",
+                "minLength": 1,
+                "maxLength": 50
+              },
+              "Region": {
+                "type": "string",
+                "description": "The province/region/state that applies to the party. Order of display on documents: line 7. Only applicable for the %Address party types.\n",
+                "maxLength": 35
+              },
+              "Country": {
+                "type": "string",
+                "description": "ISO 3166 ALPHA-2 country code. The country that applies to the party. The designation should be made according to iso2 code. Order of display on documents: line 8 (country name will be displayed). Mandatory for the %Address party types.\n",
+                "minLength": 2,
+                "maxLength": 2
+              },
+              "EmailAddress": {
+                "type": "string",
+                "format": "email",
+                "description": "The email address for the party. Only applicable for the %Address party types.",
+                "maxLength": 80
+              },
+              "PhoneNumber": {
+                "type": "string",
+                "description": "The fixed line telephone number for the party. Only applicable for the %Address party types.",
+                "maxLength": 40
+              },
+              "MobileNumber": {
+                "type": "string",
+                "description": "The mobile phone number for the party. Only applicable for the %Address party types.",
+                "maxLength": 40
+              },
+              "LanguageCode": {
+                "type": "string",
+                "description": "ISO 639-2 ALPHA-3 country code. The language of the documents to be included with the shipment (packing slip). ISO 639-2 codes are used. Only applicable for the %Address party types. If multiple addresses are indicated, the LanguageCode to be used is: 1) DropSiteAddress, if address not specified or no language code specified, then 2) ReceiverAddress, if address not specified or no language code specified, then 3) BuyerAddress, if address not specified or no language code specified, then 4) InvoiceAddress, if address not specified or no language code specified, then 5) Last address mentioned in the Order.Party, if no language code specified, then 6) By default the language code is NLD.\n",
+                "minLength": 3,
+                "maxLength": 3
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

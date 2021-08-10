@@ -1,0 +1,209 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "boolean"
+    },
+    "result": {
+      "type": "object",
+      "required": [
+        "Order"
+      ],
+      "properties": {
+        "OrderingPartyRelationId": {
+          "description": "Identification of the party that issued the order to receive stock.",
+          "type": "string",
+          "maxLength": 40
+        },
+        "Order": {
+          "type": "object",
+          "properties": {
+            "Id": {
+              "description": "The identification that the ordering party uses for the order.\n\nIn some cases, an id is specified that Modexpress has\nassigned itself, namely when it involves:\n\n- a registered order for which the ordering party has not\nspecified an id that Modexpress can use as a unique id\n\n- a blind receipt\n\n- an automatically created return order (based on an\nexecuted shipment)\n",
+              "type": "string",
+              "maxLength": 25
+            },
+            "Type": {
+              "description": "Designation of the order type.\n\nThe XDOCKLOT orders are reported as PURCHASE.\n",
+              "type": "string",
+              "maxLength": 20,
+              "enum": [
+                "PURCHASE",
+                "RETURN"
+              ]
+            },
+            "Subtype": {
+              "description": "A subdivision of the order type.\n\nIn case of an automatically created return order the subtype\nwill be 'AUTOMATISCH'.\n",
+              "type": "string",
+              "maxLength": 20
+            },
+            "Reference": {
+              "description": "Reference for the order used by the ordering party.\nIn the case of an automatically created return order, this\nrefers to the shipment (SHP) for which the return order was created.\nThe reference is to the Order.Id (SHP 3-1-01). However, this is only\npossible when the format of the Order.Id is a maximum of A20.\n",
+              "type": "string",
+              "maxLength": 20
+            },
+            "SenderInternalId": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9999999
+            },
+            "SenderExternalId": {
+              "description": "Identification of the party that delivers the goods for the order.\nThe relevant party is not known to Modexpress by the relevant Id.\n\nNot applicable in case of RETURN.\n",
+              "type": "string",
+              "maxLength": 20
+            },
+            "Date": {
+              "description": "Date that the ordering party uses for the order.\n\nNot applicable in case of RETURN.\n",
+              "type": "string",
+              "format": "date"
+            },
+            "ArrivalDateTime": {
+              "description": "The delivery date/time at Modexpress of the shipment expected by the\nsupplier.\n\nNot applicable in case of RETURN.\n",
+              "type": "string",
+              "format": "date-time"
+            },
+            "CompletionDateTime": {
+              "description": "Date – where relevant, with the time – when the order was reported\nready/executed.\n",
+              "type": "string",
+              "format": "date-time"
+            },
+            "ProcessingStatus": {
+              "description": "Indication of the status of the order: differs from RCP-Exec since it's a real-time status\n\n- N - New, not yet started\n- P - In progress, receipt has started\n- C - Closed, receipt has been closed\n",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1,
+              "enum": [
+                "N",
+                "P",
+                "C"
+              ]
+            },
+            "OrderLines": {
+              "type": "object",
+              "properties": {
+                "OrderLine": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Id": {
+                        "description": "The identification that the ordering party uses for the\norder line. This is therefore the reference to the line\nsubmitted in the RCP message.\n\nIf lines (SKUs) have been added in the\noperation, no Id can be indicated because there is no\nsubmitted line.\n",
+                        "type": "string",
+                        "maxLength": 250
+                      },
+                      "QuantityExpected": {
+                        "description": "The expected number of items in the order to receive goods.\nThis number is only indicated if the receipt was based on an\norder submitted by the ordering party.\n",
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 999999999
+                      },
+                      "QuantityReceived": {
+                        "description": "The number of items of the article actually received\n(regardless of stock type).\n",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 999999999
+                      },
+                      "Reference": {
+                        "description": "The reference that the ordering party uses for the order\nline and that the ordering party can use to recognise the\nline.\n",
+                        "type": "string",
+                        "maxLength": 10
+                      },
+                      "ReturnReason": {
+                        "description": "The reason (code) for the return of goods.",
+                        "type": "string",
+                        "maxLength": 10
+                      },
+                      "Article": {
+                        "type": "object",
+                        "properties": {
+                          "Id": {
+                            "description": "The identification that the owner uses for the received\nSKU. This is usually a logical Id. Many owners use the\ncombination of STYLE+COLOUR+SIZE as a logical Id.\n",
+                            "type": "string",
+                            "maxLength": 250
+                          },
+                          "LotNumber": {
+                            "description": "The lot/batch number of the received SKU.",
+                            "type": "string",
+                            "maxLength": 20
+                          },
+                          "Code": {
+                            "description": "A code used to recognise/identify the received article.\nThis is usually a code that is also affixed to the\narticle as a barcode.\n",
+                            "type": "string",
+                            "maxLength": 35
+                          }
+                        }
+                      },
+                      "Owner": {
+                        "type": "object",
+                        "properties": {
+                          "RelationId": {
+                            "description": "Identification of the party that is the owner of the\nreceived article.\n",
+                            "type": "string",
+                            "maxLength": 40
+                          },
+                          "RelationType": {
+                            "description": "Indication whether the Relation_Id is an internal or\nexternal id.\n\n- internal id: the id assigned\nand used by Modexpress\n\n- external id: the id assigned\nand used by the ordering party.\n",
+                            "type": "string",
+                            "minLength": 3,
+                            "maxLength": 3,
+                            "enum": [
+                              "EXT",
+                              "INT"
+                            ]
+                          }
+                        }
+                      },
+                      "QuantityStockTypes": {
+                        "type": "object",
+                        "properties": {
+                          "QuantityStockType": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "StockType": {
+                                  "description": "Designation of the type of stock that was\nreceived. Using the stock type, it is possible to\ndifferentiate according to different types of\nstock that must be maintained separately for an\narticle (both in the operation and\nadministratively).\n\n\n\nThe standaard stock\ntypes are (other types are possible):\n\n- RGL - regular or\nA-choice stock (received in pickarea)\n\n- RGLRJC - regular\nreject or B-choice stock\n\n- INN - regular or\nA-choice stock (received in inbound area)\n\n- INNRJC - regular\nreject or B-choice stock (received in inbound\narea)\n\n- INR - regular or\nA-choice stock (received in return inbound area)\n\n- INRRJC - regular\nreject or B-choice stock (received in return\ninbound area)\n\n\n\nIn the RCP-exec file\nthe area of the first receipt is mentioned. The\nstock movements from an inbound area to a pick\narea are separate transactions. These transaction\nare mentioned via the STM interface (a minus on\nINN stock and a plus on RGL stock). If the\nreceived stock in the RCP-exec interface is used\nto add the stock in your ERP, the stocktypes INN\n(inbound area new stock) and INR (inbound area\nreturn stock) have te be seen as RGL stock. In\nthat case Modexpress can configure not to sent the\ntransactions for the movement of the stock from de\ninbound area to the pick area via the STM\ninterface.\n- RGL\n- RGLRJC\n- INN\n- INNRJC\n- INR\n- INRRJC\nOther types assigned\nby Modexpress\n",
+                                  "type": "string",
+                                  "maxLength": 10
+                                },
+                                "QuantityReceived": {
+                                  "description": "The number of items of the article that were\nactually received for the stock type.\n",
+                                  "type": "integer",
+                                  "minimum": 1,
+                                  "maximum": 9999999
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": [
+                      "Id",
+                      "QuantityReceived",
+                      "Article",
+                      "Owner",
+                      "QuantityStockTypes"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "Type",
+            "OrderLines",
+            "Id"
+          ]
+        }
+      }
+    },
+    "message": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

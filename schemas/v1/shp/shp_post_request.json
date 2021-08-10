@@ -1,0 +1,648 @@
+{
+  "required": [
+    "Id",
+    "OrderLines",
+    "PartialDelivery",
+    "Parties",
+    "Type"
+  ],
+  "type": "object",
+  "properties": {
+    "SenderRelationId": {
+      "type": "string",
+      "description": "The party that submits the order.",
+      "maxLength": 40
+    },
+    "OrderingPartyRelationId": {
+      "type": "string",
+      "description": "The party on whose behalf the goods in the order have to be delivered.",
+      "maxLength": 40
+    },
+    "Id": {
+      "type": "string",
+      "description": "The identification that the ordering party uses for the order. On the basis of this identification Modexpress checks whether this order already exists for the ordering party (in Modexpress ERP/WMS). Cancelled orders are not taken into consideration. If an order already exists there are two options: - the new order is rejected without question, or - an attempt is made to cancel the existing order, if this is possible the new order is processed, otherwise the new order is rejected. The option to use must be configured.\n",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "DateTime": {
+      "type": "string",
+      "description": "Date/time that the ordering party uses for the order. For example, this can be the date on which the order was placed by the ordering party. This date is indicated as the order date on the packing slip.\n",
+      "format": "date-time"
+    },
+    "Type": {
+      "type": "string",
+      "description": "Designation of the order type. Only the types indicated by Modexpress are permitted:\n- LB2BF: delivery B2B Fashion\n- LB2CF: delivery B2C Fashion\n"
+    },
+    "DeliveryTime": {
+      "type": "string",
+      "description": "Designation of the period in which the order must be executed:\n- D - Day (24H); send off to carrier within 1 working day, however, this will be overruled by a specified date (see attribute FirstDeliveryDate)\n- H - Pack and Hold; packaging within 1 or 2 working days, send off to carrier on specified date (see attribute FirstDeliveryDate)\n- N - Normal (48H); send off to carrier within 2 working days (not yet implemented)\n- L - Long-term (> 48H); order that can be planned (not yet implemented). \nIf no delivery time is indicated, **D** is the default. For delivery times **D** and **N**, the order must be received before the agreed cut-off time (on a working day) so that it can be send off to the carrier on time. Orders received after the cut-off time will be produced and send off to the carrier one working day later.\n"
+    },
+    "OrderReference": {
+      "type": "string",
+      "description": "Reference for the order used by the ordering party.",
+      "maxLength": 25
+    },
+    "ClientReference": {
+      "type": "string",
+      "description": "Reference used by the buyer/recipient for the order.",
+      "maxLength": 35
+    },
+    "ShipmentCode": {
+      "type": "string",
+      "description": "Designation of the desired transport for the order. A customer can agree to a default means of transport. This means of transport will then be used if no means of transport has been specified. If a means of transport has indeed been specified, it overrules the default means of transport. Possible values: \n- D01: DPD General account Modexpress Fashion\n- T06: PostNL General account Modexpress Fashion\n- U01: UPS General account Modexpress Fashion\n- DHL: DHL customer account\n- CBFC: CBF Self Collector\n- CBFF: CBF Standard (CBF arranges transport)\n- CBFR: CBF Reservation order with storage (Pack and Hold / postponement of shipment for a (non-) specific longer time)\n- CBFS: CBF Special customer with buffering on shipping floor (postponement of shipment for a short time)\n- CBFU: CBF UPS account customer\n- CBFX: CBF pre-advise customers (CBF will contact the recipient)\n",
+      "enum": [
+        "D01",
+        "T06",
+        "U01",
+        "DHL",
+        "CBFC",
+        "CBFF",
+        "CBFR",
+        "CBFS",
+        "CBFU",
+        "CBFX"
+      ]
+    },
+    "ShipmentService": {
+      "type": "string",
+      "enum": [
+        "CONNECT",
+        "EUROPLUS",
+        "FORYOU",
+        "EUROPL",
+        "CONRET",
+        "FORYOU_BUSPAKKET",
+        "FORYOU_PARCELSHOP",
+        "FORYOU-HANDT",
+        "CONNECTRETURN",
+        "EXPRESS",
+        "EUROPLUS",
+        "EXPRESS SAVER"
+      ],
+      "description": "A non-standard service level to be used for transport (instead of the standard agreed transport) – for example, insured transport or transport with delivery instructions. The services/products are carrier-dependent. A choice can be made from the options offered by the carrier.\n",
+      "maxLength": 20
+    },
+    "ReturnShipmentCode": {
+      "type": "string",
+      "description": "Designation of the desired return transport for the order. Relevant in case the delivery has to contain a return label.",
+      "maxLength": 5
+    },
+    "ReturnShipmentService": {
+      "type": "string",
+      "description": "A non-standard service level to be used for return transport (instead of the standard agreed transport). Relevant in case the delivery has to contain a return label.",
+      "maxLength": 5
+    },
+    "FirstDeliveryDate": {
+      "type": "string",
+      "description": "The date on which the goods must be hand over to the carrier. This attribute is intended for use in combination with attribute DeliveryTime is 'H' (Pack and Hold). In case of DeliveryTime is 'D' (Day) the FirstDeliveryDate can also be used and overrules this DeliveryTime.",
+      "format": "date-time"
+    },
+    "LastDeliveryDate": {
+      "type": "string",
+      "description": "The last/latest desired date on which the recipient wants the goods to be delivered in case of an order with delivery time 'L' (not yet implemented)",
+      "format": "date-time"
+    },
+    "SubType": {
+      "type": "string",
+      "maxLength": 10,
+      "description": "Further subdivision of the type of the order. For example: \n- PRE-ORDER and RE-ORDER can be relevant for orders of type LB2BF\n- WEB-ORDER can be relevant for orders of type LB2CF\n- ZALANDO can be relevant for orders of type LB2CF to indicate that an e-commerce platform specific packing slip must be enclosed\n",
+      "enum": [
+        "PRE-ORDER",
+        "RE-ORDER",
+        "WEB-ORDER",
+        "ZALANDO",
+        "ADAM",
+        "AMAZON",
+        "BOL",
+        "BREUNING",
+        "SALEPACK"
+      ]
+    },
+    "PartialDelivery": {
+      "type": "string",
+      "description": "Indication whether the shipment may be delivered in parts:\n- DIRECT; the order may be delivered in parts and incomplete delivery is permitted (is also linked to 'BackorderIndication' on line level)\n- ONDELIVERYDATE; the order may not be delivered in parts, but incomplete delivery is permitted. The reference moment for this is the order release for the delivery date. The order is then cancelled for the part not to be delivered and will only be executed for the part to be delivered. , - NEVER; the order may not be delivered in parts and incomplete delivery is not permitted. The reference moment for this is the order release for the delivery date. The entire order is cancelled if the full order cannot be delivered in one delivery.\"\n",
+      "maxLength": 14,
+      "enum": [
+        "ONDELIVERYDATE",
+        "NEVER"
+      ]
+    },
+    "Explanation": {
+      "type": "string",
+      "description": "Explanation for the order.",
+      "maxLength": 255
+    },
+    "Priority": {
+      "type": "integer",
+      "description": "Priority of the order. Can be used to make a distinction in the priority of orders (priority 1 is higher than priority 2, etc.).",
+      "minimum": 0,
+      "exclusiveMinimum": true,
+      "maximum": 100,
+      "exclusiveMaximum": true
+    },
+    "IncoTerm": {
+      "type": "string",
+      "description": "A pre-defined commercial term published by the International Chamber of Commerce (ICC) relating to international commercial law. The Incoterms rules are intended primarily to clearly communicate the tasks, costs, and risks associated with the transportation and delivery of goods.\n  - CFR: Cost and Freight\n  - CIF: Cost, Insurance and Freight\n  - CIP: Carriage and Insurance Paid\n  - CPT: Carriage Paid To\n  - DAF: Delivered At Frontier\n  - DAP: Delivered At Place\n  - DAT: Delivered At Terminal\n  - DDP: Delivered Duty Paid\n  - DDU: Delivered Duty Unpaid\n  - DEQ: Delivered Ex Quay\n  - DES: Delivered Ex Ship\n  - EXW: Ex Works\n  - FAS: Free Alongside Ship\n  - FCA: Free Carrier\n  - FOB: Free On Board\n  - FOP: Free On Plane\n  - FOR: Free on Rail\n  - FOT: Free On Truck\n",
+      "enum": [
+        "CPT",
+        "DAF",
+        "DAP",
+        "DAT",
+        "DDP",
+        "DDU",
+        "DEQ",
+        "DES",
+        "EXW",
+        "FAS",
+        "FCA",
+        "FOB",
+        "FOP",
+        "FOR",
+        "FOT"
+      ]
+    },
+    "IncoTermPlace": {
+      "type": "string",
+      "description": "The agreed place of delivery/destination.",
+      "maxLength": 50
+    },
+    "ReturnPeriod": {
+      "type": "integer",
+      "description": "Period, in days. Relevant if Modexpress is generating the RMA orders, this defines how long they will remain active.",
+      "minimum": 0,
+      "exclusiveMinimum": true,
+      "maximum": 1000,
+      "exclusiveMaximum": true
+    },
+    "AdditionalFinInfo": {
+      "required": [
+        "FinInfo"
+      ],
+      "type": "object",
+      "properties": {
+        "FinInfo": {
+          "description": "Financial information of a particular type",
+          "required": [
+            "InfoType"
+          ],
+          "type": "object",
+          "properties": {
+            "InfoType": {
+              "type": "string",
+              "description": "Indication of the type of financial information: - Type 'Invoice' is used for customs declaration, - Type 'CodSurcharge' is used to indicate a Cash On Delivery surcharge (Amount and CurrencyCode must be indicated), - Type xxxxx (Amount, CurrencyCode, VATCode and VATPercentage must be indicated)",
+              "enum": [
+                "Invoice",
+                "CodSurcharge",
+                "Discount",
+                "Handling",
+                "Packaging",
+                "Transport",
+                "PayedAmount",
+                "Duties",
+                "Taxes"
+              ]
+            },
+            "Description": {
+              "type": "string",
+              "description": "A relevant description for the type of financial information. In case of **Invoice**, this concerns the invoice number.",
+              "maxLength": 50
+            },
+            "Date": {
+              "type": "string",
+              "description": "A relevant date for the type of financial information. In case of 'Invoice', this concerns the invoice date.",
+              "format": "date"
+            },
+            "Amount": {
+              "type": "number",
+              "description": "The amount that applies to the type of financial information (so the invoice amount).",
+              "format": "double",
+              "minimum": -1.7976931348623157e+308,
+              "maximum": 1.7976931348623157e+308
+            },
+            "CurrencyCode": {
+              "type": "string",
+              "description": "ISO 4217 Code indicating the currency in which the amount is expressed.",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "VATCode": {
+              "type": "string",
+              "description": "Code that indicates whether the amount/price is including (I) or excluding (E) VAT. For customs usage the prices are exclusive of VAT.",
+              "minLength": 1,
+              "maxLength": 1,
+              "enum": [
+                "I",
+                "E"
+              ]
+            },
+            "VATPercentage": {
+              "type": "number",
+              "description": "The VAT percentage that applies to the amount.",
+              "format": "double",
+              "minimum": -1.7976931348623157e+308,
+              "maximum": 1.7976931348623157e+308
+            }
+          }
+        }
+      }
+    },
+    "Parties": {
+      "required": [
+        "Party"
+      ],
+      "type": "object",
+      "properties": {
+        "Party": {
+          "type": "array",
+          "items": {
+            "required": [
+              "Type"
+            ],
+            "type": "object",
+            "properties": {
+              "Type": {
+                "type": "string",
+                "description": "A type of party/address that applies to the order:\n- BuyerId; buyer, (known to Modexpress as a business relation based on **Id** or **ExternId** of the party, only for the placeOrder operation)\n- ReceiverId; receiver/recipient/consignee, (known to Modexpress as a business relation based on 'Id' of the party, only for the placeOrder operation)\n- ReceiverAddress; receiver/recipient/consignee address,\n- SellerAddress; Seller/Shipper address (only for the placeOrder operation)\n- BuyerAddress; buyer address (only for the placeOrder operation)\n- InvoiceAddress; invoice address (only for the placeOrder operation)\n- DropSiteAddress; drop site address / pick up point address\n",
+                "enum": [
+                  "ReceiverAddress",
+                  "SellerAddress",
+                  "BuyerAddress",
+                  "InvoiceAddress",
+                  "DropSiteAddress",
+                  "BuyerId",
+                  "ReceiverId"
+                ],
+                "maxLength": 28
+              },
+              "Id": {
+                "type": "integer",
+                "description": "The party that must be regarded as the buyer or receiver of the order and that is known/registered at Modexpress as a business relation with an address.\nThe party is indicated by means of an Id assigned by Modexpress. These types of parties must have been registered in advance with Modexpress, and no address can be indicated in the order.\nThe Id can only be used for parties of type BuyerId or ReceiverId.\n",
+                "minimum": 0,
+                "maximum": 9999999
+              },
+              "ExternalId": {
+                "type": "string",
+                "description": "A party involved with the order that is identified with an Id used by the ordering party/sender.\nFor type BuyerId it is possible to indicate parties with an ExternalId if they are registered as a Modexpress business relation with an address (receiver address).\nThese types of parties must have been registered in advance with Modexpress, and no address can be included in the order. For %Address types the ExternalId can be included as a reference in the order.\nFor these parties, the applicable address must also be specified in the order. In case of a DropSiteAddress the ExternalId can be used for the pickuppoint-id/number.\n",
+                "maxLength": 35
+              },
+              "Name1": {
+                "type": "string",
+                "description": "The name of the party. Order of display on documents: line 1.\nOnly applicable for the %Address party types. Mandatory for the %Address party types.\n",
+                "minLength": 1,
+                "maxLength": 50
+              },
+              "Name2": {
+                "type": "string",
+                "description": "The parties **For attention of**. Order of display on documents: line 2. Only applicable for the %Address party types.\n",
+                "minLength": 1,
+                "maxLength": 50
+              },
+              "AddressLine1": {
+                "type": "string",
+                "description": "The street that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types. Mandatory for the %Address party types.\n",
+                "maxLength": 50
+              },
+              "AddressLine2": {
+                "type": "string",
+                "description": "A free/extra text line for the party that is part of the address. Order of display on documents: line 5. Only applicable for the %Address party types.\n",
+                "maxLength": 50
+              },
+              "HouseNumber": {
+                "type": "integer",
+                "description": "The house number that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types.\n",
+                "format": "int32",
+                "minimum": -2147483648,
+                "maximum": 2147483647
+              },
+              "HouseNumberExtension": {
+                "type": "string",
+                "description": "The house number addition that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types.\n",
+                "maxLength": 10
+              },
+              "DeliveryInstruction": {
+                "type": "string",
+                "description": "An instruction for the delivery. Order of display on documents: line 3. Only applicable for the %Address party types.\n",
+                "maxLength": 30
+              },
+              "PostalCode": {
+                "type": "string",
+                "description": "The postal code / ZIP code that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.\n",
+                "maxLength": 20
+              },
+              "City": {
+                "type": "string",
+                "description": "The town/city that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.\n",
+                "minLength": 1,
+                "maxLength": 50
+              },
+              "Region": {
+                "type": "string",
+                "description": "The province/region/state that applies to the party. Order of display on documents: line 7. Only applicable for the %Address party types.\n",
+                "maxLength": 35
+              },
+              "Country": {
+                "type": "string",
+                "description": "ISO 3166 ALPHA-2 country code. The country that applies to the party. The designation should be made according to iso2 code. Order of display on documents: line 8 (country name will be displayed). Mandatory for the %Address party types.\n",
+                "minLength": 2,
+                "maxLength": 2
+              },
+              "EmailAddress": {
+                "type": "string",
+                "format": "email",
+                "description": "The email address for the party. Only applicable for the %Address party types.",
+                "maxLength": 80
+              },
+              "PhoneNumber": {
+                "type": "string",
+                "description": "The fixed line telephone number for the party. Only applicable for the %Address party types.",
+                "maxLength": 40
+              },
+              "MobileNumber": {
+                "type": "string",
+                "description": "The mobile phone number for the party. Only applicable for the %Address party types.",
+                "maxLength": 40
+              },
+              "LanguageCode": {
+                "type": "string",
+                "description": "ISO 639-2 ALPHA-3 country code. The language of the documents to be included with the shipment (packing slip). ISO 639-2 codes are used. Only applicable for the %Address party types. If multiple addresses are indicated, the LanguageCode to be used is: 1) DropSiteAddress, if address not specified or no language code specified, then 2) ReceiverAddress, if address not specified or no language code specified, then 3) BuyerAddress, if address not specified or no language code specified, then 4) InvoiceAddress, if address not specified or no language code specified, then 5) Last address mentioned in the Order.Party, if no language code specified, then 6) By default the language code is NLD.\n",
+                "minLength": 3,
+                "maxLength": 3
+              }
+            }
+          }
+        }
+      }
+    },
+    "Instructions": {
+      "type": "object",
+      "properties": {
+        "Instruction": {
+          "description": "Details about handling",
+          "required": [
+            "SequenceNumber",
+            "Type"
+          ],
+          "type": "object",
+          "properties": {
+            "Type": {
+              "type": "string",
+              "description": "Designation of the instruction type:\n- **VAS**: control of VAS\n- **HANDLING**: instruction that is used in the execution of activities\n- **FILE**: indication that a separate file is supplied with the order, containing documents to be printed for the shipment\n- **TEXT**: xxxxxx\n",
+              "enum": [
+                "VAS",
+                "HANDLING",
+                "FILE",
+                "TEXT"
+              ]
+            },
+            "SequenceNumber": {
+              "type": "integer",
+              "description": "The execution sequence number of the instruction. This can be used to send the sequence in which the instructions should be implemented. The number must be unique among all the order instructions.",
+              "format": "int32",
+              "minimum": 1,
+              "maximum": 999
+            },
+            "Code": {
+              "type": "string",
+              "description": "Indication of the instruction by means of a code:\n- In case of VAS an example code is 10 (= remove price label F,GOH)\n- In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')\n- In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**\n- In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**\n- In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**\nIf no specific code and no description is relevant than the instruction type must also be declared as instruction code.\n",
+              "minLength": 1,
+              "maxLength": 10
+            },
+            "Description": {
+              "type": "string",
+              "description": "Indication of the instruction by means of a description.\nAn example description is **packaging shipment in red wrapping paper**.\nIf no specific description is relevant than the instruction code must be declared.\nThis field is not used for Instructiontype FILE.\n",
+              "maxLength": 156
+            },
+            "Info": {
+              "type": "string",
+              "description": "The info to be used/printed:\n- In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.\n- In case of type HANDLING with code PICK the pick strategy must be given:\n    - STYLE, STYLECOLOUR or STYLECOLOURSIZE\n- In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file.\n- In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.\n",
+              "maxLength": 70
+            }
+          }
+        }
+      }
+    },
+    "OrderLines": {
+      "required": [
+        "OrderLine"
+      ],
+      "type": "object",
+      "properties": {
+        "OrderLine": {
+          "description": "Order line information",
+          "required": [
+            "Article",
+            "Id",
+            "Quantity"
+          ],
+          "type": "object",
+          "properties": {
+            "Id": {
+              "type": "string",
+              "description": "The identification that the ordering party uses for the order line.",
+              "minLength": 1,
+              "maxLength": 50
+            },
+            "LineReference": {
+              "type": "string",
+              "description": "The reference that the ordering party uses for the order line.",
+              "maxLength": 10
+            },
+            "Quantity": {
+              "type": "integer",
+              "description": "The number of items of the article to be delivered.",
+              "format": "int32",
+              "minimum": 1,
+              "maximum": 999999
+            },
+            "StockType": {
+              "type": "string",
+              "maxLength": 10,
+              "description": "Designation of the type of stock that must be delivered. Using the stock type, it is possible to differentiate according to different types of stock that must be maintained separately for an article (both in the operation and administratively).\nThe standard stock types are (other types are possible):\n- RGL: regular or A-choice stock\n- RGLRJC - regular reject or B-choice stock.\nIf no StockType is indicated the delivery is assumed to be regular stock (RGL).\n"
+            },
+            "AlternativeDescription": {
+              "type": "string",
+              "maxLength": 60,
+              "description": "Description of the article to be displayed on the packing slip. This description is the alternative to the description registered in the SKU data.\n"
+            },
+            "ClientReference": {
+              "type": "string",
+              "description": "Reference used by the buyer/recipient for the order line.",
+              "maxLength": 10
+            },
+            "BackorderIndication": {
+              "type": "string",
+              "description": "Indication whether it is permissible to take an order in backorder. \nThis is particularly relevant if insufficient stock can be reserved for the order line.\nThe handling is also dependent on 'PartialDelivery' on order level.\nIt is possible to take a part of an orderline into backorder. Standard value = YES (on line level).\n",
+              "enum": [
+                "Y",
+                "N"
+              ]
+            },
+            "Article": {
+              "required": [
+                "Id"
+              ],
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "string",
+                  "description": "The identification that the owner uses for the SKU to be delivered. \nThis is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.\n",
+                  "minLength": 1,
+                  "maxLength": 250
+                },
+                "LotNumber": {
+                  "description": "The lot/batch number of the SKU to be delivered. It is possible to have different types of stock for a SKU (attribute StockType).\nIn addition, there may be a distinction between different lots/batches for the stock regarding a type (both in the operation and administratively).\n",
+                  "type": "string",
+                  "maxLength": 20
+                },
+                "ClientId": {
+                  "type": "string",
+                  "description": "A different identifier (logical id) that the buyer/recipient uses for the article and that must be displayed on shipment documents.",
+                  "maxLength": 70
+                },
+                "ClientCode": {
+                  "type": "string",
+                  "description": "A different identifier (barcode) that the buyer/recipient uses for the article and that must be displayed on shipment documents.",
+                  "maxLength": 70
+                }
+              }
+            },
+            "Owner": {
+              "required": [
+                "RelationId",
+                "RelationType"
+              ],
+              "type": "object",
+              "properties": {
+                "RelationId": {
+                  "type": "string",
+                  "description": "Identification of the party that is the owner of the article to be delivered."
+                },
+                "RelationType": {
+                  "type": "string",
+                  "description": "Indication whether the Relation_Id is an internal or external id.\n- internal id: the id assigned and used by Modexpress\n- external id: the id assigned and used by the ordering party\n",
+                  "enum": [
+                    "INT",
+                    "EXT"
+                  ]
+                }
+              }
+            },
+            "Instructions": {
+              "type": "object",
+              "properties": {
+                "Instruction": {
+                  "description": "Details about handling",
+                  "required": [
+                    "SequenceNumber",
+                    "Type"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "Type": {
+                      "type": "string",
+                      "description": "Designation of the instruction type:\n- **VAS**: control of VAS\n- **HANDLING**: instruction that is used in the execution of activities\n- **FILE**: indication that a separate file is supplied with the order, containing documents to be printed for the shipment\n- **TEXT**: xxxxxx\n",
+                      "enum": [
+                        "VAS",
+                        "HANDLING",
+                        "FILE",
+                        "TEXT"
+                      ]
+                    },
+                    "SequenceNumber": {
+                      "type": "integer",
+                      "description": "The execution sequence number of the instruction. This can be used to send the sequence in which the instructions should be implemented. The number must be unique among all the order instructions.",
+                      "format": "int32",
+                      "minimum": 1,
+                      "maximum": 999
+                    },
+                    "Code": {
+                      "type": "string",
+                      "description": "Indication of the instruction by means of a code:\n- In case of VAS an example code is 10 (= remove price label F,GOH)\n- In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')\n- In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**\n- In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**\n- In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**\nIf no specific code and no description is relevant than the instruction type must also be declared as instruction code.\n",
+                      "minLength": 1,
+                      "maxLength": 10
+                    },
+                    "Description": {
+                      "type": "string",
+                      "description": "Indication of the instruction by means of a description.\nAn example description is **packaging shipment in red wrapping paper**.\nIf no specific description is relevant than the instruction code must be declared.\nThis field is not used for Instructiontype FILE.\n",
+                      "maxLength": 156
+                    },
+                    "Info": {
+                      "type": "string",
+                      "description": "The info to be used/printed:\n- In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.\n- In case of type HANDLING with code PICK the pick strategy must be given:\n    - STYLE, STYLECOLOUR or STYLECOLOURSIZE\n- In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file.\n- In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.\n",
+                      "maxLength": 70
+                    }
+                  }
+                }
+              }
+            },
+            "Prices": {
+              "required": [
+                "Price"
+              ],
+              "type": "object",
+              "properties": {
+                "Price": {
+                  "type": "array",
+                  "description": "A price that applies to the SKU of the orderline. The indicated price for the SKU in a orderline overrides the comparable price in the SKU data.",
+                  "items": {
+                    "required": [
+                      "Amount",
+                      "CurrencyCode",
+                      "Type"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "Type": {
+                        "type": "string",
+                        "description": "The indication of a price that is relevant for the SKU: - Type 'Exportvalue' is used for the exportinvoice,  - Type 'Custom' is used for customs declaration,  - Type 'Purchase' is used to be the purchase price., - Type 'Sale' is meant to be the price to pay,  - Type 'From' is meant te be the original sale price (from price),  - Type 'Srp' is the Suggested Retail Price.",
+                        "enum": [
+                          "Exportvalue",
+                          "Custom",
+                          "Purchase",
+                          "Sale",
+                          "From",
+                          "Srp"
+                        ]
+                      },
+                      "Amount": {
+                        "type": "number",
+                        "description": "The amount indicating the price (regarding 1 single unit of the SKU). (N9,2 = Up to 7 digits before the comma and 2 decimals)",
+                        "format": "double",
+                        "minimum": -1.7976931348623157e+308,
+                        "maximum": 1.7976931348623157e+308
+                      },
+                      "CurrencyCode": {
+                        "type": "string",
+                        "description": "Code indicating the currency in which the price is expressed."
+                      },
+                      "Country": {
+                        "type": "string",
+                        "description": "Code indicating the country for which the price is valid."
+                      },
+                      "Region": {
+                        "type": "string",
+                        "description": "Code indicating the region for which the price is valid (for example: EU)"
+                      },
+                      "VATCode": {
+                        "type": "string",
+                        "description": "Code that indicates whether the amount/price is including (I) or excluding (E) VAT. For customs usage the prices are exclusive of VAT."
+                      },
+                      "VATPercentage": {
+                        "type": "number",
+                        "description": "BTW percentage",
+                        "format": "double",
+                        "minimum": -1.7976931348623157e+308,
+                        "maximum": 1.7976931348623157e+308
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}
