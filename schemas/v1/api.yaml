@@ -1,0 +1,3007 @@
+openapi: 3.0.0
+info:
+  title: Modexpress MX Connect REST API v1
+  description: REST API to manage orders
+  version: 1.0.0
+tags:
+  - name: SHP
+paths:
+  /sku:
+    post:
+      tags:
+        - SKU
+      summary: SKU POST request information
+      operationId: placeSku
+      description: The message to register and update SKU information
+      requestBody:
+        description: The SKU request body
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Articles
+              properties:
+                SenderRelationId:
+                  description: Identification of the party that submits the SKU message.
+                  type: string
+                  maxLength: 40
+                  example:
+                    - '1111111'
+                OrderingPartyRelationId:
+                  description: Identification of the party on whose behalf the articles are registered.
+                  type: string
+                  maxLength: 40
+                  example:
+                    - '1111111'
+                Articles:
+                  type: object
+                  required:
+                    - Article
+                  properties:
+                    Article:
+                      type: array
+                      required:
+                        - Id
+                      items:
+                        type: object
+                        properties:
+                          Id:
+                            description: |
+                              The identification that the owner uses for the SKU. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.\r\nIf the identification contains letters, they must be in uppercase. WMS interface limited to A24
+                            type: string
+                            maxLength: 24
+                            example:
+                              - STYLE-COLOUR-SIZE
+                          Description:
+                            description: The description of the SKU.
+                            type: string
+                            minLength: 1
+                            maxLength: 60
+                          StorageType:
+                            description: "Indication of the way the SKU is stored (hanging or flat).FP=Flat Pack,\r\nGOH=Garments on Hanger"
+                            type: string
+                            minLength: 1
+                            maxLength: 3
+                            enum:
+                              - FP
+                              - GOH
+                          Weight:
+                            description: The weight of the SKU expressed in kilos
+                            type: number
+                          Volume:
+                            description: The volume of the SKU expressed in litres.
+                            type: number
+                          Length:
+                            description: The length of the SKU expressed in millimetres.
+                            type: number
+                          Width:
+                            description: The width of the SKU expressed in millimetres.
+                            type: number
+                          Height:
+                            description: The height of the SKU expressed in millimetres.
+                            type: number
+                          CountryOfOrigin:
+                            description: The country of origin of the SKU. Use ISO-2 country code
+                            type: string
+                            minLength: 2
+                            maxLength: 2
+                          Owner:
+                            type: object
+                            minProperties: 2
+                            maxProperties: 2
+                            properties:
+                              RelationId:
+                                description: Identification of the party that must be regarded as being the owner of the article. Id assigned by Modexpress.
+                                type: string
+                                minLength: 1
+                                maxLength: 40
+                              RelationType:
+                                description: "Indication whether the Relation_Id is an internal or external id.\r\n- internal id: the id assigned and used by Modexpress\r\n- external id: the id assigned and used by the ordering party"
+                                type: string
+                                minLength: 3
+                                maxLength: 3
+                                enum:
+                                  - EXT
+                                  - INT
+                            required:
+                              - RelationId
+                              - RelationType
+                            additionalProperties: false
+                          Identifications:
+                            type: array
+                            items:
+                              type: object
+                              minProperties: 1
+                              properties:
+                                Code:
+                                  description: A code on the basis of which the article can be recognised in the operation. This is usually a code that is applied to the article as a barcode.
+                                  type: string
+                                  minLength: 1
+                                  maxLength: 35
+                              required:
+                                - Code
+                              additionalProperties: false
+                          Grouping:
+                            type: object
+                            properties:
+                              Group:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Type:
+                                      description: |
+                                        The indication of a group/classification in which the SKU has been included, for example:
+                                        - AFDKD: department_code; SKU classification according to departments
+                                        - LEVKD: supplier_code; SKU classification according to suppliers
+                                        - PRTTYPE: product_type; SKU classification according to product type
+                                        - THEME: product_style; SKU classification according to product theme
+
+                                        Only types agreed in advance with Modexpress can be indicated. A group/classification is included if it can be used in the operation to realise a particular control or if it is relevant as information to be displayed in documents or in the operation. The types agreed with Modexpress.
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 8
+                                      enum:
+                                        - AFDKD
+                                        - LEVKD
+                                        - PRTTYPE
+                                        - THEME
+                                    Value:
+                                      description: |
+                                        The value that applies to the SKU for the group/classification of the indicated type.
+                                        If these values are relevant for controlling the operation (WMS), they should be coordinated in advance with Modexpress.
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 8
+                                    Description:
+                                      description: |
+                                        The description/name that corresponds with the value of the type. Particularly if the value of the type is a code, it can also be relevant to specify a name/description for this code.
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 240
+                                  required:
+                                    - Type
+                                    - Value
+                                  additionalProperties: false
+                            additionalProperties: false
+                          AdditionalInfo:
+                            type: object
+                            properties:
+                              Info:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Type:
+                                      description: |
+                                        The indication of an information element that is relevant for the SKU, for example:
+                                        - MATERIAL: material name
+                                        - FABRIC: Fabric composition
+                                        - BRANDNM: Name of the brand
+
+                                        Only types agreed in advance with Modexpress can be indicated. An information element is included if it must be indicated in a document or if it is relevant in the operation (for example to display when executing an order related to the SKU). The types agreed with Modexpress.
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 8
+                                      enum:
+                                        - MATERIAL
+                                        - FABRIC
+                                        - BRANDNM
+                                    Value:
+                                      description: The value that applies to the SKU for the specified type of information.
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 250
+                                  required:
+                                    - Type
+                                    - Value
+                                  additionalProperties: false
+                            additionalProperties: false
+                          Characteristics:
+                            type: object
+                            properties:
+                              Characteristic:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Type:
+                                      description: A characteristic that is relevant for the SKU.
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 10
+                                      enum:
+                                        - STYLE
+                                        - COLOUR
+                                        - SIZE
+                                        - SIZE2
+                                        - SEASON
+                                        - TARIC
+                                        - CUSTSTYLE
+                                    Value:
+                                      description: |
+                                        The value that applies to the SKU for the specified type:
+                                        - STYLE (A40): the style name/number of the SKU
+                                        - COLOUR (A50); the colour code of the SKU
+                                        - SIZE (A35); the size of the SKU (the size code)
+                                        - SIZE2 (A35); a second size of the SKU (for example measure of length)
+                                        - SEASON (A35); the season of the SKU
+                                        - TARIC (A10); the TARIC of the SKU (part of it is the HS code), The TARIC is 10 positions or 8 positions supplemented with '00'.
+                                        - CUSTSTYLE (A17); the style name/number of the SKU for customs declaration. Max field length depends on the Type
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 70
+                                    Description:
+                                      description: |
+                                        The description/name that corresponds with the value of the type. For example the colour name for the colour code.
+                                        For printing documents the maximum length in use is:
+                                        - Style; A60
+                                        - Colour; A30
+
+                                        SIZE, SIZE2, SEASON, TARIC, CUSTSTYLE; not in use
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 240
+                                    SortingNumber:
+                                      description: "A number that specifies the sequence of the size codes (relevant for type SIZE/SIZE2). The number is used to specify the display order on the packing slip.\r\n\r\nIn case of type SIZE/SIZE2 the sortingnumber of the size codes (in attribute value) is particularly relevant if the size codes cannot be logically sorted. For example in case of size codes like XS, X, M, XXL.\r\nIf there are several size groups in use, the sortingnumber must be unique for the size codes within the size group. However the size group is not known in the Modexpress SKU registration, so for the packing slip the SKU style is used to determine the size codes that have to be used on the packing slip. The sortingnumber is used to determine the order of the size codes on the packing slip."
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 9999
+                                  required:
+                                    - Type
+                                    - Value
+                                  additionalProperties: false
+                            additionalProperties: false
+                          Composition:
+                            description: |
+                              Any SKUs that are part of the SKU (bill of material). For a pre-pack SKU, for example, it can be indicated here which SKUs are part of the pre-pack SKU. This is on condition that these SKUs are individually known and were therefore registered earlier.
+                            type: object
+                            properties:
+                              Part:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Id:
+                                      description: The reference to a SKU that is part of the current SKU; the reference is made using the Id of the SKU. WMS interface limited to A24.
+                                      type: string
+                                      maxLength: 250
+                                    Code:
+                                      description: "The reference to a SKU that is part of the current SKU; the reference is made using the identification (barcode) of the SKU.\r\nA condition for the use of this reference is that the SKU can be clearly determined on the basis of this identification (barcode)."
+                                      type: string
+                                      maxLength: 35
+                                    PartQuantity:
+                                      description: The number of items of the SKU in the current SKU.
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 999
+                                  additionalProperties: false
+                          Prices:
+                            type: object
+                            properties:
+                              Price:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Type:
+                                      description: "A price that is relevant for the SKU.\r\n\r\nThe 'Exportvalue' is used for the exportinvoice.\r\nThe type 'Sale' is meant to be the price to pay.\r\nThe type 'From' is meant te be the original sale price (from price)."
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 15
+                                      enum:
+                                        - Exportvalue
+                                        - Purchase
+                                        - Sale
+                                        - From
+                                    Amount:
+                                      description: |
+                                        The amount indicating the price (regarding 1 single unit of the SKU). (N9,2 = Up to 7 digits before the comma and 2 decimals)
+                                      type: number
+                                    CurrencyCode:
+                                      description: Code indicating the currency in which the price is expressed. ISO-4217.
+                                      type: string
+                                      minLength: 3
+                                      maxLength: 3
+                                    Country:
+                                      description: Code indicating the country for which the price is valid. Use ISO-2 country code.
+                                      type: string
+                                      minLength: 2
+                                      maxLength: 2
+                                    Region:
+                                      description: 'Code indicating the region for which the price is valid (for example: EU)'
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 25
+                                    VATCode:
+                                      description: "Code that indicates whether the price is including (I) or excluding (E) VAT.\r\nFor customs usage prices are exclusive of VAT."
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 1
+                                      enum:
+                                        - I
+                                        - E
+                                  required:
+                                    - Type
+                                    - Amount
+                                    - CurrencyCode
+                                  additionalProperties: false
+                            additionalProperties: false
+                          PackagingUnits:
+                            type: object
+                            properties:
+                              PackagingUnit:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Type:
+                                      description: A packaging unit that is used for an article (SKU).
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 15
+                                      enum:
+                                        - PIECE
+                                        - BOX
+                                    Quantity:
+                                      description: "The number of pieces (SKU's) in the unit \r\n(in case of type PIECE the quantity is 1)."
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 999999
+                                    Weight:
+                                      description: The weight of the unit expressed in kilos
+                                      type: number
+                                    Volume:
+                                      description: The volume of the unit expressed in litres
+                                      type: number
+                                    Length:
+                                      description: The length of the unit expressed in millimetres
+                                      type: number
+                                    Width:
+                                      description: The width of the unit expressed in millimetres
+                                      type: number
+                                    Height:
+                                      description: The height of the unit expressed in millimetres
+                                      type: number
+                                  required:
+                                    - Type
+                                    - Quantity
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  result:
+                    type: object
+                    properties:
+                      Articles:
+                        type: object
+                        properties:
+                          Valid:
+                            type: array
+                            description: |
+                              The article IDs that are well-received and processed
+                            items:
+                              type: string
+                            example:
+                              - SKU_TG_U_050
+                          Invalid:
+                            type: array
+                            description: |
+                              The article IDs that were not processed due to errors
+                            items:
+                              type: string
+                            example:
+                              - SKU_TG_U_051
+                          Errors:
+                            type: object
+                            description: |
+                              The errors listed for each SKU entry in the 'Invalid' list
+                            additionalProperties:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  example: barcode_exists
+                                en:
+                                  type: string
+                                  example: 'Barcode exists: SKU_TG_U_051'
+                                nl:
+                                  type: string
+                                  example: 'Barcode bestaat al: SKU_TG_U_051'
+                                de:
+                                  type: string
+                                  example: ''
+                                fr:
+                                  type: string
+                                  example: ''
+                  message:
+                    type: string
+                    nullable: true
+  /rcp:
+    post:
+      tags:
+        - RCP
+      summary: RCP POST request information
+      operationId: receiptOrder
+      description: The request to register a Receipt Order
+      externalDocs:
+        url: 'https://github.com/Modexpress/saleskit-api-sources/blob/main/schemas/shp/rcp_post_request_3.0.json'
+        description: Request body **JSON schema**
+      requestBody:
+        description: The receipt order request body
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                SenderRelationId:
+                  description: Identification of the party that submits the receipt message.
+                  type: string
+                  maxLength: 40
+                OrderingPartyRelationId:
+                  description: Identification of the party on whose behalf the articles have to be received.
+                  type: string
+                  maxLength: 40
+                Order:
+                  description: |
+                    An order to receive goods (stock). A receipt consists of two parts that can be registered simultaneously or separately: - Purchase/return order (PO/RMA); the order from the ordering party to receive goods; these are goods that the ordering party has purchased from suppliers or is taking back as returns from buyers/recipients. - Shipment; a shipment to be supplied by a supplier or buyer/recipient for a purchase/return order. - By default it is assumed that the purchase/return order and the shipment are the same. This means that it is sufficient to specify the purchase/return order without specifying shipments. The submitted purchase/return order is automatically regarded as the shipment to be received (in terms of the contents, the shipment is the same as the purchase/return order).
+                  type: object
+                  properties:
+                    Id:
+                      description: |
+                        The identification that the ordering party uses for the order. Based on this identification, Modexpress checks whether the registered order already exists for the ordering party. Cancelled orders or executed orders on which nothing has been received, are not taken into consideration. If an order already exists, the registration is rejected.\r\n\r\nIf purchase/return orders and shipments are registered separately, this identification is used to link the shipment to a purchase/return order that was reported earlier.
+                      type: string
+                      minLength: 1
+                      maxLength: 25
+                    PurchaseOrder:
+                      type: object
+                      properties:
+                        Type:
+                          description: |
+                            Designation of the order type. Only the types indicated by Modexpress are permitted. Type XDOCKLOT can only be used if this has been agreed upon. For return orders there also can be automatic return orders. These are created automatically on the basis of executed shipments and are therefore not submitted by means of this message but will be reported back as such using the RCP-exec message.
+                          type: string
+                          maxLength: 20
+                          enum:
+                            - PURCHASE
+                            - RETURN
+                            - XDOCKLOT
+                        Subtype:
+                          description: |
+                            A subdivision of the order type. For example `RETAIL` returns versus `WHOLESALE` returns. Only types coordinated with Modexpress are permitted.
+                          type: string
+                          maxLength: 20
+                          enum:
+                            - RETAIL
+                            - WHOLESALE
+                        Reference:
+                          description: Reference for the order used by the ordering party.
+                          type: string
+                          maxLength: 20
+                        SenderInternalId:
+                          description: |
+                            Identification of the party that delivers the goods for the order. The party must be known to Modexpress by the relevant Id.  **Note**: Id assigned by Modexpress
+                          type: integer
+                          minimum: 1
+                          maximum: 9999999
+                        SenderExternalId:
+                          description: Identification of the party that delivers the goods for the order. The party is not known to Modexpress by the relevant Id.
+                          type: string
+                          maxLength: 20
+                        SenderName:
+                          title: Name/description of the party that delivers the goods for the order.
+                          maxLength: 70
+                        Date:
+                          description: |
+                            Date that the ordering party uses for the order. For example, this can be the date on which the order was created by the ordering party. This date is reported back in the execution result of the order. This date can be used to make the order recognisable.
+                            For example, if the ordering party has any questions concerning the status of the order and that order cannot be identified by means of a unique id.
+                          type: string
+                          format: date
+                        Parties:
+                          type: object
+                          properties:
+                            Party:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Type:
+                                    description: |
+                                      Designation of a party/address that applies to the order: - ShipperAddress; the shipper/seller of the shipment (is required in case of customs declaration)
+                                    type: string
+                                    maxLength: 20
+                                    enum:
+                                      - ShipperAddress
+                                  ExternalId:
+                                    description: The Id that is used as the identification of the party/address.
+                                    type: string
+                                    maxLength: 35
+                                  Name1:
+                                    description: The name of the party.
+                                    type: string
+                                    maxLength: 80
+                                  Name2:
+                                    description: The parties 'For attention of'.
+                                    type: string
+                                    maxLength: 55
+                                  AddressLine1:
+                                    description: The street that applies to the party.
+                                    type: string
+                                    maxLength: 50
+                                  HouseNumber:
+                                    description: The house number that applies to the party.
+                                    type: integer
+                                    minimum: 1
+                                    maximum: 999999
+                                  HouseNumberExtension:
+                                    description: The house number addition that applies to the party.
+                                    type: string
+                                    maxLength: 10
+                                  PostalCode:
+                                    description: The postal code / ZIP code that applies to the party.
+                                    type: string
+                                    maxLength: 20
+                                  City:
+                                    description: The town/city that applies to the party.
+                                    type: string
+                                    maxLength: 40
+                                  Country:
+                                    description: The country that applies to the party. The designation should be made according to iso2 code.
+                                    type: string
+                                    minLength: 2
+                                    maxLength: 2
+                                required:
+                                  - Type
+                                  - ExternalId
+                        Instructions:
+                          type: object
+                          properties:
+                            Instruction:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  SequenceNumber:
+                                    description: A sequence number indicating the order of execution of the instruction.
+                                    type: integer
+                                    minimum: 1
+                                    maximum: 999999
+                                  Code:
+                                    description: Indication of the instruction by means of a code.
+                                    type: string
+                                    maxLength: 10
+                                  Description:
+                                    description: Indication of the instruction by means of a description.
+                                    type: string
+                                    maxLength: 70
+                        PurchaseOrderLines:
+                          type: object
+                          properties:
+                            PurchaseOrderLine:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Id:
+                                    description: 'The identification that the ordering party uses for the order line (unique in the PurchaseOrder). '
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 250
+                                  Quantity:
+                                    description: The number of items of the article that must be received.
+                                    type: integer
+                                    minimum: 1
+                                    maximum: 999999999
+                                  Reference:
+                                    description: The reference the ordering party uses for the order line and that the ordering party can use to recognise the line.
+                                    type: string
+                                    maxLength: 10
+                                  StockType:
+                                    description: |
+                                      Designation of the type of stock that must be received. By stock type, it is possible to differentiate into different types of stock to be kept separately for an article (both in the operation and administratively).
+                                      The standaard stock types are (other types are possible):
+                                      - RGL: regular or A-choice stock
+                                      - RGLRJC: regular reject or B-choice stock
+
+                                      If no StockType is indicated the receipt is assumed to be regular stock (RGL). Other types assigned by Modexpress.
+                                    type: string
+                                    maxLength: 10
+                                  Instructions:
+                                    type: object
+                                    properties:
+                                      Instruction:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            SequenceNumber:
+                                              description: A sequence number indicating the order of execution of the instruction.
+                                              type: integer
+                                              minimum: 1
+                                              maximum: 999
+                                            Code:
+                                              description: Indication of the instruction by means of a code.
+                                              type: string
+                                              maxLength: 10
+                                            Description:
+                                              description: Indication of the instruction by means of a description.
+                                              type: string
+                                              maxLength: 70
+                                  Article:
+                                    type: object
+                                    properties:
+                                      Id:
+                                        description: The identification that the owner uses for the SKU to be received. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id. WMS A24
+                                        type: string
+                                        minLength: 1
+                                        maxLength: 250
+                                    required:
+                                      - Id
+                                  Owner:
+                                    type: object
+                                    properties:
+                                      RelationId:
+                                        description: Identification of the party that is the owner of the article to be received. Id assigned by Modexpress
+                                        type: string
+                                        maxLength: 40
+                                      RelationType:
+                                        description: |
+                                          Indication whether the Relation_Id is an internal or external id. - internal id: the id assigned and used by Modexpress - external id: the id assigned and used by the ordering party.
+                                        type: string
+                                        minLength: 3
+                                        maxLength: 3
+                                        enum:
+                                          - EXT
+                                          - INT
+                                required:
+                                  - Id
+                                  - Quantity
+                                  - Article
+                      required:
+                        - Type
+                        - PurchaseOrderLines
+                    Shipment:
+                      description: |
+                        The registration of a shipment to be supplied for a purchase/return order by a supplier or buyer/recipient. There are four possibilities: 1. the shipment(s) for a purchase order from an ordering party is/are provided separately by the supplier (not yet implemented) 2. the shipment(s) for a purchase order is/are provided by the ordering party itself together with the purchase order 3. the shipment(s) for a purchase order is/are provided by the ordering party itself separately from the purchase order (not yet implemented) 4. no shipment(s) are provided for a purchase order, each purchase order automatically results in a corresponding shipment that is the same as the purchase order in terms of its contents.
+                        Pay attention; a combination of 2 and 4 is not possible. So, if ShipmentLines are provided for the PurchaseOrderLines, it is necessary that every PurchaseOrderLine has a ShipmentLine and the Quantity in both lines has to be the same. When a shipment is provided separately, a reference to the purchase/return order is required; this is done using the 'id' of the order. Moreover, the purchase/return order must then be registered/provided before the shipment is registered/provided."
+                      type: object
+                      properties:
+                        Reference:
+                          description: Reference used by the supplier for the shipment.
+                          type: string
+                          maxLength: 25
+                        Type:
+                          description: Designation of the order type. Only the types indicated by Modexpress are permitted.
+                          type: string
+                          maxLength: 20
+                          enum:
+                            - STANDARD
+                            - PREORDER
+                            - REORDER
+                        ArrivalDateTime:
+                          description: The delivery date/time of the shipment expected by the supplier at Modexpress.
+                          type: string
+                          format: date-time
+                        Carrier:
+                          description: The identification of the shipper that will deliver the shipment
+                          type: string
+                          maxLength: 70
+                        CarrierInfo:
+                          description: 'Information about the shipper that will deliver the shipment, for example contact data.'
+                          type: string
+                          maxLength: 70
+                        CountryOfDeparture:
+                          description: The country of origin of the shipment (Country of departure). Use an ISO-2 country code.
+                          type: string
+                          minLength: 2
+                          maxLength: 2
+                        IncoTerm:
+                          description: |
+                            A pre-defined commercial term published by the International Chamber of Commerce (ICC) relating to international commercial law. The Incoterms rules are intended primarily to clearly communicate the tasks, costs, and risks associated with the transportation and delivery of goods. - CFR - Cost and Freight - CIF - Cost, Insurance and Freight - CIP - Carriage and Insurance Paid - CPT - Carriage Paid To - DAF - Delivered At Frontier - DAP - Delivered At Place - DAT - Delivered At Terminal - DDP - Delivered Duty Paid - DDU - Delivered Duty Unpaid - DEQ - Delivered Ex Quay - DES - Delivered Ex Ship - EXW - Ex Works - FAS - Free Alongside Ship - FCA - Free Carrier - FOB - Free On Board - FOP - Free On Plane - FOR - Free on Rail - FOT - Free On Truck
+                          type: string
+                          minLength: 3
+                          maxLength: 3
+                          enum:
+                            - CFR
+                            - CIF
+                            - CIP
+                            - CPT
+                            - DAF
+                            - DAP
+                            - DAT
+                            - DDP
+                            - DDU
+                            - DEQ
+                            - DES
+                            - EXW
+                            - FAS
+                            - FCA
+                            - FOB
+                            - FOP
+                            - FOR
+                            - FOT
+                        IncoTermPlace:
+                          description: The agreed place of delivery/destination.
+                          type: string
+                          maxLength: 50
+                        FreightReference:
+                          description: An unique delivery number/reference for the customs declaration of the shipment.
+                          type: string
+                          maxLength: 14
+                        AdditionalFinInfo:
+                          type: object
+                          properties:
+                            FinInfo:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  InfoType:
+                                    description: |
+                                      Indication of the type of financial information: - Type 'Invoice' is used for customs declaration - Type ´Freightcost´ is used for customs declaration - Type ´Insurancecost´ is used for customs declaration
+                                    type: string
+                                    maxLength: 15
+                                    enum:
+                                      - Invoice
+                                      - Freightcost
+                                      - Insurancecost
+                                  Description:
+                                    description: |
+                                      A relevant description for the type of financial information. In case of type 'Invoice', this concerns the invoice number (for customs declaration, the invoice number is limited to format A35).
+                                    type: string
+                                    maxLength: 40
+                                  Date:
+                                    description: |
+                                      A relevant date for the type of financial information. In case of 'Invoice', this concerns the invoice date.
+                                    type: string
+                                    format: date
+                                  Amount:
+                                    description: |
+                                      The amount that applies to the type of financial information (so the invoice amount, the freight cost, the insurance cost).
+                                    type: number
+                                  CurrencyCode:
+                                    description: Code indicating the currency in which the amount is expressed. Use ISO-4217
+                                    type: string
+                                    minLength: 3
+                                    maxLength: 3
+                                required:
+                                  - InfoType
+                        ShipmentLines:
+                          type: object
+                          properties:
+                            ShipmentLine:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Id:
+                                    description: Reference to the PurchaseOrderLine (Id) for which this shipment line indicates the delivery.
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 250
+                                  Quantity:
+                                    description: The number of items of the article that will be delivered.
+                                    type: number
+                                    minimum: 1
+                                    maximum: 999999999
+                                  CountryOfOrigin:
+                                    description: The country of origin of the article to be delivered (country of production). Use an ISO-2 country code
+                                    type: string
+                                    minLength: 2
+                                    maxLength: 2
+                                  Prepacked:
+                                    description: 'Indication whether the delivered article, together with other articles, has been packed in secondary packaging (for example, size curve box) and must be removed from this packaging when it arrives.'
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 1
+                                    enum:
+                                      - 'Y'
+                                      - 'N'
+                                  LotNumber:
+                                    description: "The lot/batch number of the SKU to be received.\r\nIt is possible to have different types of stock for a SKU (attribute StockType). In addition, there may be a distinction between different lots/batches for the stock regarding a type (both in the operation and administratively)."
+                                    type: string
+                                    maxLength: 20
+                                  AdditionalLineFinInfo:
+                                    type: object
+                                    properties:
+                                      LineFinInfo:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            InfoType:
+                                              description: |
+                                                Indication of the type of financial information: - Type 'Invoice' is used for customs declaration
+                                              type: string
+                                              maxLength: 15
+                                              enum:
+                                                - Invoice
+                                            Description:
+                                              description: "A relevant description for the type of financial information.\r\nIn case of type 'Invoice', this concerns the invoice number (for customs declaration, the invoice number is limited to format A35)."
+                                              type: string
+                                              maxLength: 35
+                                            Date:
+                                              description: |
+                                                A relevant date for the type of financial information. In case of 'Invoice', this concerns the invoice date.
+                                              type: string
+                                              format: date
+                                            Amount:
+                                              description: The amount that applies to the type of financial information (so the invoice amount).
+                                              type: number
+                                            CurrencyCode:
+                                              description: Code indicating the currency in which the amount is expressed. Use ISO-4217
+                                              type: string
+                                              minLength: 3
+                                              maxLength: 3
+                                          required:
+                                            - InfoType
+                                  Prices:
+                                    type: object
+                                    properties:
+                                      Price:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            Type:
+                                              description: The indication of a price that is relevant for the SKU.
+                                              type: string
+                                              maxLength: 15
+                                              enum:
+                                                - Purchase
+                                                - Sale
+                                                - Custom
+                                            Amount:
+                                              description: "The amount indicating the price (regarding 1 single unit of the SKU).\r\n(N9,2 = Up to 7 digits before the comma and 2 decimals)"
+                                              type: number
+                                            CurrencyCode:
+                                              description: Code indicating the currency in which the price is expressed. Use ISO-4217
+                                              type: string
+                                              minLength: 3
+                                              maxLength: 3
+                                            Country:
+                                              description: Code indicating the country for which the price is valid. Use ISO-2 country code
+                                              type: string
+                                              minLength: 2
+                                              maxLength: 2
+                                            Region:
+                                              description: 'Code indicating the region for which the price is valid (for example: EU)'
+                                              type: string
+                                              maxLength: 25
+                                            VATCode:
+                                              description: "Code that indicates whether the amount/price is including (I) or excluding (E) VAT.\r\nFor customs usage the prices are exclusive of VAT."
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 1
+                                              enum:
+                                                - I
+                                                - E
+                                          required:
+                                            - Type
+                                            - Amount
+                                            - CurrencyCode
+                                required:
+                                  - Quantity
+                      required:
+                        - Type
+                  required:
+                    - Id
+                    - PurchaseOrder
+              required:
+                - Order
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  result:
+                    type: object
+                    properties:
+                      Id:
+                        type: string
+                  message:
+                    type: string
+                    nullable: true
+  '/rcp/{Id}':
+    parameters:
+      - in: path
+        name: Id
+        description: The order id
+        schema:
+          type: string
+          maxLength: 25
+          example: 123456789
+        required: true
+        example: 12345678
+    get:
+      tags:
+        - RCP
+      summary: Retrieve Receipt Order information
+      description: Retrieve Receipt Order information
+      operationId: retrieveReceiptOrder
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  result:
+                    type: object
+                    required:
+                      - Order
+                    properties:
+                      OrderingPartyRelationId:
+                        description: Identification of the party that issued the order to receive stock.
+                        type: string
+                        maxLength: 40
+                        example: 1234567
+                      Order:
+                        type: object
+                        properties:
+                          Id:
+                            description: |
+                              The identification that the ordering party uses for the order.
+
+                              In some cases, an id is specified that Modexpress has
+                              assigned itself, namely when it involves:
+
+                              - a registered order for which the ordering party has not
+                              specified an id that Modexpress can use as a unique id
+
+                              - a blind receipt
+
+                              - an automatically created return order (based on an
+                              executed shipment)
+                            type: string
+                            maxLength: 25
+                          Type:
+                            description: |
+                              Designation of the order type.
+
+                              The XDOCKLOT orders are reported as PURCHASE.
+                            type: string
+                            maxLength: 20
+                            enum:
+                              - PURCHASE
+                              - RETURN
+                          Subtype:
+                            description: |
+                              A subdivision of the order type.
+
+                              In case of an automatically created return order the subtype
+                              will be 'AUTOMATISCH'.
+                            type: string
+                            maxLength: 20
+                          Reference:
+                            description: |
+                              Reference for the order used by the ordering party.
+                              In the case of an automatically created return order, this
+                              refers to the shipment (SHP) for which the return order was created.
+                              The reference is to the Order.Id (SHP 3-1-01). However, this is only
+                              possible when the format of the Order.Id is a maximum of A20.
+                            type: string
+                            maxLength: 20
+                          SenderInternalId:
+                            type: integer
+                            minimum: 1
+                            maximum: 9999999
+                          SenderExternalId:
+                            description: |
+                              Identification of the party that delivers the goods for the order.
+                              The relevant party is not known to Modexpress by the relevant Id.
+
+                              Not applicable in case of RETURN.
+                            type: string
+                            maxLength: 20
+                          Date:
+                            description: |
+                              Date that the ordering party uses for the order.
+
+                              Not applicable in case of RETURN.
+                            type: string
+                            format: date
+                          ArrivalDateTime:
+                            description: |
+                              The delivery date/time at Modexpress of the shipment expected by the
+                              supplier.
+
+                              Not applicable in case of RETURN.
+                            type: string
+                            format: date-time
+                          CompletionDateTime:
+                            description: |
+                              Date – where relevant, with the time – when the order was reported
+                              ready/executed.
+                            type: string
+                            format: date-time
+                          ProcessingStatus:
+                            description: |
+                              Indication of the status of the order: differs from RCP-Exec since it's a real-time status
+
+                              - N - New, not yet started
+                              - P - In progress, receipt has started
+                              - C - Closed, receipt has been closed
+                            type: string
+                            minLength: 1
+                            maxLength: 1
+                            enum:
+                              - 'N'
+                              - P
+                              - C
+                          OrderLines:
+                            type: object
+                            properties:
+                              OrderLine:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Id:
+                                      description: |
+                                        The identification that the ordering party uses for the
+                                        order line. This is therefore the reference to the line
+                                        submitted in the RCP message.
+
+                                        If lines (SKUs) have been added in the
+                                        operation, no Id can be indicated because there is no
+                                        submitted line.
+                                      type: string
+                                      maxLength: 250
+                                    QuantityExpected:
+                                      description: |
+                                        The expected number of items in the order to receive goods.
+                                        This number is only indicated if the receipt was based on an
+                                        order submitted by the ordering party.
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 999999999
+                                    QuantityReceived:
+                                      description: |
+                                        The number of items of the article actually received
+                                        (regardless of stock type).
+                                      type: integer
+                                      minimum: 0
+                                      maximum: 999999999
+                                    Reference:
+                                      description: |
+                                        The reference that the ordering party uses for the order
+                                        line and that the ordering party can use to recognise the
+                                        line.
+                                      type: string
+                                      maxLength: 10
+                                    ReturnReason:
+                                      description: The reason (code) for the return of goods.
+                                      type: string
+                                      maxLength: 10
+                                    Article:
+                                      type: object
+                                      properties:
+                                        Id:
+                                          description: |
+                                            The identification that the owner uses for the received
+                                            SKU. This is usually a logical Id. Many owners use the
+                                            combination of STYLE+COLOUR+SIZE as a logical Id.
+                                          type: string
+                                          maxLength: 250
+                                        LotNumber:
+                                          description: The lot/batch number of the received SKU.
+                                          type: string
+                                          maxLength: 20
+                                        Code:
+                                          description: |
+                                            A code used to recognise/identify the received article.
+                                            This is usually a code that is also affixed to the
+                                            article as a barcode.
+                                          type: string
+                                          maxLength: 35
+                                    Owner:
+                                      type: object
+                                      properties:
+                                        RelationId:
+                                          description: |
+                                            Identification of the party that is the owner of the
+                                            received article.
+                                          type: string
+                                          maxLength: 40
+                                        RelationType:
+                                          description: |
+                                            Indication whether the Relation_Id is an internal or
+                                            external id.
+
+                                            - internal id: the id assigned
+                                            and used by Modexpress
+
+                                            - external id: the id assigned
+                                            and used by the ordering party.
+                                          type: string
+                                          minLength: 3
+                                          maxLength: 3
+                                          enum:
+                                            - EXT
+                                            - INT
+                                    QuantityStockTypes:
+                                      type: object
+                                      properties:
+                                        QuantityStockType:
+                                          type: array
+                                          items:
+                                            type: object
+                                            properties:
+                                              StockType:
+                                                description: |
+                                                  Designation of the type of stock that was
+                                                  received. Using the stock type, it is possible to
+                                                  differentiate according to different types of
+                                                  stock that must be maintained separately for an
+                                                  article (both in the operation and
+                                                  administratively).
+
+
+
+                                                  The standaard stock
+                                                  types are (other types are possible):
+
+                                                  - RGL - regular or
+                                                  A-choice stock (received in pickarea)
+
+                                                  - RGLRJC - regular
+                                                  reject or B-choice stock
+
+                                                  - INN - regular or
+                                                  A-choice stock (received in inbound area)
+
+                                                  - INNRJC - regular
+                                                  reject or B-choice stock (received in inbound
+                                                  area)
+
+                                                  - INR - regular or
+                                                  A-choice stock (received in return inbound area)
+
+                                                  - INRRJC - regular
+                                                  reject or B-choice stock (received in return
+                                                  inbound area)
+
+
+
+                                                  In the RCP-exec file
+                                                  the area of the first receipt is mentioned. The
+                                                  stock movements from an inbound area to a pick
+                                                  area are separate transactions. These transaction
+                                                  are mentioned via the STM interface (a minus on
+                                                  INN stock and a plus on RGL stock). If the
+                                                  received stock in the RCP-exec interface is used
+                                                  to add the stock in your ERP, the stocktypes INN
+                                                  (inbound area new stock) and INR (inbound area
+                                                  return stock) have te be seen as RGL stock. In
+                                                  that case Modexpress can configure not to sent the
+                                                  transactions for the movement of the stock from de
+                                                  inbound area to the pick area via the STM
+                                                  interface.
+                                                  - RGL
+                                                  - RGLRJC
+                                                  - INN
+                                                  - INNRJC
+                                                  - INR
+                                                  - INRRJC
+                                                  Other types assigned
+                                                  by Modexpress
+                                                type: string
+                                                maxLength: 10
+                                              QuantityReceived:
+                                                description: |
+                                                  The number of items of the article that were
+                                                  actually received for the stock type.
+                                                type: integer
+                                                minimum: 1
+                                                maximum: 9999999
+                                  required:
+                                    - Id
+                                    - QuantityReceived
+                                    - Article
+                                    - Owner
+                                    - QuantityStockTypes
+                        required:
+                          - Type
+                          - OrderLines
+                          - Id
+                  message:
+                    type: object
+                    nullable: true
+  /shp:
+    post:
+      tags:
+        - SHP
+      summary: Place an order to deliver goods to an address/recipient
+      description: 'Place an order to deliver goods to an address/recipient. This can involve both B2B and B2C orders. Request body **JSON schema** can be found [here](https://github.com/Modexpress/saleskit-api-sources/blob/main/schemas/shp/shp_post_request_3.0.json)'
+      operationId: placeOrder
+      externalDocs:
+        url: 'https://github.com/Modexpress/saleskit-api-sources/blob/main/schemas/shp/shp_post_request_3.0.json'
+        description: Request body **JSON schema**
+      requestBody:
+        description: The order request body
+        content:
+          application/json:
+            schema:
+              required:
+                - Id
+                - OrderLines
+                - PartialDelivery
+                - Parties
+                - Type
+              type: object
+              properties:
+                SenderRelationId:
+                  type: string
+                  description: The party that submits the order.
+                  maxLength: 40
+                  example: '1111111'
+                OrderingPartyRelationId:
+                  type: string
+                  description: The party on whose behalf the goods in the order have to be delivered.
+                  maxLength: 40
+                  example: '1111111'
+                Id:
+                  type: string
+                  description: |
+                    The identification that the ordering party uses for the order. On the basis of this identification Modexpress checks whether this order already exists for the ordering party (in Modexpress ERP/WMS). Cancelled orders are not taken into consideration. If an order already exists there are two options: - the new order is rejected without question, or - an attempt is made to cancel the existing order, if this is possible the new order is processed, otherwise the new order is rejected. The option to use must be configured.
+                  minLength: 1
+                  maxLength: 40
+                  example: ExampleOrderId
+                DateTime:
+                  type: string
+                  description: |
+                    Date/time that the ordering party uses for the order. For example, this can be the date on which the order was placed by the ordering party. This date is indicated as the order date on the packing slip.
+                  format: date-time
+                  example: '2021-07-06T09:07:18.4848\+02:00'
+                Type:
+                  type: string
+                  description: |
+                    Designation of the order type. Only the types indicated by Modexpress are permitted:
+                    - LB2BF: delivery B2B Fashion
+                    - LB2CF: delivery B2C Fashion
+                  example: LB2BF
+                DeliveryTime:
+                  type: string
+                  description: |
+                    Designation of the period in which the order must be executed:
+                    - D - Day (24H); send off to carrier within 1 working day, however, this will be overruled by a specified date (see attribute FirstDeliveryDate)
+                    - H - Pack and Hold; packaging within 1 or 2 working days, send off to carrier on specified date (see attribute FirstDeliveryDate)
+                    - N - Normal (48H); send off to carrier within 2 working days (not yet implemented)
+                    - L - Long-term (> 48H); order that can be planned (not yet implemented). 
+                    If no delivery time is indicated, **D** is the default. For delivery times **D** and **N**, the order must be received before the agreed cut-off time (on a working day) so that it can be send off to the carrier on time. Orders received after the cut-off time will be produced and send off to the carrier one working day later.
+                  example: D
+                OrderReference:
+                  type: string
+                  description: Reference for the order used by the ordering party.
+                  maxLength: 25
+                  example: OrderReferenceExample
+                ClientReference:
+                  type: string
+                  description: Reference used by the buyer/recipient for the order.
+                  maxLength: 35
+                  example: ClientReferenceExample
+                ShipmentCode:
+                  type: string
+                  description: |
+                    Designation of the desired transport for the order. A customer can agree to a default means of transport. This means of transport will then be used if no means of transport has been specified. If a means of transport has indeed been specified, it overrules the default means of transport. Possible values: 
+                    - D01: DPD General account Modexpress Fashion
+                    - T06: PostNL General account Modexpress Fashion
+                    - U01: UPS General account Modexpress Fashion
+                    - DHL: DHL customer account
+                    - CBFC: CBF Self Collector
+                    - CBFF: CBF Standard (CBF arranges transport)
+                    - CBFR: CBF Reservation order with storage (Pack and Hold / postponement of shipment for a (non-) specific longer time)
+                    - CBFS: CBF Special customer with buffering on shipping floor (postponement of shipment for a short time)
+                    - CBFU: CBF UPS account customer
+                    - CBFX: CBF pre-advise customers (CBF will contact the recipient)
+                  enum:
+                    - D01
+                    - T06
+                    - U01
+                    - DHL
+                    - CBFC
+                    - CBFF
+                    - CBFR
+                    - CBFS
+                    - CBFU
+                    - CBFX
+                  example: DHL
+                ShipmentService:
+                  type: string
+                  enum:
+                    - CONNECT
+                    - EUROPLUS
+                    - FORYOU
+                    - EUROPL
+                    - CONRET
+                    - FORYOU_BUSPAKKET
+                    - FORYOU_PARCELSHOP
+                    - FORYOU-HANDT
+                    - CONNECTRETURN
+                    - EXPRESS
+                    - EUROPLUS
+                    - EXPRESS SAVER
+                  description: |
+                    A non-standard service level to be used for transport (instead of the standard agreed transport) – for example, insured transport or transport with delivery instructions. The services/products are carrier-dependent. A choice can be made from the options offered by the carrier.
+                  maxLength: 20
+                  example: CONNECT
+                ReturnShipmentCode:
+                  type: string
+                  description: Designation of the desired return transport for the order. Relevant in case the delivery has to contain a return label.
+                  maxLength: 5
+                  example: DHL
+                ReturnShipmentService:
+                  type: string
+                  description: A non-standard service level to be used for return transport (instead of the standard agreed transport). Relevant in case the delivery has to contain a return label.
+                  maxLength: 5
+                  example: RShpServiceExample
+                FirstDeliveryDate:
+                  type: string
+                  description: The date on which the goods must be hand over to the carrier. This attribute is intended for use in combination with attribute DeliveryTime is 'H' (Pack and Hold). In case of DeliveryTime is 'D' (Day) the FirstDeliveryDate can also be used and overrules this DeliveryTime.
+                  format: date-time
+                  example: '2021-01-30T00:00:00\.000Z'
+                LastDeliveryDate:
+                  type: string
+                  description: The last/latest desired date on which the recipient wants the goods to be delivered in case of an order with delivery time 'L' (not yet implemented)
+                  format: date-time
+                  example: '2021-01-30T00:00:00\.000Z'
+                SubType:
+                  type: string
+                  maxLength: 10
+                  description: |
+                    Further subdivision of the type of the order. For example: 
+                    - PRE-ORDER and RE-ORDER can be relevant for orders of type LB2BF
+                    - WEB-ORDER can be relevant for orders of type LB2CF
+                    - ZALANDO can be relevant for orders of type LB2CF to indicate that an e-commerce platform specific packing slip must be enclosed
+                  example: PRE-ORDER
+                  enum:
+                    - PRE-ORDER
+                    - RE-ORDER
+                    - WEB-ORDER
+                    - ZALANDO
+                    - ADAM
+                    - AMAZON
+                    - BOL
+                    - BREUNING
+                    - SALEPACK
+                PartialDelivery:
+                  type: string
+                  description: |
+                    Indication whether the shipment may be delivered in parts:
+                    - DIRECT; the order may be delivered in parts and incomplete delivery is permitted (is also linked to 'BackorderIndication' on line level)
+                    - ONDELIVERYDATE; the order may not be delivered in parts, but incomplete delivery is permitted. The reference moment for this is the order release for the delivery date. The order is then cancelled for the part not to be delivered and will only be executed for the part to be delivered. , - NEVER; the order may not be delivered in parts and incomplete delivery is not permitted. The reference moment for this is the order release for the delivery date. The entire order is cancelled if the full order cannot be delivered in one delivery."
+                  maxLength: 14
+                  enum:
+                    - ONDELIVERYDATE
+                    - NEVER
+                  example: ONDELIVERYDATE
+                Explanation:
+                  type: string
+                  description: Explanation for the order.
+                  maxLength: 255
+                  example: This is an explanation
+                Priority:
+                  type: integer
+                  description: 'Priority of the order. Can be used to make a distinction in the priority of orders (priority 1 is higher than priority 2, etc.).'
+                  minimum: 0
+                  exclusiveMinimum: true
+                  example: 1
+                  maximum: 100
+                  exclusiveMaximum: true
+                IncoTerm:
+                  type: string
+                  description: |
+                    A pre-defined commercial term published by the International Chamber of Commerce (ICC) relating to international commercial law. The Incoterms rules are intended primarily to clearly communicate the tasks, costs, and risks associated with the transportation and delivery of goods.
+                      - CFR: Cost and Freight
+                      - CIF: Cost, Insurance and Freight
+                      - CIP: Carriage and Insurance Paid
+                      - CPT: Carriage Paid To
+                      - DAF: Delivered At Frontier
+                      - DAP: Delivered At Place
+                      - DAT: Delivered At Terminal
+                      - DDP: Delivered Duty Paid
+                      - DDU: Delivered Duty Unpaid
+                      - DEQ: Delivered Ex Quay
+                      - DES: Delivered Ex Ship
+                      - EXW: Ex Works
+                      - FAS: Free Alongside Ship
+                      - FCA: Free Carrier
+                      - FOB: Free On Board
+                      - FOP: Free On Plane
+                      - FOR: Free on Rail
+                      - FOT: Free On Truck
+                  enum:
+                    - CPT
+                    - DAF
+                    - DAP
+                    - DAT
+                    - DDP
+                    - DDU
+                    - DEQ
+                    - DES
+                    - EXW
+                    - FAS
+                    - FCA
+                    - FOB
+                    - FOP
+                    - FOR
+                    - FOT
+                  example: CFR
+                IncoTermPlace:
+                  type: string
+                  description: The agreed place of delivery/destination.
+                  example: Netherlands
+                  maxLength: 50
+                ReturnPeriod:
+                  type: integer
+                  description: 'Period, in days. Relevant if Modexpress is generating the RMA orders, this defines how long they will remain active.'
+                  minimum: 0
+                  exclusiveMinimum: true
+                  maximum: 1000
+                  exclusiveMaximum: true
+                  example: 45
+                AdditionalFinInfo:
+                  required:
+                    - FinInfo
+                  type: object
+                  properties:
+                    FinInfo:
+                      description: Financial information of a particular type
+                      required:
+                        - InfoType
+                      type: object
+                      properties:
+                        InfoType:
+                          type: string
+                          description: 'Indication of the type of financial information: - Type ''Invoice'' is used for customs declaration, - Type ''CodSurcharge'' is used to indicate a Cash On Delivery surcharge (Amount and CurrencyCode must be indicated), - Type xxxxx (Amount, CurrencyCode, VATCode and VATPercentage must be indicated)'
+                          enum:
+                            - Invoice
+                            - CodSurcharge
+                            - Discount
+                            - Handling
+                            - Packaging
+                            - Transport
+                            - PayedAmount
+                            - Duties
+                            - Taxes
+                          example: Invoice
+                        Description:
+                          type: string
+                          description: 'A relevant description for the type of financial information. In case of **Invoice**, this concerns the invoice number.'
+                          maxLength: 50
+                          example: 'invoicenr:123456'
+                        Date:
+                          type: string
+                          description: 'A relevant date for the type of financial information. In case of ''Invoice'', this concerns the invoice date.'
+                          format: date
+                          example: '2021-01-01'
+                        Amount:
+                          type: number
+                          description: The amount that applies to the type of financial information (so the invoice amount).
+                          format: double
+                          example: 10.25
+                        CurrencyCode:
+                          type: string
+                          description: ISO 4217 Code indicating the currency in which the amount is expressed.
+                          minLength: 3
+                          maxLength: 3
+                          example: EUR
+                        VATCode:
+                          type: string
+                          description: Code that indicates whether the amount/price is including (I) or excluding (E) VAT. For customs usage the prices are exclusive of VAT.
+                          minLength: 1
+                          maxLength: 1
+                          enum:
+                            - I
+                            - E
+                          example: I
+                        VATPercentage:
+                          type: number
+                          description: The VAT percentage that applies to the amount.
+                          format: double
+                          example: 21.25
+                Parties:
+                  required:
+                    - Party
+                  type: object
+                  properties:
+                    Party:
+                      type: array
+                      items:
+                        required:
+                          - Type
+                        type: object
+                        properties:
+                          Type:
+                            type: string
+                            description: |
+                              A type of party/address that applies to the order:
+                              - BuyerId; buyer, (known to Modexpress as a business relation based on **Id** or **ExternId** of the party, only for the placeOrder operation)
+                              - ReceiverId; receiver/recipient/consignee, (known to Modexpress as a business relation based on 'Id' of the party, only for the placeOrder operation)
+                              - ReceiverAddress; receiver/recipient/consignee address,
+                              - SellerAddress; Seller/Shipper address (only for the placeOrder operation)
+                              - BuyerAddress; buyer address (only for the placeOrder operation)
+                              - InvoiceAddress; invoice address (only for the placeOrder operation)
+                              - DropSiteAddress; drop site address / pick up point address
+                            enum:
+                              - ReceiverAddress
+                              - SellerAddress
+                              - BuyerAddress
+                              - InvoiceAddress
+                              - DropSiteAddress
+                              - BuyerId
+                              - ReceiverId
+                            maxLength: 28
+                            example: ReceiverAddress
+                          Id:
+                            type: integer
+                            description: |
+                              The party that must be regarded as the buyer or receiver of the order and that is known/registered at Modexpress as a business relation with an address.
+                              The party is indicated by means of an Id assigned by Modexpress. These types of parties must have been registered in advance with Modexpress, and no address can be indicated in the order.
+                              The Id can only be used for parties of type BuyerId or ReceiverId.
+                            minimum: 0
+                            maximum: 9999999
+                            example: 1234567
+                          ExternalId:
+                            type: string
+                            description: |
+                              A party involved with the order that is identified with an Id used by the ordering party/sender.
+                              For type BuyerId it is possible to indicate parties with an ExternalId if they are registered as a Modexpress business relation with an address (receiver address).
+                              These types of parties must have been registered in advance with Modexpress, and no address can be included in the order. For %Address types the ExternalId can be included as a reference in the order.
+                              For these parties, the applicable address must also be specified in the order. In case of a DropSiteAddress the ExternalId can be used for the pickuppoint-id/number.
+                            maxLength: 35
+                            example: External ID
+                          Name1:
+                            type: string
+                            description: |
+                              The name of the party. Order of display on documents: line 1.
+                              Only applicable for the %Address party types. Mandatory for the %Address party types.
+                            minLength: 1
+                            maxLength: 50
+                            example: Jan Jansen
+                          Name2:
+                            type: string
+                            description: |
+                              The parties **For attention of**. Order of display on documents: line 2. Only applicable for the %Address party types.
+                            minLength: 1
+                            maxLength: 50
+                            example: Ria Jansen
+                          AddressLine1:
+                            type: string
+                            description: |
+                              The street that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types. Mandatory for the %Address party types.
+                            maxLength: 50
+                            example: Erasmusweg
+                          AddressLine2:
+                            type: string
+                            description: |
+                              A free/extra text line for the party that is part of the address. Order of display on documents: line 5. Only applicable for the %Address party types.
+                            maxLength: 50
+                            example: Example extra address info
+                          HouseNumber:
+                            type: integer
+                            description: |
+                              The house number that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types.
+                            format: int32
+                            example: 10
+                          HouseNumberExtension:
+                            type: string
+                            description: |
+                              The house number addition that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types.
+                            maxLength: 10
+                            example: B
+                          DeliveryInstruction:
+                            type: string
+                            description: |
+                              An instruction for the delivery. Order of display on documents: line 3. Only applicable for the %Address party types.
+                            maxLength: 30
+                            example: Delivery instruction example
+                          PostalCode:
+                            type: string
+                            description: |
+                              The postal code / ZIP code that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.
+                            maxLength: 20
+                            example: 4104 AK
+                          City:
+                            type: string
+                            description: |
+                              The town/city that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.
+                            minLength: 1
+                            maxLength: 50
+                            example: Culemborg
+                          Region:
+                            type: string
+                            description: |
+                              The province/region/state that applies to the party. Order of display on documents: line 7. Only applicable for the %Address party types.
+                            maxLength: 35
+                            example: Gelderland
+                          Country:
+                            type: string
+                            description: |
+                              ISO 3166 ALPHA-2 country code. The country that applies to the party. The designation should be made according to iso2 code. Order of display on documents: line 8 (country name will be displayed). Mandatory for the %Address party types.
+                            minLength: 2
+                            maxLength: 2
+                            example: NL
+                          EmailAddress:
+                            type: string
+                            format: email
+                            description: The email address for the party. Only applicable for the %Address party types.
+                            maxLength: 80
+                            example: test@test.nl
+                          PhoneNumber:
+                            type: string
+                            description: The fixed line telephone number for the party. Only applicable for the %Address party types.
+                            maxLength: 40
+                            example: 0345-475911
+                          MobileNumber:
+                            type: string
+                            description: The mobile phone number for the party. Only applicable for the %Address party types.
+                            maxLength: 40
+                            example: 06-12345678
+                          LanguageCode:
+                            type: string
+                            description: |
+                              ISO 639-2 ALPHA-3 country code. The language of the documents to be included with the shipment (packing slip). ISO 639-2 codes are used. Only applicable for the %Address party types. If multiple addresses are indicated, the LanguageCode to be used is: 1) DropSiteAddress, if address not specified or no language code specified, then 2) ReceiverAddress, if address not specified or no language code specified, then 3) BuyerAddress, if address not specified or no language code specified, then 4) InvoiceAddress, if address not specified or no language code specified, then 5) Last address mentioned in the Order.Party, if no language code specified, then 6) By default the language code is NLD.
+                            minLength: 3
+                            maxLength: 3
+                            example: NLD
+                Instructions:
+                  type: object
+                  properties:
+                    Instruction:
+                      description: Details about handling
+                      required:
+                        - SequenceNumber
+                        - Type
+                      type: object
+                      properties:
+                        Type:
+                          type: string
+                          description: |
+                            Designation of the instruction type:
+                            - **VAS**: control of VAS
+                            - **HANDLING**: instruction that is used in the execution of activities
+                            - **FILE**: indication that a separate file is supplied with the order, containing documents to be printed for the shipment
+                            - **TEXT**: xxxxxx
+                          enum:
+                            - VAS
+                            - HANDLING
+                            - FILE
+                            - TEXT
+                          example: VAS
+                        SequenceNumber:
+                          type: integer
+                          description: The execution sequence number of the instruction. This can be used to send the sequence in which the instructions should be implemented. The number must be unique among all the order instructions.
+                          format: int32
+                          minimum: 1
+                          maximum: 999
+                          example: 1
+                        Code:
+                          type: string
+                          description: |
+                            Indication of the instruction by means of a code:
+                            - In case of VAS an example code is 10 (= remove price label F,GOH)
+                            - In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')
+                            - In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**
+                            - In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**
+                            - In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**
+                            If no specific code and no description is relevant than the instruction type must also be declared as instruction code.
+                          minLength: 1
+                          maxLength: 10
+                          example: COD
+                        Description:
+                          type: string
+                          description: |
+                            Indication of the instruction by means of a description.
+                            An example description is **packaging shipment in red wrapping paper**.
+                            If no specific description is relevant than the instruction code must be declared.
+                            This field is not used for Instructiontype FILE.
+                          maxLength: 156
+                          example: Description
+                        Info:
+                          type: string
+                          description: |
+                            The info to be used/printed:
+                            - In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.
+                            - In case of type HANDLING with code PICK the pick strategy must be given:
+                                - STYLE, STYLECOLOUR or STYLECOLOURSIZE
+                            - In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file.
+                            - In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.
+                          maxLength: 70
+                          example: This line is printed on the package
+                OrderLines:
+                  required:
+                    - OrderLine
+                  type: object
+                  properties:
+                    OrderLine:
+                      description: Order line information
+                      required:
+                        - Article
+                        - Id
+                        - Quantity
+                      type: object
+                      properties:
+                        Id:
+                          type: string
+                          description: The identification that the ordering party uses for the order line.
+                          minLength: 1
+                          maxLength: 50
+                          example: 1
+                        LineReference:
+                          type: string
+                          description: The reference that the ordering party uses for the order line.
+                          maxLength: 10
+                          example: 001Ref
+                        Quantity:
+                          type: integer
+                          description: The number of items of the article to be delivered.
+                          format: int32
+                          minimum: 1
+                          maximum: 999999
+                          example: 2
+                        StockType:
+                          type: string
+                          maxLength: 10
+                          description: |
+                            Designation of the type of stock that must be delivered. Using the stock type, it is possible to differentiate according to different types of stock that must be maintained separately for an article (both in the operation and administratively).
+                            The standard stock types are (other types are possible):
+                            - RGL: regular or A-choice stock
+                            - RGLRJC - regular reject or B-choice stock.
+                            If no StockType is indicated the delivery is assumed to be regular stock (RGL).
+                          example: RGL
+                        AlternativeDescription:
+                          type: string
+                          maxLength: 60
+                          description: |
+                            Description of the article to be displayed on the packing slip. This description is the alternative to the description registered in the SKU data.
+                          example: Blue jacket
+                        ClientReference:
+                          type: string
+                          description: Reference used by the buyer/recipient for the order line.
+                          maxLength: 10
+                          example: R001
+                        BackorderIndication:
+                          type: string
+                          description: |
+                            Indication whether it is permissible to take an order in backorder. 
+                            This is particularly relevant if insufficient stock can be reserved for the order line.
+                            The handling is also dependent on 'PartialDelivery' on order level.
+                            It is possible to take a part of an orderline into backorder. Standard value = YES (on line level).
+                          enum:
+                            - 'Y'
+                            - 'N'
+                          example: 'Y'
+                        Article:
+                          required:
+                            - Id
+                          type: object
+                          properties:
+                            Id:
+                              type: string
+                              description: |
+                                The identification that the owner uses for the SKU to be delivered. 
+                                This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.
+                              minLength: 1
+                              maxLength: 250
+                              example: SKU001
+                            LotNumber:
+                              description: |
+                                The lot/batch number of the SKU to be delivered. It is possible to have different types of stock for a SKU (attribute StockType).
+                                In addition, there may be a distinction between different lots/batches for the stock regarding a type (both in the operation and administratively).
+                              type: string
+                              maxLength: 20
+                            ClientId:
+                              type: string
+                              description: A different identifier (logical id) that the buyer/recipient uses for the article and that must be displayed on shipment documents.
+                              maxLength: 70
+                              example: ExampleClientId
+                            ClientCode:
+                              type: string
+                              description: A different identifier (barcode) that the buyer/recipient uses for the article and that must be displayed on shipment documents.
+                              maxLength: 70
+                              example: ExampleClientCode
+                        Owner:
+                          required:
+                            - RelationId
+                            - RelationType
+                          type: object
+                          properties:
+                            RelationId:
+                              type: string
+                              description: Identification of the party that is the owner of the article to be delivered.
+                              example: 1111111
+                            RelationType:
+                              type: string
+                              description: |
+                                Indication whether the Relation_Id is an internal or external id.
+                                - internal id: the id assigned and used by Modexpress
+                                - external id: the id assigned and used by the ordering party
+                              enum:
+                                - INT
+                                - EXT
+                              example: INT
+                        Instructions:
+                          type: object
+                          properties:
+                            Instruction:
+                              description: Details about handling
+                              required:
+                                - SequenceNumber
+                                - Type
+                              type: object
+                              properties:
+                                Type:
+                                  type: string
+                                  description: |
+                                    Designation of the instruction type:
+                                    - **VAS**: control of VAS
+                                    - **HANDLING**: instruction that is used in the execution of activities
+                                    - **FILE**: indication that a separate file is supplied with the order, containing documents to be printed for the shipment
+                                    - **TEXT**: xxxxxx
+                                  enum:
+                                    - VAS
+                                    - HANDLING
+                                    - FILE
+                                    - TEXT
+                                  example: VAS
+                                SequenceNumber:
+                                  type: integer
+                                  description: The execution sequence number of the instruction. This can be used to send the sequence in which the instructions should be implemented. The number must be unique among all the order instructions.
+                                  format: int32
+                                  minimum: 1
+                                  maximum: 999
+                                  example: 1
+                                Code:
+                                  type: string
+                                  description: |
+                                    Indication of the instruction by means of a code:
+                                    - In case of VAS an example code is 10 (= remove price label F,GOH)
+                                    - In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')
+                                    - In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**
+                                    - In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**
+                                    - In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**
+                                    If no specific code and no description is relevant than the instruction type must also be declared as instruction code.
+                                  minLength: 1
+                                  maxLength: 10
+                                  example: COD
+                                Description:
+                                  type: string
+                                  description: |
+                                    Indication of the instruction by means of a description.
+                                    An example description is **packaging shipment in red wrapping paper**.
+                                    If no specific description is relevant than the instruction code must be declared.
+                                    This field is not used for Instructiontype FILE.
+                                  maxLength: 156
+                                  example: Description
+                                Info:
+                                  type: string
+                                  description: |
+                                    The info to be used/printed:
+                                    - In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.
+                                    - In case of type HANDLING with code PICK the pick strategy must be given:
+                                        - STYLE, STYLECOLOUR or STYLECOLOURSIZE
+                                    - In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file.
+                                    - In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.
+                                  maxLength: 70
+                                  example: This line is printed on the package
+                        Prices:
+                          required:
+                            - Price
+                          type: object
+                          properties:
+                            Price:
+                              type: array
+                              description: A price that applies to the SKU of the orderline. The indicated price for the SKU in a orderline overrides the comparable price in the SKU data.
+                              items:
+                                required:
+                                  - Amount
+                                  - CurrencyCode
+                                  - Type
+                                type: object
+                                properties:
+                                  Type:
+                                    type: string
+                                    description: 'The indication of a price that is relevant for the SKU: - Type ''Exportvalue'' is used for the exportinvoice,  - Type ''Custom'' is used for customs declaration,  - Type ''Purchase'' is used to be the purchase price., - Type ''Sale'' is meant to be the price to pay,  - Type ''From'' is meant te be the original sale price (from price),  - Type ''Srp'' is the Suggested Retail Price.'
+                                    example: From
+                                    enum:
+                                      - Exportvalue
+                                      - Custom
+                                      - Purchase
+                                      - Sale
+                                      - From
+                                      - Srp
+                                  Amount:
+                                    type: number
+                                    description: 'The amount indicating the price (regarding 1 single unit of the SKU). (N9,2 = Up to 7 digits before the comma and 2 decimals)'
+                                    format: double
+                                    example: 25.95
+                                  CurrencyCode:
+                                    type: string
+                                    description: Code indicating the currency in which the price is expressed.
+                                    example: EUR
+                                  Country:
+                                    type: string
+                                    description: Code indicating the country for which the price is valid.
+                                    example: NL
+                                  Region:
+                                    type: string
+                                    description: 'Code indicating the region for which the price is valid (for example: EU)'
+                                    example: Western-Europe
+                                  VATCode:
+                                    type: string
+                                    description: Code that indicates whether the amount/price is including (I) or excluding (E) VAT. For customs usage the prices are exclusive of VAT.
+                                    example: I
+                                  VATPercentage:
+                                    type: number
+                                    description: BTW percentage
+                                    format: double
+                                    example: 21
+              xml:
+                name: PlaceOrder
+        required: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                externalDocs:
+                  url: 'https://github.com/Modexpress/saleskit-api-sources/blob/main/schemas/shp/shp_post_response_3.0.json'
+                  description: Response body **JSON schema**
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                    enum:
+                      - true
+                      - false
+                  result:
+                    type: object
+                    properties:
+                      OrderingPartyRelationId:
+                        description: Identification of the party on whose behalf the articles are delivered.
+                        type: string
+                        maxLength: 40
+                      Order:
+                        type: object
+                        properties:
+                          Id:
+                            description: The identification that the ordering party uses for the order.
+                            type: string
+                            maxLength: 40
+                          OrderReference:
+                            description: Reference for the order used by the ordering party.
+                            type: string
+                            maxLength: 25
+                          DocumentNumber:
+                            description: |
+                              The number of the document (packing slip) that was created for the shipment and that is also specified/printed on the document.
+                            type: string
+                            maxLength: 35
+                          ProcessingStatus:
+                            description: |
+                              Indication of the status of the order:
+                              - N: New (order is received but it's not yet being handled)
+                              - I: In progress (order being fullfilled)
+                              - P: Packed (order is packed but has not yet its final status)
+                              - S: Shipped (order has been transferred to the carrier and has been closed)
+                              - C: Cancelled (order has been cancelled)
+                              The status field is only included if this is configured. **Note**: differs from SHP-Exec since it's a real-time status
+                            type: string
+                            minLength: 1
+                            maxLength: 1
+                            enum:
+                              - 'N'
+                              - I
+                              - P
+                              - S
+                              - C
+                          Orderlines:
+                            type: object
+                            properties:
+                              Orderline:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Id:
+                                      description: The identification that the ordering party uses for the order line.
+                                      type: string
+                                      maxLength: 50
+                                      example: 123456
+                                    QuantityOrdered:
+                                      description: The number of items of the article that must be delivered according to the submitted order.
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 999999999
+                                      example: 2
+                                    QuantityDelivered:
+                                      description: The number of items of the article that were delivered.
+                                      type: integer
+                                      minimum: 0
+                                      maximum: 999999999
+                                      example: 2
+                                    QuantityNotDelivered:
+                                      description: The number of items of the article that were not delivered.
+                                      type: integer
+                                      minimum: 0
+                                      maximum: 999999999
+                                      example: 2
+                                    StockType:
+                                      description: |
+                                        Designation of the type of stock that was delivered. For details refer to the comment of attribute StockType in SHP interface.
+                                        - RGL
+                                        - RGLRJC
+                                        Other types assigned by Modexpress
+                                      type: string
+                                      maxLength: 10
+                                      example: RGL
+                                    DateTimeOfCompletion:
+                                      description: Date + time on which the line was reported ready.
+                                      type: string
+                                      format: date-time
+                                      example: '2021-01-30T00:00:00\.000Z'
+                                    Article:
+                                      type: object
+                                      properties:
+                                        Id:
+                                          description: The identification that the owner uses for the delivered SKU - **WMS A24**
+                                          type: string
+                                          maxLength: 250
+                                          example: 1122334455
+                                        Code:
+                                          description: |
+                                            A code used to recognise/identify the delivered article.
+                                            This is usually a code that is also affixed to the article as a barcode.
+                                            If several barcodes are known for the article one of these is used.
+                                          type: string
+                                          maxLength: 35
+                                          example: ABC-123
+                                      additionalProperties: false
+                                  required:
+                                    - Id
+                                    - QuantityOrdered
+                                    - QuantityDelivered
+                                    - QuantityNotDelivered
+                                  additionalProperties: false
+                            additionalProperties: false
+                          ShippingUnits:
+                            type: object
+                            properties:
+                              ShippingUnit:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Id:
+                                      description: The identification for the unit defined by Modexpress.
+                                      type: string
+                                      maxLength: 35
+                                      example: 12345678
+                                    Code:
+                                      description: The barcode that is affixed/applied to the unit.
+                                      type: string
+                                      maxLength: 35
+                                      example: 123456
+                                    Weight:
+                                      description: |
+                                        The weight of the unit expressed in grams. There are two possibilities:
+                                        - The weight is the actual weighed weight (including the packing materials). This weight can only be indicated if it has been agreed that items must be weighed in the operation.
+                                        - The weight is the calculated weight of the contents (based on the weight of individual articles in the unit). This weight can only be indicated if a weight is known for the individual articles.
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 999999999
+                                    Length:
+                                      description: The length of the unit expressed in millimeters.
+                                      type: number
+                                      minimum: 1
+                                      maximum: 9999999999
+                                      example: 520
+                                    Width:
+                                      description: The width of the unit expressed in millimeters.
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 9999999999
+                                      example: 480
+                                    Height:
+                                      description: The height of the unit expressed in millimeters.
+                                      type: number
+                                      minimum: 1
+                                      maximum: 9999999999
+                                      example: 640
+                                    Carrier:
+                                      description: The carrier that is responsible for transporting the package.
+                                      type: string
+                                      maxLength: 40
+                                      example: Carrier
+                                    ShipmentCode:
+                                      description: Designation of the actual transport for the order.
+                                      type: string
+                                      maxLength: 6
+                                    TrackingId:
+                                      description: Track and trace identification of the unit (assigned by the carrier).
+                                      type: string
+                                      maxLength: 35
+                                    DateTimeOfCompletion:
+                                      description: Date + time on which the unit was reported ready.
+                                      type: string
+                                      format: date-time
+                                      example: '2021-01-30T00:00:00\.000Z'
+                                    ReturnTrackingId:
+                                      description: Track and trace identification for a return unit (assigned by the carrier).
+                                      type: string
+                                      maxLength: 35
+                                      example: xyz-123
+                                    Compositions:
+                                      type: object
+                                      properties:
+                                        Composition:
+                                          type: array
+                                          items:
+                                            type: object
+                                            properties:
+                                              QuantityDelivered:
+                                                type: integer
+                                                minimum: 1
+                                                maximum: 9999999999
+                                                example: 2
+                                              Stocktype:
+                                                description: |
+                                                  Designation of the type of stock that is delivered. For details refer to the comment of attribute StockType in SHP interface.
+                                                type: string
+                                                maxLength: 10
+                                              Article:
+                                                type: object
+                                                properties:
+                                                  Id:
+                                                    description: The identification that the owner uses for the delivered SKU.
+                                                    type: string
+                                                    maxLength: 250
+                                                  LotNumber:
+                                                    description: The lot/batch number of the delivered SKU.
+                                                    type: string
+                                                    maxLength: 20
+                                                  Code:
+                                                    description: "A code used to recognise/identify the delivered article in the unit. This is usually a code that is also affixed to the article as a barcode.\r\nIf several barcodes are known for the article one of these is used."
+                                                    type: string
+                                                    maxLength: 35
+                                                additionalProperties: false
+                                            additionalProperties: false
+                                      additionalProperties: false
+                                  required:
+                                    - Id
+                                    - Code
+                                    - DateTimeOfCompletion
+                                  additionalProperties: false
+                            additionalProperties: false
+                        required:
+                          - Id
+                        additionalProperties: false
+        '422':
+          description: Invalid JSON structure and/or property values
+          content:
+            application/json:
+              example:
+                error:
+                  code: 422
+                  en: 'String is too long at position \#->properties:ShipmentService'
+        '500':
+          description: the payload contains logical errors
+          content:
+            application/json:
+              example:
+                status: false
+                error:
+                  code: InvalidAddress
+                  nl: De straatnaam ontbreekt in het adres van de ontvanger
+                  en: The receiver address is missing a value for street name
+  '/shp/{Id}':
+    parameters:
+      - in: path
+        name: Id
+        description: The order id
+        schema:
+          type: string
+          example: '87654321'
+        required: true
+        example: '12345678'
+    delete:
+      tags:
+        - SHP
+      summary: Cancel an order to deliver goods to an address/recipient
+      description: Cancel an order to deliver goods to an address/recipient.
+      operationId: cancelOrder
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                externalDocs:
+                  url: 'https://github.com/Modexpress/saleskit-api-sources/blob/main/schemas/shp/shp_cancel_response_3.0.json'
+                  description: Response body **JSON schema**
+                type: object
+                properties:
+                  Message:
+                    required:
+                      - MessageCode
+                      - MessageText
+                      - MessageType
+                    type: object
+                    properties:
+                      MessageType:
+                        type: string
+                        description: Notification type
+                        example: I
+                        enum:
+                          - E
+                          - I
+                      MessageCode:
+                        type: string
+                        description: Notification code
+                        example: WMS-00001
+                      MessageText:
+                        type: string
+                        description: Notification text
+                        example: Order updated
+                    xml:
+                      name: Message
+              example:
+                status: true
+                Id: YourOrderId
+        '404':
+          description: Order not found in the Modexpress system
+          content:
+            application/json:
+              example:
+                status: false
+                Id: YourOrderId
+    get:
+      tags:
+        - SHP
+      summary: Get the details of an order by Id
+      description: Get order details by Id.
+      operationId: getOrder
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                externalDocs:
+                  url: 'https://github.com/Modexpress/saleskit-api-sources/blob/main/schemas/shp/shp_get_response_3.0.json'
+                  description: Response body **JSON schema**
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                    enum:
+                      - true
+                      - false
+                  result:
+                    type: object
+                    properties:
+                      OrderingPartyRelationId:
+                        description: Identification of the party on whose behalf the articles are delivered.
+                        type: string
+                        maxLength: 40
+                      Order:
+                        type: object
+                        properties:
+                          Id:
+                            description: The identification that the ordering party uses for the order.
+                            type: string
+                            maxLength: 40
+                          OrderReference:
+                            description: Reference for the order used by the ordering party.
+                            type: string
+                            maxLength: 25
+                          DocumentNumber:
+                            description: |
+                              The number of the document (packing slip) that was created for the shipment and that is also specified/printed on the document.
+                            type: string
+                            maxLength: 35
+                          ProcessingStatus:
+                            description: |
+                              Indication of the status of the order:
+                              - N: New (order is received but it's not yet being handled)
+                              - I: In progress (order being fullfilled)
+                              - P: Packed (order is packed but has not yet its final status)
+                              - S: Shipped (order has been transferred to the carrier and has been closed)
+                              - C: Cancelled (order has been cancelled)
+                              The status field is only included if this is configured. **Note**: differs from SHP-Exec since it's a real-time status
+                            type: string
+                            minLength: 1
+                            maxLength: 1
+                            enum:
+                              - 'N'
+                              - I
+                              - P
+                              - S
+                              - C
+                          Orderlines:
+                            type: object
+                            properties:
+                              Orderline:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Id:
+                                      description: The identification that the ordering party uses for the order line.
+                                      type: string
+                                      maxLength: 50
+                                      example: 123456
+                                    QuantityOrdered:
+                                      description: The number of items of the article that must be delivered according to the submitted order.
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 999999999
+                                      example: 2
+                                    QuantityDelivered:
+                                      description: The number of items of the article that were delivered.
+                                      type: integer
+                                      minimum: 0
+                                      maximum: 999999999
+                                      example: 2
+                                    QuantityNotDelivered:
+                                      description: The number of items of the article that were not delivered.
+                                      type: integer
+                                      minimum: 0
+                                      maximum: 999999999
+                                      example: 2
+                                    StockType:
+                                      description: |
+                                        Designation of the type of stock that was delivered. For details refer to the comment of attribute StockType in SHP interface.
+                                        - RGL
+                                        - RGLRJC
+                                        Other types assigned by Modexpress
+                                      type: string
+                                      maxLength: 10
+                                      example: RGL
+                                    DateTimeOfCompletion:
+                                      description: Date + time on which the line was reported ready.
+                                      type: string
+                                      format: date-time
+                                      example: '2021-01-30T00:00:00\.000Z'
+                                    Article:
+                                      type: object
+                                      properties:
+                                        Id:
+                                          description: The identification that the owner uses for the delivered SKU - **WMS A24**
+                                          type: string
+                                          maxLength: 250
+                                          example: 1122334455
+                                        Code:
+                                          description: |
+                                            A code used to recognise/identify the delivered article.
+                                            This is usually a code that is also affixed to the article as a barcode.
+                                            If several barcodes are known for the article one of these is used.
+                                          type: string
+                                          maxLength: 35
+                                          example: ABC-123
+                                      additionalProperties: false
+                                  required:
+                                    - Id
+                                    - QuantityOrdered
+                                    - QuantityDelivered
+                                    - QuantityNotDelivered
+                                  additionalProperties: false
+                            additionalProperties: false
+                          ShippingUnits:
+                            type: object
+                            properties:
+                              ShippingUnit:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Id:
+                                      description: The identification for the unit defined by Modexpress.
+                                      type: string
+                                      maxLength: 35
+                                      example: 12345678
+                                    Code:
+                                      description: The barcode that is affixed/applied to the unit.
+                                      type: string
+                                      maxLength: 35
+                                      example: 123456
+                                    Weight:
+                                      description: |
+                                        The weight of the unit expressed in grams. There are two possibilities:
+                                        - The weight is the actual weighed weight (including the packing materials). This weight can only be indicated if it has been agreed that items must be weighed in the operation.
+                                        - The weight is the calculated weight of the contents (based on the weight of individual articles in the unit). This weight can only be indicated if a weight is known for the individual articles.
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 999999999
+                                    Length:
+                                      description: The length of the unit expressed in millimeters.
+                                      type: number
+                                      minimum: 1
+                                      maximum: 9999999999
+                                      example: 520
+                                    Width:
+                                      description: The width of the unit expressed in millimeters.
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 9999999999
+                                      example: 480
+                                    Height:
+                                      description: The height of the unit expressed in millimeters.
+                                      type: number
+                                      minimum: 1
+                                      maximum: 9999999999
+                                      example: 640
+                                    Carrier:
+                                      description: The carrier that is responsible for transporting the package.
+                                      type: string
+                                      maxLength: 40
+                                      example: Carrier
+                                    ShipmentCode:
+                                      description: Designation of the actual transport for the order.
+                                      type: string
+                                      maxLength: 6
+                                    TrackingId:
+                                      description: Track and trace identification of the unit (assigned by the carrier).
+                                      type: string
+                                      maxLength: 35
+                                    DateTimeOfCompletion:
+                                      description: Date + time on which the unit was reported ready.
+                                      type: string
+                                      format: date-time
+                                      example: '2021-01-30T00:00:00\.000Z'
+                                    ReturnTrackingId:
+                                      description: Track and trace identification for a return unit (assigned by the carrier).
+                                      type: string
+                                      maxLength: 35
+                                      example: xyz-123
+                                    Compositions:
+                                      type: object
+                                      properties:
+                                        Composition:
+                                          type: array
+                                          items:
+                                            type: object
+                                            properties:
+                                              QuantityDelivered:
+                                                type: integer
+                                                minimum: 1
+                                                maximum: 9999999999
+                                                example: 2
+                                              Stocktype:
+                                                description: |
+                                                  Designation of the type of stock that is delivered. For details refer to the comment of attribute StockType in SHP interface.
+                                                type: string
+                                                maxLength: 10
+                                              Article:
+                                                type: object
+                                                properties:
+                                                  Id:
+                                                    description: The identification that the owner uses for the delivered SKU.
+                                                    type: string
+                                                    maxLength: 250
+                                                  LotNumber:
+                                                    description: The lot/batch number of the delivered SKU.
+                                                    type: string
+                                                    maxLength: 20
+                                                  Code:
+                                                    description: "A code used to recognise/identify the delivered article in the unit. This is usually a code that is also affixed to the article as a barcode.\r\nIf several barcodes are known for the article one of these is used."
+                                                    type: string
+                                                    maxLength: 35
+                                                additionalProperties: false
+                                            additionalProperties: false
+                                      additionalProperties: false
+                                  required:
+                                    - Id
+                                    - Code
+                                    - DateTimeOfCompletion
+                                  additionalProperties: false
+                            additionalProperties: false
+                        required:
+                          - Id
+                        additionalProperties: false
+        '404':
+          description: order not found
+          content:
+            application/json:
+              example:
+                status: false
+                Id: YourOrderId
+    put:
+      tags:
+        - SHP
+      summary: Update an order to deliver goods to an address/recipient
+      description: 'Update an order to deliver goods to an address/recipient. Request body **JSON schema** can be found [here](https://github.com/Modexpress/saleskit-api-sources/blob/main/schemas/shp/shp_update_request_3.0.json)'
+      operationId: updateOrder
+      externalDocs:
+        url: 'https://github.com/Modexpress/saleskit-api-sources/blob/main/schemas/shp/shp_update_request_3.0.json'
+        description: Request body **JSON schema**
+      requestBody:
+        description: The order update request body
+        content:
+          application/json:
+            schema:
+              required:
+                - Id
+                - Parties
+              type: object
+              properties:
+                SenderRelationId:
+                  type: string
+                  description: The party that submits the order.
+                  example: '1111111'
+                OrderingPartyRelationId:
+                  type: string
+                  description: The party on whose behalf the goods in the order have to be delivered.
+                  example: '1111111'
+                Id:
+                  type: string
+                  description: The identification that the ordering party uses for the order. On the basis of this identification Modexpress checks whether the order exists for the ordering party. If so the order will be updated.
+                  example: ExampleOrderId
+                ShipmentCode:
+                  type: string
+                  description: |
+                    Designation of the desired transport for the order. A customer can agree to a default means of transport. This means of transport will then be used if no means of transport has been specified. If a means of transport has indeed been specified, it overrules the default means of transport. Possible values:
+                      - D01: DPD General account CB Fashion
+                      - T06: PostNL General account CB Fashion
+                      - U01: UPS General account CB Fashion
+                      - DHL: DHL customer account
+                      - CBFC: CBF Self Collector
+                      - CBFF: CBF Standard (CBF arranges transport)
+                      - CBFR: CBF Reservation order with storage (Pack and Hold / postponement of shipment for a (non-) specific longer time)
+                      - CBFS: CBF Special customer with buffering on shipping floor (postponement of shipment for a short time)
+                      - CBFU: CBF UPS account customer
+                      - CBFX: CBF pre-advise customers (CBF will contact the recipient)
+                  example: DHL
+                ShipmentService:
+                  type: string
+                  description: 'A non-standard service level to be used for transport (instead of the standard agreed transport) – for example, insured transport or transport with delivery instructions. The services/products are carrier-dependent. A choice can be made from the options offered by the carrier.'
+                  example: ShpServiceExample
+                ReturnShipmentCode:
+                  type: string
+                  description: Designation of the desired return transport for the order. Relevant in case the delivery has to contain a return label.
+                  example: DHL
+                ReturnShipmentService:
+                  type: string
+                  description: A non-standard service level to be used for return transport (instead of the standard agreed transport). Relevant in case the delivery has to contain a return label.
+                  example: RShpServiceExample
+                Parties:
+                  required:
+                    - Party
+                  type: object
+                  properties:
+                    Party:
+                      type: array
+                      items:
+                        required:
+                          - Type
+                        type: object
+                        properties:
+                          Type:
+                            type: string
+                            description: |
+                              A type of party/address that applies to the order:
+                              - BuyerId; buyer, (known to Modexpress as a business relation based on **Id** or **ExternId** of the party, only for the placeOrder operation)
+                              - ReceiverId; receiver/recipient/consignee, (known to Modexpress as a business relation based on 'Id' of the party, only for the placeOrder operation)
+                              - ReceiverAddress; receiver/recipient/consignee address,
+                              - SellerAddress; Seller/Shipper address (only for the placeOrder operation)
+                              - BuyerAddress; buyer address (only for the placeOrder operation)
+                              - InvoiceAddress; invoice address (only for the placeOrder operation)
+                              - DropSiteAddress; drop site address / pick up point address
+                            enum:
+                              - ReceiverAddress
+                              - SellerAddress
+                              - BuyerAddress
+                              - InvoiceAddress
+                              - DropSiteAddress
+                              - BuyerId
+                              - ReceiverId
+                            maxLength: 28
+                            example: ReceiverAddress
+                          Id:
+                            type: integer
+                            description: |
+                              The party that must be regarded as the buyer or receiver of the order and that is known/registered at Modexpress as a business relation with an address.
+                              The party is indicated by means of an Id assigned by Modexpress. These types of parties must have been registered in advance with Modexpress, and no address can be indicated in the order.
+                              The Id can only be used for parties of type BuyerId or ReceiverId.
+                            minimum: 0
+                            maximum: 9999999
+                            example: 1234567
+                          ExternalId:
+                            type: string
+                            description: |
+                              A party involved with the order that is identified with an Id used by the ordering party/sender.
+                              For type BuyerId it is possible to indicate parties with an ExternalId if they are registered as a Modexpress business relation with an address (receiver address).
+                              These types of parties must have been registered in advance with Modexpress, and no address can be included in the order. For %Address types the ExternalId can be included as a reference in the order.
+                              For these parties, the applicable address must also be specified in the order. In case of a DropSiteAddress the ExternalId can be used for the pickuppoint-id/number.
+                            maxLength: 35
+                            example: External ID
+                          Name1:
+                            type: string
+                            description: |
+                              The name of the party. Order of display on documents: line 1.
+                              Only applicable for the %Address party types. Mandatory for the %Address party types.
+                            minLength: 1
+                            maxLength: 50
+                            example: Jan Jansen
+                          Name2:
+                            type: string
+                            description: |
+                              The parties **For attention of**. Order of display on documents: line 2. Only applicable for the %Address party types.
+                            minLength: 1
+                            maxLength: 50
+                            example: Ria Jansen
+                          AddressLine1:
+                            type: string
+                            description: |
+                              The street that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types. Mandatory for the %Address party types.
+                            maxLength: 50
+                            example: Erasmusweg
+                          AddressLine2:
+                            type: string
+                            description: |
+                              A free/extra text line for the party that is part of the address. Order of display on documents: line 5. Only applicable for the %Address party types.
+                            maxLength: 50
+                            example: Example extra address info
+                          HouseNumber:
+                            type: integer
+                            description: |
+                              The house number that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types.
+                            format: int32
+                            example: 10
+                          HouseNumberExtension:
+                            type: string
+                            description: |
+                              The house number addition that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types.
+                            maxLength: 10
+                            example: B
+                          DeliveryInstruction:
+                            type: string
+                            description: |
+                              An instruction for the delivery. Order of display on documents: line 3. Only applicable for the %Address party types.
+                            maxLength: 30
+                            example: Delivery instruction example
+                          PostalCode:
+                            type: string
+                            description: |
+                              The postal code / ZIP code that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.
+                            maxLength: 20
+                            example: 4104 AK
+                          City:
+                            type: string
+                            description: |
+                              The town/city that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.
+                            minLength: 1
+                            maxLength: 50
+                            example: Culemborg
+                          Region:
+                            type: string
+                            description: |
+                              The province/region/state that applies to the party. Order of display on documents: line 7. Only applicable for the %Address party types.
+                            maxLength: 35
+                            example: Gelderland
+                          Country:
+                            type: string
+                            description: |
+                              ISO 3166 ALPHA-2 country code. The country that applies to the party. The designation should be made according to iso2 code. Order of display on documents: line 8 (country name will be displayed). Mandatory for the %Address party types.
+                            minLength: 2
+                            maxLength: 2
+                            example: NL
+                          EmailAddress:
+                            type: string
+                            format: email
+                            description: The email address for the party. Only applicable for the %Address party types.
+                            maxLength: 80
+                            example: test@test.nl
+                          PhoneNumber:
+                            type: string
+                            description: The fixed line telephone number for the party. Only applicable for the %Address party types.
+                            maxLength: 40
+                            example: 0345-475911
+                          MobileNumber:
+                            type: string
+                            description: The mobile phone number for the party. Only applicable for the %Address party types.
+                            maxLength: 40
+                            example: 06-12345678
+                          LanguageCode:
+                            type: string
+                            description: |
+                              ISO 639-2 ALPHA-3 country code. The language of the documents to be included with the shipment (packing slip). ISO 639-2 codes are used. Only applicable for the %Address party types. If multiple addresses are indicated, the LanguageCode to be used is: 1) DropSiteAddress, if address not specified or no language code specified, then 2) ReceiverAddress, if address not specified or no language code specified, then 3) BuyerAddress, if address not specified or no language code specified, then 4) InvoiceAddress, if address not specified or no language code specified, then 5) Last address mentioned in the Order.Party, if no language code specified, then 6) By default the language code is NLD.
+                            minLength: 3
+                            maxLength: 3
+                            example: NLD
+              xml:
+                name: UpdateOrder
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                externalDocs:
+                  url: 'https://github.com/Modexpress/saleskit-api-sources/blob/main/schemas/shp/shp_update_response_3.0.json'
+                  description: Response body **JSON schema**
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                    enum:
+                      - true
+                      - false
+                  result:
+                    type: object
+                    properties:
+                      OrderingPartyRelationId:
+                        description: Identification of the party on whose behalf the articles are delivered.
+                        type: string
+                        maxLength: 40
+                      Order:
+                        type: object
+                        properties:
+                          Id:
+                            description: The identification that the ordering party uses for the order.
+                            type: string
+                            maxLength: 40
+                          OrderReference:
+                            description: Reference for the order used by the ordering party.
+                            type: string
+                            maxLength: 25
+                          DocumentNumber:
+                            description: |
+                              The number of the document (packing slip) that was created for the shipment and that is also specified/printed on the document.
+                            type: string
+                            maxLength: 35
+                          ProcessingStatus:
+                            description: |
+                              Indication of the status of the order:
+                              - N: New (order is received but it's not yet being handled)
+                              - I: In progress (order being fullfilled)
+                              - P: Packed (order is packed but has not yet its final status)
+                              - S: Shipped (order has been transferred to the carrier and has been closed)
+                              - C: Cancelled (order has been cancelled)
+                              The status field is only included if this is configured. **Note**: differs from SHP-Exec since it's a real-time status
+                            type: string
+                            minLength: 1
+                            maxLength: 1
+                            enum:
+                              - 'N'
+                              - I
+                              - P
+                              - S
+                              - C
+                          Orderlines:
+                            type: object
+                            properties:
+                              Orderline:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Id:
+                                      description: The identification that the ordering party uses for the order line.
+                                      type: string
+                                      maxLength: 50
+                                      example: 123456
+                                    QuantityOrdered:
+                                      description: The number of items of the article that must be delivered according to the submitted order.
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 999999999
+                                      example: 2
+                                    QuantityDelivered:
+                                      description: The number of items of the article that were delivered.
+                                      type: integer
+                                      minimum: 0
+                                      maximum: 999999999
+                                      example: 2
+                                    QuantityNotDelivered:
+                                      description: The number of items of the article that were not delivered.
+                                      type: integer
+                                      minimum: 0
+                                      maximum: 999999999
+                                      example: 2
+                                    StockType:
+                                      description: |
+                                        Designation of the type of stock that was delivered. For details refer to the comment of attribute StockType in SHP interface.
+                                        - RGL
+                                        - RGLRJC
+                                        Other types assigned by Modexpress
+                                      type: string
+                                      maxLength: 10
+                                      example: RGL
+                                    DateTimeOfCompletion:
+                                      description: Date + time on which the line was reported ready.
+                                      type: string
+                                      format: date-time
+                                      example: '2021-01-30T00:00:00\.000Z'
+                                    Article:
+                                      type: object
+                                      properties:
+                                        Id:
+                                          description: The identification that the owner uses for the delivered SKU - **WMS A24**
+                                          type: string
+                                          maxLength: 250
+                                          example: 1122334455
+                                        Code:
+                                          description: |
+                                            A code used to recognise/identify the delivered article.
+                                            This is usually a code that is also affixed to the article as a barcode.
+                                            If several barcodes are known for the article one of these is used.
+                                          type: string
+                                          maxLength: 35
+                                          example: ABC-123
+                                      additionalProperties: false
+                                  required:
+                                    - Id
+                                    - QuantityOrdered
+                                    - QuantityDelivered
+                                    - QuantityNotDelivered
+                                  additionalProperties: false
+                            additionalProperties: false
+                          ShippingUnits:
+                            type: object
+                            properties:
+                              ShippingUnit:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Id:
+                                      description: The identification for the unit defined by Modexpress.
+                                      type: string
+                                      maxLength: 35
+                                      example: 12345678
+                                    Code:
+                                      description: The barcode that is affixed/applied to the unit.
+                                      type: string
+                                      maxLength: 35
+                                      example: 123456
+                                    Weight:
+                                      description: |
+                                        The weight of the unit expressed in grams. There are two possibilities:
+                                        - The weight is the actual weighed weight (including the packing materials). This weight can only be indicated if it has been agreed that items must be weighed in the operation.
+                                        - The weight is the calculated weight of the contents (based on the weight of individual articles in the unit). This weight can only be indicated if a weight is known for the individual articles.
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 999999999
+                                    Length:
+                                      description: The length of the unit expressed in millimeters.
+                                      type: number
+                                      minimum: 1
+                                      maximum: 9999999999
+                                      example: 520
+                                    Width:
+                                      description: The width of the unit expressed in millimeters.
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 9999999999
+                                      example: 480
+                                    Height:
+                                      description: The height of the unit expressed in millimeters.
+                                      type: number
+                                      minimum: 1
+                                      maximum: 9999999999
+                                      example: 640
+                                    Carrier:
+                                      description: The carrier that is responsible for transporting the package.
+                                      type: string
+                                      maxLength: 40
+                                      example: Carrier
+                                    ShipmentCode:
+                                      description: Designation of the actual transport for the order.
+                                      type: string
+                                      maxLength: 6
+                                    TrackingId:
+                                      description: Track and trace identification of the unit (assigned by the carrier).
+                                      type: string
+                                      maxLength: 35
+                                    DateTimeOfCompletion:
+                                      description: Date + time on which the unit was reported ready.
+                                      type: string
+                                      format: date-time
+                                      example: '2021-01-30T00:00:00\.000Z'
+                                    ReturnTrackingId:
+                                      description: Track and trace identification for a return unit (assigned by the carrier).
+                                      type: string
+                                      maxLength: 35
+                                      example: xyz-123
+                                    Compositions:
+                                      type: object
+                                      properties:
+                                        Composition:
+                                          type: array
+                                          items:
+                                            type: object
+                                            properties:
+                                              QuantityDelivered:
+                                                type: integer
+                                                minimum: 1
+                                                maximum: 9999999999
+                                                example: 2
+                                              Stocktype:
+                                                description: |
+                                                  Designation of the type of stock that is delivered. For details refer to the comment of attribute StockType in SHP interface.
+                                                type: string
+                                                maxLength: 10
+                                              Article:
+                                                type: object
+                                                properties:
+                                                  Id:
+                                                    description: The identification that the owner uses for the delivered SKU.
+                                                    type: string
+                                                    maxLength: 250
+                                                  LotNumber:
+                                                    description: The lot/batch number of the delivered SKU.
+                                                    type: string
+                                                    maxLength: 20
+                                                  Code:
+                                                    description: "A code used to recognise/identify the delivered article in the unit. This is usually a code that is also affixed to the article as a barcode.\r\nIf several barcodes are known for the article one of these is used."
+                                                    type: string
+                                                    maxLength: 35
+                                                additionalProperties: false
+                                            additionalProperties: false
+                                      additionalProperties: false
+                                  required:
+                                    - Id
+                                    - Code
+                                    - DateTimeOfCompletion
+                                  additionalProperties: false
+                            additionalProperties: false
+                        required:
+                          - Id
+                        additionalProperties: false
+        '404':
+          description: order not found
+          content:
+            application/json:
+              example:
+                status: false
+                Id: YourOrderId
+        '422':
+          description: Invalid JSON structure and/or field values
+          content:
+            application/json:
+              example:
+                error:
+                  code: 422
+                  en: 'String is too long at \#->properties:ShipmentService'
+        '500':
+          description: the payload contains errors
+          content:
+            application/json:
+              example:
+                status: false
+                error:
+                  code: InvalidAddress
+                  nl: De straatnaam ontbreekt in het adres van de ontvanger
+                  en: The receiver address is missing a value for street name
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
