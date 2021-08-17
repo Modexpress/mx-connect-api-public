@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "boolean"
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "Articles": {
+          "type": "object",
+          "properties": {
+            "Valid": {
+              "type": "array",
+              "description": "The article IDs that are well-received and processed\n",
+              "items": {
+                "type": "string"
+              }
+            },
+            "Invalid": {
+              "type": "array",
+              "description": "The article IDs that were not processed due to errors\n",
+              "items": {
+                "type": "string"
+              }
+            },
+            "Errors": {
+              "type": "object",
+              "description": "The errors listed for each SKU entry in the 'Invalid' list\n",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "en": {
+                    "type": "string"
+                  },
+                  "nl": {
+                    "type": "string"
+                  },
+                  "de": {
+                    "type": "string"
+                  },
+                  "fr": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "message": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

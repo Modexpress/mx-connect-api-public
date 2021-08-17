@@ -195,8 +195,7 @@
                         "maxLength": 10
                       },
                       "StockType": {
-                        "description": "Designation of the type of stock that must be received. By stock type, it is possible to differentiate into different types of stock to be kept separately for an article (both in the operation and administratively).\r\n\r\nThe standaard stock types are (other types are possible):\r\n- RGL - regular or A-choice stock\r\n- RGLRJC - regular reject or B-choice stock\r\n\r\nIf no StockType is indicated the receipt is assumed to be regular stock (RGL).",
-                        "$comment": "RGL,\r\nRGLRJC,\r\n\r\nOther types assigned by Modexpress",
+                        "description": "Designation of the type of stock that must be received. By stock type, it is possible to differentiate into different types of stock to be kept separately for an article (both in the operation and administratively).\nThe standaard stock types are (other types are possible):\n- RGL: regular or A-choice stock\n- RGLRJC: regular reject or B-choice stock\n\nIf no StockType is indicated the receipt is assumed to be regular stock (RGL). Other types assigned by Modexpress.\n",
                         "type": "string",
                         "maxLength": 10
                       },
@@ -233,8 +232,7 @@
                         "type": "object",
                         "properties": {
                           "Id": {
-                            "description": "The identification that the owner uses for the SKU to be received. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.",
-                            "$comment": "WMS A24",
+                            "description": "The identification that the owner uses for the SKU to be received. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id. WMS A24",
                             "type": "string",
                             "minLength": 1,
                             "maxLength": 250
@@ -248,8 +246,7 @@
                         "type": "object",
                         "properties": {
                           "RelationId": {
-                            "description": "Identification of the party that is the owner of the article to be received.",
-                            "$comment": "Id assigned by Modexpress",
+                            "description": "Identification of the party that is the owner of the article to be received. Id assigned by Modexpress",
                             "type": "string",
                             "maxLength": 40
                           },
@@ -316,8 +313,7 @@
               "maxLength": 70
             },
             "CountryOfDeparture": {
-              "description": "The country of origin of the shipment (Country of departure).",
-              "$comment": "iso2 country code",
+              "description": "The country of origin of the shipment (Country of departure). Use an ISO-2 country code.",
               "type": "string",
               "minLength": 2,
               "maxLength": 2
@@ -391,8 +387,7 @@
                         "type": "number"
                       },
                       "CurrencyCode": {
-                        "description": "Code indicating the currency in which the amount is expressed.",
-                        "$comment": "iso 4217",
+                        "description": "Code indicating the currency in which the amount is expressed. Use ISO-4217",
                         "type": "string",
                         "minLength": 3,
                         "maxLength": 3
@@ -426,8 +421,7 @@
                         "maximum": 999999999
                       },
                       "CountryOfOrigin": {
-                        "description": "The country of origin of the article to be delivered (country of production).",
-                        "$comment": "iso2 country code",
+                        "description": "The country of origin of the article to be delivered (country of production). Use an ISO-2 country code",
                         "type": "string",
                         "minLength": 2,
                         "maxLength": 2
@@ -478,8 +472,7 @@
                                   "type": "number"
                                 },
                                 "CurrencyCode": {
-                                  "description": "Code indicating the currency in which the amount is expressed.",
-                                  "$comment": "iso 4217",
+                                  "description": "Code indicating the currency in which the amount is expressed. Use ISO-4217",
                                   "type": "string",
                                   "minLength": 3,
                                   "maxLength": 3
@@ -515,15 +508,13 @@
                                   "type": "number"
                                 },
                                 "CurrencyCode": {
-                                  "description": "Code indicating the currency in which the price is expressed.",
-                                  "$comment": "iso 4217",
+                                  "description": "Code indicating the currency in which the price is expressed. Use ISO-4217",
                                   "type": "string",
                                   "minLength": 3,
                                   "maxLength": 3
                                 },
                                 "Country": {
-                                  "description": "Code indicating the country for which the price is valid.",
-                                  "$comment": "iso2 country code",
+                                  "description": "Code indicating the country for which the price is valid. Use ISO-2 country code",
                                   "type": "string",
                                   "minLength": 2,
                                   "maxLength": 2
