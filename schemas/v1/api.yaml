@@ -1,10 +1,8 @@
 openapi: 3.0.0
 info:
   title: Modexpress MX Connect REST API v1
-  description: REST API to manage orders
+  description: Modexpress MX Connect REST API to manage the order lifecycle
   version: 1.0.0
-tags:
-  - name: SHP
 paths:
   /sku:
     post:
