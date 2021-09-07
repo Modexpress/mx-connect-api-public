@@ -21,6 +21,8 @@ The Modexpress Outbound Orders webhook allows you to stay informed about order s
 | --------------------------| ----------- |
 | N                         | New         |
 | I                         | In progress |
+| R                         | Released    |
+| K                         | Picked      |
 | P                         | Packed      |
 | S                         | Shipped     |
 | C                         | Cancelled   |
