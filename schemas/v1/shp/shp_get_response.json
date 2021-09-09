@@ -11,11 +11,6 @@
     "result": {
       "type": "object",
       "properties": {
-        "OrderingPartyRelationId": {
-          "description": "Identification of the party on whose behalf the articles are delivered.",
-          "type": "string",
-          "maxLength": 40
-        },
         "Order": {
           "type": "object",
           "properties": {
@@ -35,13 +30,15 @@
               "maxLength": 35
             },
             "ProcessingStatus": {
-              "description": "Indication of the status of the order:\n- N: New (order is received but it's not yet being handled)\n- I: In progress (order being fullfilled)\n- P: Packed (order is packed but has not yet its final status)\n- S: Shipped (order has been transferred to the carrier and has been closed)\n- C: Cancelled (order has been cancelled)\nThe status field is only included if this is configured. **Note**: differs from SHP-Exec since it's a real-time status\n",
+              "description": "Indication of the status of the order:\n- N: New (order is received but it's not yet being handled)\n- I: In progress (order being fulfilled)\n- R: The order has been released for picking\n- K: The order has been picked\n- P: Packed (order has been packed but has not progressed to its final status)\n- S: Shipped (order has been transferred to the carrier and has been closed)\n- C: Cancelled (order has been cancelled)\nThe status field is only included if this is configured. **Note**: differs from SHP-Exec since it's a real-time status\n",
               "type": "string",
               "minLength": 1,
               "maxLength": 1,
               "enum": [
                 "N",
                 "I",
+                "R",
+                "K",
                 "P",
                 "S",
                 "C"
@@ -210,43 +207,32 @@
                                       "type": "string",
                                       "maxLength": 250
                                     },
-                                    "LotNumber": {
-                                      "description": "The lot/batch number of the delivered SKU.",
-                                      "type": "string",
-                                      "maxLength": 20
-                                    },
                                     "Code": {
                                       "description": "A code used to recognise/identify the delivered article in the unit. This is usually a code that is also affixed to the article as a barcode.\r\nIf several barcodes are known for the article one of these is used.",
                                       "type": "string",
                                       "maxLength": 35
                                     }
-                                  },
-                                  "additionalProperties": false
+                                  }
                                 }
-                              },
-                              "additionalProperties": false
+                              }
                             }
                           }
-                        },
-                        "additionalProperties": false
+                        }
                       }
                     },
                     "required": [
                       "Id",
                       "Code",
                       "DateTimeOfCompletion"
-                    ],
-                    "additionalProperties": false
+                    ]
                   }
                 }
-              },
-              "additionalProperties": false
+              }
             }
           },
           "required": [
             "Id"
-          ],
-          "additionalProperties": false
+          ]
         }
       }
     }

@@ -12,11 +12,11 @@
       "maxLength": 40
     },
     "Order": {
-      "description": "An order to receive goods (stock). A receipt consists of two parts that can be registered simultaneously or separately: - Purchase/return order (PO/RMA); the order from the ordering party to receive goods; these are goods that the ordering party has purchased from suppliers or is taking back as returns from buyers/recipients. - Shipment; a shipment to be supplied by a supplier or buyer/recipient for a purchase/return order. - By default it is assumed that the purchase/return order and the shipment are the same. This means that it is sufficient to specify the purchase/return order without specifying shipments. The submitted purchase/return order is automatically regarded as the shipment to be received (in terms of the contents, the shipment is the same as the purchase/return order).\n",
+      "description": "An order to receive goods (stock). A receipt consists of two parts that can be registered simultaneously or separately:\n- Purchase/return order (PO/RMA); the order from the ordering party to receive goods; these are goods that the ordering party has purchased from suppliers or is taking back as returns from buyers/recipients.\n- Shipment; a shipment to be supplied by a supplier or buyer/recipient for a purchase/return order.\n- By default it is assumed that the purchase/return order and the shipment are the same. This means that it is sufficient to specify the purchase/return order without specifying shipments. The submitted purchase/return order is automatically regarded as the shipment to be received (in terms of the contents, the shipment is the same as the purchase/return order).\n",
       "type": "object",
       "properties": {
         "Id": {
-          "description": "The identification that the ordering party uses for the order. Based on this identification, Modexpress checks whether the registered order already exists for the ordering party. Cancelled orders or executed orders on which nothing has been received, are not taken into consideration. If an order already exists, the registration is rejected.\\r\\n\\r\\nIf purchase/return orders and shipments are registered separately, this identification is used to link the shipment to a purchase/return order that was reported earlier.\n",
+          "description": "The identification that the ordering party uses for the order. Based on this identification, Modexpress checks whether the registered order already exists for the ordering party.\nCancelled orders or executed orders on which nothing has been received, are not taken into consideration. If an order already exists, the registration is rejected.\\r\\n\\r\\nIf purchase/return orders and shipments are registered separately, this identification is used to link the shipment to a purchase/return order that was reported earlier.\n",
           "type": "string",
           "minLength": 1,
           "maxLength": 25
@@ -25,7 +25,7 @@
           "type": "object",
           "properties": {
             "Type": {
-              "description": "Designation of the order type. Only the types indicated by Modexpress are permitted. Type XDOCKLOT can only be used if this has been agreed upon. For return orders there also can be automatic return orders. These are created automatically on the basis of executed shipments and are therefore not submitted by means of this message but will be reported back as such using the RCP-exec message.\n",
+              "description": "Designation of the order type. Only the types indicated by Modexpress are permitted.\nType XDOCKLOT can only be used if this has been agreed upon. For return orders there also can be automatic return orders.\nThese are created automatically on the basis of executed shipments and are therefore not submitted by means of this message\nbut will be reported back as such using the RCP-exec message.\n",
               "type": "string",
               "maxLength": 20,
               "enum": [
@@ -49,7 +49,7 @@
               "maxLength": 20
             },
             "SenderInternalId": {
-              "description": "Identification of the party that delivers the goods for the order. The party must be known to Modexpress by the relevant Id.  **Note**: Id assigned by Modexpress\n",
+              "description": "Identification of the party that delivers the goods for the order. The party must be known to Modexpress by the relevant Id. \n**Note**: Id assigned by Modexpress\n",
               "type": "integer",
               "minimum": 1,
               "maximum": 9999999
@@ -60,11 +60,12 @@
               "maxLength": 20
             },
             "SenderName": {
+              "type": "string",
               "title": "Name/description of the party that delivers the goods for the order.",
               "maxLength": 70
             },
             "Date": {
-              "description": "Date that the ordering party uses for the order. For example, this can be the date on which the order was created by the ordering party. This date is reported back in the execution result of the order. This date can be used to make the order recognisable.\nFor example, if the ordering party has any questions concerning the status of the order and that order cannot be identified by means of a unique id.\n",
+              "description": "Date that the ordering party uses for the order. For example, this can be the date on which the order was created by the ordering party.\nThis date is reported back in the execution result of the order. This date can be used to make the order recognisable.\n\nFor example, if the ordering party has any questions concerning the status of the order and that order cannot be identified by means of a unique id.\n",
               "type": "string",
               "format": "date"
             },
@@ -77,7 +78,7 @@
                     "type": "object",
                     "properties": {
                       "Type": {
-                        "description": "Designation of a party/address that applies to the order: - ShipperAddress; the shipper/seller of the shipment (is required in case of customs declaration)\n",
+                        "description": "Designation of a party/address that applies to the order:\n- ShipperAddress; the shipper/seller of the shipment (is required in case of customs declaration)\n",
                         "type": "string",
                         "maxLength": 20,
                         "enum": [
@@ -126,8 +127,8 @@
                         "maxLength": 40
                       },
                       "Country": {
-                        "description": "The country that applies to the party. The designation should be made according to iso2 code.",
                         "type": "string",
+                        "description": "ISO 3166 ALPHA-2 country code. The country that applies to the party. The designation should be made according to iso2 code. Order of display on documents: line 8 (country name will be displayed). Mandatory for the %Address party types.\n",
                         "minLength": 2,
                         "maxLength": 2
                       }
@@ -251,7 +252,7 @@
                             "maxLength": 40
                           },
                           "RelationType": {
-                            "description": "Indication whether the Relation_Id is an internal or external id. - internal id: the id assigned and used by Modexpress - external id: the id assigned and used by the ordering party.\n",
+                            "description": "Indication whether the Relation_Id is an internal or external id.\n- internal id: the id assigned and used by Modexpress\n- external id: the id assigned and used by the ordering party.\n",
                             "type": "string",
                             "minLength": 3,
                             "maxLength": 3,
@@ -279,7 +280,7 @@
           ]
         },
         "Shipment": {
-          "description": "The registration of a shipment to be supplied for a purchase/return order by a supplier or buyer/recipient. There are four possibilities: 1. the shipment(s) for a purchase order from an ordering party is/are provided separately by the supplier (not yet implemented) 2. the shipment(s) for a purchase order is/are provided by the ordering party itself together with the purchase order 3. the shipment(s) for a purchase order is/are provided by the ordering party itself separately from the purchase order (not yet implemented) 4. no shipment(s) are provided for a purchase order, each purchase order automatically results in a corresponding shipment that is the same as the purchase order in terms of its contents.\nPay attention; a combination of 2 and 4 is not possible. So, if ShipmentLines are provided for the PurchaseOrderLines, it is necessary that every PurchaseOrderLine has a ShipmentLine and the Quantity in both lines has to be the same. When a shipment is provided separately, a reference to the purchase/return order is required; this is done using the 'id' of the order. Moreover, the purchase/return order must then be registered/provided before the shipment is registered/provided.\"\n",
+          "description": "The registration of a shipment to be supplied for a purchase/return order by a supplier or buyer/recipient. There are four possibilities:\n1. the shipment(s) for a purchase order from an ordering party is/are provided separately by the supplier (not yet implemented)\n2. the shipment(s) for a purchase order is/are provided by the ordering party itself together with the purchase order\n3. the shipment(s) for a purchase order is/are provided by the ordering party itself separately from the purchase order (not yet implemented)\n4. no shipment(s) are provided for a purchase order, each purchase order automatically results in a corresponding shipment that is the same as the purchase order in terms of its contents.\n\nPay attention; a combination of 2 and 4 is not possible. So, if ShipmentLines are provided for the PurchaseOrderLines, it is necessary that every PurchaseOrderLine has a ShipmentLine and the Quantity in both lines has to be the same.\nWhen a shipment is provided separately, a reference to the purchase/return order is required; this is done using the 'id' of the order. Moreover, the purchase/return order must then be registered/provided before the shipment is registered/provided.\"\n",
           "type": "object",
           "properties": {
             "Reference": {
@@ -319,7 +320,7 @@
               "maxLength": 2
             },
             "IncoTerm": {
-              "description": "A pre-defined commercial term published by the International Chamber of Commerce (ICC) relating to international commercial law. The Incoterms rules are intended primarily to clearly communicate the tasks, costs, and risks associated with the transportation and delivery of goods. - CFR - Cost and Freight - CIF - Cost, Insurance and Freight - CIP - Carriage and Insurance Paid - CPT - Carriage Paid To - DAF - Delivered At Frontier - DAP - Delivered At Place - DAT - Delivered At Terminal - DDP - Delivered Duty Paid - DDU - Delivered Duty Unpaid - DEQ - Delivered Ex Quay - DES - Delivered Ex Ship - EXW - Ex Works - FAS - Free Alongside Ship - FCA - Free Carrier - FOB - Free On Board - FOP - Free On Plane - FOR - Free on Rail - FOT - Free On Truck\n",
+              "description": "A pre-defined commercial term published by the International Chamber of Commerce (ICC) relating to international commercial law. The Incoterms rules are intended primarily to clearly communicate the tasks, costs, and risks associated with the transportation and delivery of goods.\n- CFR - Cost and Freight\n- CIF - Cost, Insurance and Freight\n- CIP - Carriage and Insurance Paid\n- CPT - Carriage Paid To\n- DAF - Delivered At Frontier\n- DAP - Delivered At Place\n- DAT - Delivered At Terminal\n- DDP - Delivered Duty Paid\n- DDU - Delivered Duty Unpaid\n- DEQ - Delivered Ex Quay\n- DES - Delivered Ex Ship\n- EXW - Ex Works\n- FAS - Free Alongside Ship\n- FCA - Free Carrier\n- FOB - Free On Board\n- FOP - Free On Plane\n- FOR - Free on Rail\n- FOT - Free On Truck\n",
               "type": "string",
               "minLength": 3,
               "maxLength": 3,
@@ -363,7 +364,7 @@
                     "type": "object",
                     "properties": {
                       "InfoType": {
-                        "description": "Indication of the type of financial information: - Type 'Invoice' is used for customs declaration - Type ´Freightcost´ is used for customs declaration - Type ´Insurancecost´ is used for customs declaration\n",
+                        "description": "Indication of the type of financial information:\n- Type 'Invoice' is used for customs declaration\n- Type ´Freightcost´ is used for customs declaration\n- Type ´Insurancecost´ is used for customs declaration\n",
                         "type": "string",
                         "maxLength": 15,
                         "enum": [
@@ -375,7 +376,7 @@
                       "Description": {
                         "description": "A relevant description for the type of financial information. In case of type 'Invoice', this concerns the invoice number (for customs declaration, the invoice number is limited to format A35).\n",
                         "type": "string",
-                        "maxLength": 40
+                        "maxLength": 50
                       },
                       "Date": {
                         "description": "A relevant date for the type of financial information. In case of 'Invoice', this concerns the invoice date.\n",
@@ -387,8 +388,8 @@
                         "type": "number"
                       },
                       "CurrencyCode": {
-                        "description": "Code indicating the currency in which the amount is expressed. Use ISO-4217",
                         "type": "string",
+                        "description": "ISO-4217 Code indicating the currency in which the amount is expressed.",
                         "minLength": 3,
                         "maxLength": 3
                       }
@@ -421,7 +422,7 @@
                         "maximum": 999999999
                       },
                       "CountryOfOrigin": {
-                        "description": "The country of origin of the article to be delivered (country of production). Use an ISO-2 country code",
+                        "description": "The country of origin of the article to be delivered (country of production). Use an ISO-2 country code.",
                         "type": "string",
                         "minLength": 2,
                         "maxLength": 2
@@ -450,7 +451,7 @@
                               "type": "object",
                               "properties": {
                                 "InfoType": {
-                                  "description": "Indication of the type of financial information: - Type 'Invoice' is used for customs declaration\n",
+                                  "description": "Indication of the type of financial information:\n- Type 'Invoice' is used for customs declaration\n",
                                   "type": "string",
                                   "maxLength": 15,
                                   "enum": [
@@ -458,9 +459,9 @@
                                   ]
                                 },
                                 "Description": {
-                                  "description": "A relevant description for the type of financial information.\r\nIn case of type 'Invoice', this concerns the invoice number (for customs declaration, the invoice number is limited to format A35).",
+                                  "description": "A relevant description for the type of financial information.\nIn case of type 'Invoice', this concerns the invoice number (for customs declaration, the invoice number is limited to format 35 characters)\n",
                                   "type": "string",
-                                  "maxLength": 35
+                                  "maxLength": 50
                                 },
                                 "Date": {
                                   "description": "A relevant date for the type of financial information. In case of 'Invoice', this concerns the invoice date.\n",
@@ -472,8 +473,8 @@
                                   "type": "number"
                                 },
                                 "CurrencyCode": {
-                                  "description": "Code indicating the currency in which the amount is expressed. Use ISO-4217",
                                   "type": "string",
+                                  "description": "ISO-4217 Code indicating the currency in which the amount is expressed.",
                                   "minLength": 3,
                                   "maxLength": 3
                                 }
@@ -508,13 +509,13 @@
                                   "type": "number"
                                 },
                                 "CurrencyCode": {
-                                  "description": "Code indicating the currency in which the price is expressed. Use ISO-4217",
                                   "type": "string",
+                                  "description": "ISO-4217 Code indicating the currency in which the amount is expressed.",
                                   "minLength": 3,
                                   "maxLength": 3
                                 },
                                 "Country": {
-                                  "description": "Code indicating the country for which the price is valid. Use ISO-2 country code",
+                                  "description": "Code indicating the country for which the price is valid. Use ISO-2 country code.",
                                   "type": "string",
                                   "minLength": 2,
                                   "maxLength": 2

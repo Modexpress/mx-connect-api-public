@@ -70,7 +70,7 @@
                 "type": "number"
               },
               "CountryOfOrigin": {
-                "description": "The country of origin of the SKU. Use ISO-2 country code",
+                "description": "The country of origin of the SKU. Use ISO-2 country code.",
                 "type": "string",
                 "minLength": 2,
                 "maxLength": 2
@@ -225,19 +225,19 @@
                           ]
                         },
                         "Value": {
-                          "description": "The value that applies to the SKU for the specified type:\n- STYLE (A40): the style name/number of the SKU\n- COLOUR (A50); the colour code of the SKU\n- SIZE (A35); the size of the SKU (the size code)\n- SIZE2 (A35); a second size of the SKU (for example measure of length)\n- SEASON (A35); the season of the SKU\n- TARIC (A10); the TARIC of the SKU (part of it is the HS code), The TARIC is 10 positions or 8 positions supplemented with '00'.\n- CUSTSTYLE (A17); the style name/number of the SKU for customs declaration. Max field length depends on the Type\n",
+                          "description": "The value that applies to the SKU for the specified type:\n- STYLE (**maximum length**: 40): the style name/number of the SKU\n- COLOUR (**maximum length**: 50); the colour code of the SKU\n- SIZE (**maximum length**: 35); the size of the SKU (the size code)\n- SIZE2 (**maximum length**: 35); a second size of the SKU (for example measure of length)\n- SEASON (**maximum length**: 35); the season of the SKU\n- TARIC (**maximum length**: 10); the TARIC of the SKU (part of it is the HS code), The TARIC is 10 positions or 8 positions supplemented with '00'.\n- CUSTSTYLE (**maximum length**: 17); the style name/number of the SKU for customs declaration. Max field length depends on the Type\n",
                           "type": "string",
                           "minLength": 1,
                           "maxLength": 70
                         },
                         "Description": {
-                          "description": "The description/name that corresponds with the value of the type. For example the colour name for the colour code.\nFor printing documents the maximum length in use is:\n- Style; A60\n- Colour; A30\n\nSIZE, SIZE2, SEASON, TARIC, CUSTSTYLE; not in use\n",
+                          "description": "The description/name that corresponds with the value of the type. For example the colour name for the colour code.\nFor printing documents the maximum length in use is:\n- Style (**maximum length**: 60)\n- Colour (**maximum length**: 30)\n\nSIZE, SIZE2, SEASON, TARIC, CUSTSTYLE; not in use\n",
                           "type": "string",
                           "minLength": 1,
                           "maxLength": 240
                         },
                         "SortingNumber": {
-                          "description": "A number that specifies the sequence of the size codes (relevant for type SIZE/SIZE2). The number is used to specify the display order on the packing slip.\r\n\r\nIn case of type SIZE/SIZE2 the sortingnumber of the size codes (in attribute value) is particularly relevant if the size codes cannot be logically sorted. For example in case of size codes like XS, X, M, XXL.\r\nIf there are several size groups in use, the sortingnumber must be unique for the size codes within the size group. However the size group is not known in the Modexpress SKU registration, so for the packing slip the SKU style is used to determine the size codes that have to be used on the packing slip. The sortingnumber is used to determine the order of the size codes on the packing slip.",
+                          "description": "A number that specifies the sequence of the size codes (relevant for type SIZE/SIZE2). The number is used to specify the display order on the packing slip.\\r\\n\\r\\nIn case of type SIZE/SIZE2 the sortingnumber of the size codes (in attribute value) is particularly relevant if the size codes cannot be logically sorted. For example in case of size codes like XS, X, M, XXL.\\r\\nIf there are several size groups in use, the sortingnumber must be unique for the size codes within the size group. However the size group is not known in the Modexpress SKU registration, so for the packing slip the SKU style is used to determine the size codes that have to be used on the packing slip. The sortingnumber is used to determine the order of the size codes on the packing slip.\n",
                           "type": "integer",
                           "minimum": 1,
                           "maximum": 9999
@@ -259,6 +259,10 @@
                 "properties": {
                   "Part": {
                     "type": "array",
+                    "required": [
+                      "Id",
+                      "PartQuantity"
+                    ],
                     "items": {
                       "type": "object",
                       "properties": {
@@ -309,14 +313,14 @@
                           "type": "number"
                         },
                         "CurrencyCode": {
-                          "description": "Code indicating the currency in which the price is expressed. ISO-4217.",
                           "type": "string",
+                          "description": "ISO-4217 Code indicating the currency in which the amount is expressed.",
                           "minLength": 3,
                           "maxLength": 3
                         },
                         "Country": {
-                          "description": "Code indicating the country for which the price is valid. Use ISO-2 country code.",
                           "type": "string",
+                          "description": "ISO 3166 ALPHA-2 country code. The country that applies to the party. The designation should be made according to iso2 code. Order of display on documents: line 8 (country name will be displayed). Mandatory for the %Address party types.\n",
                           "minLength": 2,
                           "maxLength": 2
                         },
@@ -327,7 +331,7 @@
                           "maxLength": 25
                         },
                         "VATCode": {
-                          "description": "Code that indicates whether the price is including (I) or excluding (E) VAT.\r\nFor customs usage prices are exclusive of VAT.",
+                          "description": "Code that indicates whether the price is including (I) or excluding (E) VAT.\nFor customs usage prices are exclusive of VAT.\n",
                           "type": "string",
                           "minLength": 1,
                           "maxLength": 1,
@@ -341,12 +345,10 @@
                         "Type",
                         "Amount",
                         "CurrencyCode"
-                      ],
-                      "additionalProperties": false
+                      ]
                     }
                   }
-                },
-                "additionalProperties": false
+                }
               },
               "PackagingUnits": {
                 "type": "object",

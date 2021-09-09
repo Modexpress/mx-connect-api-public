@@ -43,7 +43,10 @@
           "type": "array",
           "items": {
             "required": [
-              "Type"
+              "Type",
+              "AddressLine1",
+              "City",
+              "Country"
             ],
             "type": "object",
             "properties": {
@@ -153,7 +156,13 @@
                 "type": "string",
                 "description": "ISO 639-2 ALPHA-3 country code. The language of the documents to be included with the shipment (packing slip). ISO 639-2 codes are used. Only applicable for the %Address party types. If multiple addresses are indicated, the LanguageCode to be used is: 1) DropSiteAddress, if address not specified or no language code specified, then 2) ReceiverAddress, if address not specified or no language code specified, then 3) BuyerAddress, if address not specified or no language code specified, then 4) InvoiceAddress, if address not specified or no language code specified, then 5) Last address mentioned in the Order.Party, if no language code specified, then 6) By default the language code is NLD.\n",
                 "minLength": 3,
-                "maxLength": 3
+                "maxLength": 3,
+                "enum": [
+                  "NLD",
+                  "ENG",
+                  "DEU",
+                  "FRA"
+                ]
               }
             }
           }

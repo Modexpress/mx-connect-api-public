@@ -2162,8 +2162,10 @@ paths:
                             description: |
                               Indication of the status of the order:
                               - N: New (order is received but it's not yet being handled)
-                              - I: In progress (order being fullfilled)
-                              - P: Packed (order is packed but has not yet its final status)
+                              - I: In progress (order being fulfilled)
+                              - R: The order has been released for picking
+                              - K: The order has been picked
+                              - P: Packed (order has been packed but has not progressed to its final status)
                               - S: Shipped (order has been transferred to the carrier and has been closed)
                               - C: Cancelled (order has been cancelled)
                               The status field is only included if this is configured. **Note**: differs from SHP-Exec since it's a real-time status
@@ -2174,6 +2176,8 @@ paths:
                             enum:
                               - 'N'
                               - I
+                              - R
+                              - K
                               - P
                               - S
                               - C
@@ -2609,8 +2613,10 @@ paths:
                             description: |
                               Indication of the status of the order:
                               - N: New (order is received but it's not yet being handled)
-                              - I: In progress (order being fullfilled)
-                              - P: Packed (order is packed but has not yet its final status)
+                              - I: In progress (order being fulfilled)
+                              - R: The order has been released for picking
+                              - K: The order has been picked
+                              - P: Packed (order has been packed but has not progressed to its final status)
                               - S: Shipped (order has been transferred to the carrier and has been closed)
                               - C: Cancelled (order has been cancelled)
                               The status field is only included if this is configured. **Note**: differs from SHP-Exec since it's a real-time status
@@ -2621,6 +2627,8 @@ paths:
                             enum:
                               - 'N'
                               - I
+                              - R
+                              - K
                               - P
                               - S
                               - C

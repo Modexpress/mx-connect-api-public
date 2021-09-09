@@ -35,7 +35,7 @@
     },
     "DeliveryTime": {
       "type": "string",
-      "description": "Designation of the period in which the order must be executed:\n- D - Day (24H); send off to carrier within 1 working day, however, this will be overruled by a specified date (see attribute FirstDeliveryDate)\n- H - Pack and Hold; packaging within 1 or 2 working days, send off to carrier on specified date (see attribute FirstDeliveryDate)\n- N - Normal (48H); send off to carrier within 2 working days (not yet implemented)\n- L - Long-term (> 48H); order that can be planned (not yet implemented). \nIf no delivery time is indicated, **D** is the default. For delivery times **D** and **N**, the order must be received before the agreed cut-off time (on a working day) so that it can be send off to the carrier on time. Orders received after the cut-off time will be produced and send off to the carrier one working day later.\n"
+      "description": "Designation of the period in which the order must be executed:\n- D - Day (24H); send off to carrier within 1 working day, however, this will be overruled by a specified date (see attribute FirstDeliveryDate)\n- H - Pack and Hold; packaging within 1 or 2 working days, send off to carrier on specified date (see attribute FirstDeliveryDate)\n\nIf no delivery time is indicated, **D** is the default. For delivery time **D**, the order must be received before the agreed cut-off time (on a working day) so that it can be send off to the carrier on time. Orders received after the cut-off time will be produced and send off to the carrier one working day later.\n"
     },
     "OrderReference": {
       "type": "string",
@@ -49,36 +49,10 @@
     },
     "ShipmentCode": {
       "type": "string",
-      "description": "Designation of the desired transport for the order. A customer can agree to a default means of transport. This means of transport will then be used if no means of transport has been specified. If a means of transport has indeed been specified, it overrules the default means of transport. Possible values: \n- D01: DPD General account Modexpress Fashion\n- T06: PostNL General account Modexpress Fashion\n- U01: UPS General account Modexpress Fashion\n- DHL: DHL customer account\n- CBFC: CBF Self Collector\n- CBFF: CBF Standard (CBF arranges transport)\n- CBFR: CBF Reservation order with storage (Pack and Hold / postponement of shipment for a (non-) specific longer time)\n- CBFS: CBF Special customer with buffering on shipping floor (postponement of shipment for a short time)\n- CBFU: CBF UPS account customer\n- CBFX: CBF pre-advise customers (CBF will contact the recipient)\n",
-      "enum": [
-        "D01",
-        "T06",
-        "U01",
-        "DHL",
-        "CBFC",
-        "CBFF",
-        "CBFR",
-        "CBFS",
-        "CBFU",
-        "CBFX"
-      ]
+      "description": "Designation of the desired transport for the order. A customer can agree to a default means of transport. This means of transport will then be used if no means of transport has been specified. If a means of transport has indeed been specified, it overrules the default means of transport. Possible values: \n- D01: DPD General account Modexpress Fashion\n- T06: PostNL General account Modexpress Fashion\n- U01: UPS General account Modexpress Fashion\n- DHL: DHL customer account\n- CBFC: CBF Self Collector\n- CBFF: CBF Standard (CBF arranges transport)\n- CBFR: CBF Reservation order with storage (Pack and Hold / postponement of shipment for a (non-) specific longer time)\n- CBFS: CBF Special customer with buffering on shipping floor (postponement of shipment for a short time)\n- CBFU: CBF UPS account customer\n- CBFX: CBF pre-advise customers (CBF will contact the recipient)\n"
     },
     "ShipmentService": {
       "type": "string",
-      "enum": [
-        "CONNECT",
-        "EUROPLUS",
-        "FORYOU",
-        "EUROPL",
-        "CONRET",
-        "FORYOU_BUSPAKKET",
-        "FORYOU_PARCELSHOP",
-        "FORYOU-HANDT",
-        "CONNECTRETURN",
-        "EXPRESS",
-        "EUROPLUS",
-        "EXPRESS SAVER"
-      ],
       "description": "A non-standard service level to be used for transport (instead of the standard agreed transport) – for example, insured transport or transport with delivery instructions. The services/products are carrier-dependent. A choice can be made from the options offered by the carrier.\n",
       "maxLength": 20
     },
@@ -90,7 +64,7 @@
     "ReturnShipmentService": {
       "type": "string",
       "description": "A non-standard service level to be used for return transport (instead of the standard agreed transport). Relevant in case the delivery has to contain a return label.",
-      "maxLength": 5
+      "maxLength": 20
     },
     "FirstDeliveryDate": {
       "type": "string",
@@ -105,18 +79,7 @@
     "SubType": {
       "type": "string",
       "maxLength": 10,
-      "description": "Further subdivision of the type of the order. For example: \n- PRE-ORDER and RE-ORDER can be relevant for orders of type LB2BF\n- WEB-ORDER can be relevant for orders of type LB2CF\n- ZALANDO can be relevant for orders of type LB2CF to indicate that an e-commerce platform specific packing slip must be enclosed\n",
-      "enum": [
-        "PRE-ORDER",
-        "RE-ORDER",
-        "WEB-ORDER",
-        "ZALANDO",
-        "ADAM",
-        "AMAZON",
-        "BOL",
-        "BREUNING",
-        "SALEPACK"
-      ]
+      "description": "Further subdivision of the type of the order. For example: \n- PRE-ORDER and RE-ORDER can be relevant for orders of type LB2BF\n- WEB-ORDER can be relevant for orders of type LB2CF\n- ZALANDO can be relevant for orders of type LB2CF to indicate that an e-commerce platform specific packing slip must be enclosed\n"
     },
     "PartialDelivery": {
       "type": "string",
@@ -221,13 +184,13 @@
             },
             "CurrencyCode": {
               "type": "string",
-              "description": "ISO 4217 Code indicating the currency in which the amount is expressed.",
+              "description": "ISO-4217 Code indicating the currency in which the amount is expressed.",
               "minLength": 3,
               "maxLength": 3
             },
             "VATCode": {
               "type": "string",
-              "description": "Code that indicates whether the amount/price is including (I) or excluding (E) VAT. For customs usage the prices are exclusive of VAT.",
+              "description": "Code that indicates whether the amount/price is including (I) or excluding (E) VAT.\nFor customs usage the prices are exclusive of VAT.\n",
               "minLength": 1,
               "maxLength": 1,
               "enum": [
@@ -256,7 +219,10 @@
           "type": "array",
           "items": {
             "required": [
-              "Type"
+              "Type",
+              "AddressLine1",
+              "City",
+              "Country"
             ],
             "type": "object",
             "properties": {
@@ -366,7 +332,13 @@
                 "type": "string",
                 "description": "ISO 639-2 ALPHA-3 country code. The language of the documents to be included with the shipment (packing slip). ISO 639-2 codes are used. Only applicable for the %Address party types. If multiple addresses are indicated, the LanguageCode to be used is: 1) DropSiteAddress, if address not specified or no language code specified, then 2) ReceiverAddress, if address not specified or no language code specified, then 3) BuyerAddress, if address not specified or no language code specified, then 4) InvoiceAddress, if address not specified or no language code specified, then 5) Last address mentioned in the Order.Party, if no language code specified, then 6) By default the language code is NLD.\n",
                 "minLength": 3,
-                "maxLength": 3
+                "maxLength": 3,
+                "enum": [
+                  "NLD",
+                  "ENG",
+                  "DEU",
+                  "FRA"
+                ]
               }
             }
           }
@@ -410,7 +382,7 @@
             "Description": {
               "type": "string",
               "description": "Indication of the instruction by means of a description.\nAn example description is **packaging shipment in red wrapping paper**.\nIf no specific description is relevant than the instruction code must be declared.\nThis field is not used for Instructiontype FILE.\n",
-              "maxLength": 156
+              "maxLength": 70
             },
             "Info": {
               "type": "string",
@@ -515,7 +487,8 @@
               "properties": {
                 "RelationId": {
                   "type": "string",
-                  "description": "Identification of the party that is the owner of the article to be delivered."
+                  "description": "Identification of the party that is the owner of the article to be delivered.",
+                  "maxLength": 40
                 },
                 "RelationType": {
                   "type": "string",
@@ -564,7 +537,7 @@
                     "Description": {
                       "type": "string",
                       "description": "Indication of the instruction by means of a description.\nAn example description is **packaging shipment in red wrapping paper**.\nIf no specific description is relevant than the instruction code must be declared.\nThis field is not used for Instructiontype FILE.\n",
-                      "maxLength": 156
+                      "maxLength": 70
                     },
                     "Info": {
                       "type": "string",
@@ -594,10 +567,9 @@
                     "properties": {
                       "Type": {
                         "type": "string",
-                        "description": "The indication of a price that is relevant for the SKU: - Type 'Exportvalue' is used for the exportinvoice,  - Type 'Custom' is used for customs declaration,  - Type 'Purchase' is used to be the purchase price., - Type 'Sale' is meant to be the price to pay,  - Type 'From' is meant te be the original sale price (from price),  - Type 'Srp' is the Suggested Retail Price.",
+                        "description": "The indication of a price that is relevant for the SKU:\n\n- Type 'Exportvalue' is used for the exportinvoice\n- Type 'Purchase' is used to be the purchase price\n- Type 'Sale' is meant to be the price to pay\n- Type 'From' is meant te be the original sale price (from price)\n- Type 'Srp' is the Suggested Retail Price\n",
                         "enum": [
                           "Exportvalue",
-                          "Custom",
                           "Purchase",
                           "Sale",
                           "From",
@@ -613,23 +585,33 @@
                       },
                       "CurrencyCode": {
                         "type": "string",
-                        "description": "Code indicating the currency in which the price is expressed."
+                        "description": "ISO-4217 Code indicating the currency in which the amount is expressed.",
+                        "minLength": 3,
+                        "maxLength": 3
                       },
                       "Country": {
                         "type": "string",
-                        "description": "Code indicating the country for which the price is valid."
+                        "description": "ISO 3166 ALPHA-2 country code. The country that applies to the party. The designation should be made according to iso2 code. Order of display on documents: line 8 (country name will be displayed). Mandatory for the %Address party types.\n",
+                        "minLength": 2,
+                        "maxLength": 2
                       },
                       "Region": {
                         "type": "string",
-                        "description": "Code indicating the region for which the price is valid (for example: EU)"
+                        "description": "Code indicating the region for which the price is valid (for example: EU)\n"
                       },
                       "VATCode": {
                         "type": "string",
-                        "description": "Code that indicates whether the amount/price is including (I) or excluding (E) VAT. For customs usage the prices are exclusive of VAT."
+                        "description": "Code that indicates whether the amount/price is including (I) or excluding (E) VAT.\nFor customs usage the prices are exclusive of VAT.\n",
+                        "minLength": 1,
+                        "maxLength": 1,
+                        "enum": [
+                          "I",
+                          "E"
+                        ]
                       },
                       "VATPercentage": {
                         "type": "number",
-                        "description": "BTW percentage",
+                        "description": "VAT percentage",
                         "format": "double",
                         "minimum": -1.7976931348623157e+308,
                         "maximum": 1.7976931348623157e+308

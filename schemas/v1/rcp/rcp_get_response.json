@@ -19,7 +19,7 @@
           "type": "object",
           "properties": {
             "Id": {
-              "description": "The identification that the ordering party uses for the order.\n\nIn some cases, an id is specified that Modexpress has\nassigned itself, namely when it involves:\n\n- a registered order for which the ordering party has not\nspecified an id that Modexpress can use as a unique id\n\n- a blind receipt\n\n- an automatically created return order (based on an\nexecuted shipment)\n",
+              "description": "The identification that the ordering party uses for the order. In some cases, an id is specified that Modexpress has\nassigned itself, namely when it involves:\n- a registered order for which the ordering party has not specified an id that Modexpress can use as a unique id\n- a blind receipt\n- an automatically created return order (based on an executed shipment)\n",
               "type": "string",
               "maxLength": 25
             },
