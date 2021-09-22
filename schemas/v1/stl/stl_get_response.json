@@ -1,0 +1,110 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "boolean",
+      "enum": [
+        true,
+        false
+      ]
+    },
+    "message": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "DateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "TotalItems": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The total number of items"
+        },
+        "TotalPages": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The total number of pages. Values in the range of 1 up to `TotalPages` can be used for the query string parameter `page`.\n"
+        },
+        "PageSize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "The maximum number of items to retrieve per request."
+        },
+        "CurrentPage": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The value submitted in the query string parameter `page`."
+        },
+        "InventoryLevels": {
+          "type": "object",
+          "properties": {
+            "InventoryLevel": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "SequenceNumber": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "DateTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp of the transaction"
+                  },
+                  "StockType": {
+                    "description": "Designation of the type of stock that was delivered.\n- RGL\n- RGLRJC\nOther types assigned by Modexpress\n",
+                    "type": "string",
+                    "maxLength": 10
+                  },
+                  "QuantityInStock": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "QuantityReserved": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "Article": {
+                    "type": "object",
+                    "properties": {
+                      "Id": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "Owner": {
+                    "type": "object",
+                    "properties": {
+                      "RelationId": {
+                        "type": "string",
+                        "description": "Identification of the party that is the owner of the article to be delivered.",
+                        "maxLength": 40
+                      },
+                      "RelationType": {
+                        "type": "string",
+                        "description": "Indication whether the Relation_Id is an internal or external id.\n- internal id: the id assigned and used by Modexpress\n- external id: the id assigned and used by the ordering party\n",
+                        "enum": [
+                          "INT",
+                          "EXT"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

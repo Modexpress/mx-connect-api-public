@@ -2828,6 +2828,334 @@ paths:
                   code: InvalidAddress
                   nl: De straatnaam ontbreekt in het adres van de ontvanger
                   en: The receiver address is missing a value for street name
+  /stl:
+    get:
+      tags:
+        - STL
+      summary: Retrieve the stock level
+      description: Retrieve the stock level
+      operationId: getStockLevel
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: The page to return items from. Default value is 1.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of TransactionLine items to return. Default and maximum value are 100.
+        - in: query
+          name: Id
+          schema:
+            type: string
+          description: Filter by SKU value
+        - in: query
+          name: Style
+          schema:
+            type: string
+          description: Filter by STYLE value
+        - in: query
+          name: StockType
+          schema:
+            type: string
+          description: Filter by STOCKTYPE value
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                externalDocs:
+                  url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v1/stl/stl_get_response.json'
+                  description: Response body **JSON schema**
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                    enum:
+                      - true
+                      - false
+                  message:
+                    type: string
+                    nullable: true
+                    example: null
+                  result:
+                    type: object
+                    properties:
+                      DateTime:
+                        type: string
+                        format: date-time
+                        example: '2021-09-21T10:40:02+02:00'
+                      TotalItems:
+                        type: integer
+                        minimum: 0
+                        description: The total number of items
+                        example: 3441
+                      TotalPages:
+                        type: integer
+                        minimum: 0
+                        description: |
+                          The total number of pages. Values in the range of 1 up to `TotalPages` can be used for the query string parameter `page`.
+                        example: 35
+                      PageSize:
+                        type: integer
+                        minimum: 0
+                        maximum: 100
+                        description: The maximum number of items to retrieve per request.
+                        example: 1
+                      CurrentPage:
+                        type: integer
+                        minimum: 0
+                        description: The value submitted in the query string parameter `page`.
+                        example: 1
+                      InventoryLevels:
+                        type: object
+                        properties:
+                          InventoryLevel:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                SequenceNumber:
+                                  type: integer
+                                  minimum: 1
+                                  example: 1
+                                DateTime:
+                                  type: string
+                                  format: date-time
+                                  description: The timestamp of the transaction
+                                  example: '2021-09-21T10:40:02+02:00'
+                                StockType:
+                                  description: |
+                                    Designation of the type of stock that was delivered.
+                                    - RGL
+                                    - RGLRJC
+                                    Other types assigned by Modexpress
+                                  type: string
+                                  maxLength: 10
+                                  example: RGL
+                                QuantityInStock:
+                                  type: integer
+                                  minimum: 0
+                                  example: 2
+                                QuantityReserved:
+                                  type: integer
+                                  minimum: 0
+                                  example: 2
+                                Article:
+                                  type: object
+                                  properties:
+                                    Id:
+                                      type: string
+                                      example: 230095003999OS
+                                Owner:
+                                  type: object
+                                  properties:
+                                    RelationId:
+                                      type: string
+                                      description: Identification of the party that is the owner of the article to be delivered.
+                                      example: 1111111
+                                      maxLength: 40
+                                    RelationType:
+                                      type: string
+                                      description: |
+                                        Indication whether the Relation_Id is an internal or external id.
+                                        - internal id: the id assigned and used by Modexpress
+                                        - external id: the id assigned and used by the ordering party
+                                      enum:
+                                        - INT
+                                        - EXT
+                                      example: INT
+        '404':
+          description: 'Unsuccessful operation due an invalid (combination of) value(s) for the query string parameters `Id`, `StockType`, and/or `Style`'
+          content:
+            application/json:
+              example:
+                status: false
+                result: null
+                error:
+                  code: product_option_id_fail
+                  en: ''
+                  nl: ''
+                  de: ''
+                  fr: ''
+  /stm:
+    get:
+      tags:
+        - STM
+      summary: Retrieve the stock mutations
+      description: Retrieve the stock mutations
+      operationId: getStockMutations
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: The page to return items from. Default value is 1.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of TransactionLine items to return. Default and maximum value are 100.
+        - in: query
+          name: Id
+          schema:
+            type: string
+          description: Filter by SKU value
+        - in: query
+          name: Style
+          schema:
+            type: string
+          description: Filter by STYLE value
+        - in: query
+          name: StockType
+          schema:
+            type: string
+          description: Filter by STOCKTYPE value
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                externalDocs:
+                  url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v1/stm/stm_get_response.json'
+                  description: Response body **JSON schema**
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                    enum:
+                      - true
+                      - false
+                  message:
+                    type: string
+                    nullable: true
+                    example: null
+                  result:
+                    type: object
+                    properties:
+                      DateTime:
+                        type: string
+                        format: date-time
+                        example: '2021-09-21T10:40:02+02:00'
+                      TotalItems:
+                        type: integer
+                        minimum: 0
+                        description: The total number of items
+                        example: 3441
+                      TotalPages:
+                        type: integer
+                        minimum: 0
+                        description: |
+                          The total number of pages. Values in the range of 1 up to `TotalPages` can be used for the query string parameter `page`.
+                        example: 35
+                      PageSize:
+                        type: integer
+                        minimum: 0
+                        maximum: 100
+                        description: The maximum number of items to retrieve per request.
+                        example: 1
+                      CurrentPage:
+                        type: integer
+                        minimum: 0
+                        description: The value submitted in the query string parameter `page`.
+                        example: 1
+                      Transactions:
+                        type: object
+                        properties:
+                          Transaction:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                Id:
+                                  type: integer
+                                  example: 1
+                                TransactionLines:
+                                  type: object
+                                  properties:
+                                    TransactionLine:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          SequenceNumber:
+                                            type: integer
+                                            minimum: 1
+                                            example: 1
+                                          DateTime:
+                                            type: string
+                                            format: date-time
+                                            description: The timestamp of the transaction
+                                            example: '2021-09-21T10:40:02+02:00'
+                                          TransactionLineType:
+                                            type: string
+                                            enum:
+                                              - Mutation
+                                            example: Mutation
+                                          StockType:
+                                            description: |
+                                              Designation of the type of stock that was delivered.
+                                              - RGL
+                                              - RGLRJC
+                                              Other types assigned by Modexpress
+                                            type: string
+                                            maxLength: 10
+                                            example: RGL
+                                          TransactionSign:
+                                            type: string
+                                            enum:
+                                              - MINUS
+                                            example: MINUS
+                                          Reason:
+                                            type: string
+                                            nullable: true
+                                            example: null
+                                          Quantity:
+                                            type: integer
+                                            example: 2
+                                          Article:
+                                            type: object
+                                            properties:
+                                              Id:
+                                                type: string
+                                                example: 230095003999OS
+                                          Owner:
+                                            type: object
+                                            properties:
+                                              RelationId:
+                                                type: string
+                                                description: Identification of the party that is the owner of the article to be delivered.
+                                                example: 1111111
+                                                maxLength: 40
+                                              RelationType:
+                                                type: string
+                                                description: |
+                                                  Indication whether the Relation_Id is an internal or external id.
+                                                  - internal id: the id assigned and used by Modexpress
+                                                  - external id: the id assigned and used by the ordering party
+                                                enum:
+                                                  - INT
+                                                  - EXT
+                                                example: INT
+        '404':
+          description: 'Unsuccessful operation due an invalid (combination of) value(s) for the query string parameters `Id`, `StockType`, and/or `Style`'
+          content:
+            application/json:
+              example:
+                status: false
+                result: null
+                error:
+                  code: product_option_id_fail
+                  en: ''
+                  nl: ''
+                  de: ''
+                  fr: ''
 components:
   securitySchemes:
     bearerAuth:
