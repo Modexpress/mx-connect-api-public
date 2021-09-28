@@ -51,24 +51,27 @@
                 "type": "object",
                 "properties": {
                   "SequenceNumber": {
+                    "description": "The sequence number of the stock level.\n",
                     "type": "integer",
                     "minimum": 1
                   },
                   "DateTime": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "The timestamp of the transaction"
+                    "description": "Date + time of the stock level.\n"
                   },
                   "StockType": {
-                    "description": "Designation of the type of stock that was delivered.\n- RGL\n- RGLRJC\nOther types assigned by Modexpress\n",
+                    "description": "Designation of the type of stock. For details refer to the comment of attribute StockType in STM interface.\n- RGL\n- RGLRJC\nOther types assigned by Modexpress\n",
                     "type": "string",
                     "maxLength": 10
                   },
                   "QuantityInStock": {
+                    "description": "The number of items of the article that are present without taking outstanding orders into account.\nIt is possible that (part of) this number of items has been reserved for outstanding orders and is therefore no longer freely available for new orders. \nThis number of items is indicated as QuantityReserved. \nThe freely available stock of the article can therefore be defined as QuantityInStock minus QuantityReserved.\n",
                     "type": "integer",
                     "minimum": 0
                   },
                   "QuantityReserved": {
+                    "description": "The number of items of the article that have been reserved for outstanding orders (only outstanding orders known to Modexpress).\n",
                     "type": "integer",
                     "minimum": 0
                   },
@@ -76,7 +79,18 @@
                     "type": "object",
                     "properties": {
                       "Id": {
+                        "description": "The identification that the owner uses for the article.\n",
                         "type": "string"
+                      },
+                      "LotNumber": {
+                        "description": "The lot/batch number of the article.\n",
+                        "type": "string",
+                        "maxLength": 20
+                      },
+                      "Code": {
+                        "description": "A code used to recognise/identify the article. This is usually a code that is also affixed to the article as a barcode.\nIf several barcodes are known for the article one of these is used.\n",
+                        "type": "string",
+                        "maxLength": 35
                       }
                     }
                   },
@@ -85,7 +99,7 @@
                     "properties": {
                       "RelationId": {
                         "type": "string",
-                        "description": "Identification of the party that is the owner of the article to be delivered.",
+                        "description": "Identification of the party that is the owner of the article.",
                         "maxLength": 40
                       },
                       "RelationType": {

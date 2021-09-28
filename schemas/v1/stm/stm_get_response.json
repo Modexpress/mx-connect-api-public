@@ -62,45 +62,67 @@
                           "type": "object",
                           "properties": {
                             "SequenceNumber": {
+                              "description": "The sequence number of the line.",
                               "type": "integer",
                               "minimum": 1
                             },
                             "DateTime": {
                               "type": "string",
                               "format": "date-time",
-                              "description": "The timestamp of the transaction"
+                              "description": "Date + time of execution of the stock movement."
                             },
                             "TransactionLineType": {
                               "type": "string",
+                              "description": "Designation of the type of transaction:\n- PRERECPT; Pre-receipt of stock (not send by default)\n- PRERETRN; Pre-return receipt of stock (not send by default)\n- RECEIPT; Receipt of stock (not send by default, assumption RCP-exec is used)\n- RETURN; Return receipt of stock (not send by default, assumption RCP-exec is used)\n- SHIPMENT; Shipment of stock (not send by default, assumption SHP-exec is used)\n- MUTATION; Other stock movement or stock correction\n",
                               "enum": [
-                                "Mutation"
+                                "MUTATION",
+                                "PRERECPT",
+                                "PRERETRN",
+                                "RECEIPT",
+                                "RETURN",
+                                "SHIPMENT"
                               ]
                             },
                             "StockType": {
-                              "description": "Designation of the type of stock that was delivered.\n- RGL\n- RGLRJC\nOther types assigned by Modexpress\n",
+                              "description": "Designation of the type of stock. Using the stock type, it is possible to differentiate according to different types of stock that must be maintained separately for an article (both in the operation and administratively).\nThe standard stock types are (other types are possible):\n- RGL - regular stock (A-choice stock)\n- KWL - regular stock, blocked for quality control (not available for SHP)\n- BLK -  regular stock, blocked for other reason (not available for shipping)\n- RGLRJC - regular reject stock (B-choice stock)\n- KWLRJC - regular reject stock, blocked for quality control (not available for shipping)\n- BLKRJC - regular reject stock, blocked for other reason (not available for shipping)\n- INN - regular stock (A-choice stock), received in inbound area\n- INNRJC - regular reject stock (B-choice stock), received in inbound area\n- INR - regular stock (A-choice stock), received in return inbound area\n- INRRJC - regular reject stock (B-choice stock), received in return inbound area\nIf the received stock in the RCP-exec interface is used to add the stock in your ERP, the stock movements regarding the INN(RJC) and INR(RJC) stocktypes will not be sent. \nHowever, it is still possible there will be stock corrections regarding the INN(RJC) and INR(RJC) stocktypes. Depending on the handling of the stock in your ERP, these corrections should probably be made to the RGL(RJC) stock.\nOther types assigned by Modexpress\n",
                               "type": "string",
                               "maxLength": 10
                             },
                             "TransactionSign": {
                               "type": "string",
+                              "description": "Indication whether it involves an increase (+) or decrease (-/-) in the stock.\n",
                               "enum": [
+                                "PLUS",
                                 "MINUS"
                               ]
                             },
                             "Reason": {
+                              "description": "The reason for the transaction (only for type MUTATION and in case of a stock correction):\n- 2 -  Count discrepancy\n- 17 - Order pick count discrepancy\n- 18 - Order pick damaged\n- 26 - Cycle count discrepancy\n- 27 - Cycle count damaged\n- 28 - Reclassify stock\n- 29 - Destroy stock\n- 30 - Packaging material usage\n- 90 - Found stock\n- SY - Synchronisation correction (internal reason)\n",
                               "type": [
                                 "string",
                                 "null"
                               ]
                             },
                             "Quantity": {
+                              "description": "The number of items of the transaction line",
                               "type": "integer"
                             },
                             "Article": {
                               "type": "object",
                               "properties": {
                                 "Id": {
+                                  "description": "The identification that the owner uses for the article.",
                                   "type": "string"
+                                },
+                                "LotNumber": {
+                                  "description": "The lot/batch number of the article.",
+                                  "type": "string",
+                                  "maxLength": 20
+                                },
+                                "Code": {
+                                  "description": "A code used to recognise/identify the article. This is usually a code that is also affixed to the article as a barcode.\nIf several barcodes are known for the article one of these is used.\n",
+                                  "type": "string",
+                                  "maxLength": 35
                                 }
                               }
                             },
@@ -109,7 +131,7 @@
                               "properties": {
                                 "RelationId": {
                                   "type": "string",
-                                  "description": "Identification of the party that is the owner of the article to be delivered.",
+                                  "description": "Identification of the party that is the owner of the article.",
                                   "maxLength": 40
                                 },
                                 "RelationType": {
