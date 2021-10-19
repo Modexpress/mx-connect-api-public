@@ -378,6 +378,10 @@
                         "type": "string",
                         "maxLength": 50
                       },
+                      "InvoiceId": {
+                        "type": "string",
+                        "description": "The ID of the invoice"
+                      },
                       "Date": {
                         "description": "A relevant date for the type of financial information. In case of 'Invoice', this concerns the invoice date.\n",
                         "type": "string",
@@ -385,7 +389,10 @@
                       },
                       "Amount": {
                         "description": "The amount that applies to the type of financial information (so the invoice amount, the freight cost, the insurance cost).\n",
-                        "type": "number"
+                        "type": "number",
+                        "format": "double",
+                        "minimum": -1.7976931348623157e+308,
+                        "maximum": 1.7976931348623157e+308
                       },
                       "CurrencyCode": {
                         "type": "string",
@@ -422,13 +429,13 @@
                         "maximum": 999999999
                       },
                       "CountryOfOrigin": {
-                        "description": "The country of origin of the article to be delivered (country of production). Use an ISO-2 country code.",
+                        "description": "The country of origin of the article to be delivered (country of production). Use an ISO-2 country code.\n",
                         "type": "string",
                         "minLength": 2,
                         "maxLength": 2
                       },
                       "Prepacked": {
-                        "description": "Indication whether the delivered article, together with other articles, has been packed in secondary packaging (for example, size curve box) and must be removed from this packaging when it arrives.",
+                        "description": "Indication whether the delivered article, together with other articles, has been packed in secondary packaging (for example, size curve box) and must be removed from this packaging when it arrives.\n",
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 1,
@@ -438,7 +445,7 @@
                         ]
                       },
                       "LotNumber": {
-                        "description": "The lot/batch number of the SKU to be received.\r\nIt is possible to have different types of stock for a SKU (attribute StockType). In addition, there may be a distinction between different lots/batches for the stock regarding a type (both in the operation and administratively).",
+                        "description": "The lot/batch number of the SKU to be received.\\r\\nIt is possible to have different types of stock for a SKU (attribute StockType). In addition, there may be a distinction between different lots/batches for the stock regarding a type (both in the operation and administratively).\n",
                         "type": "string",
                         "maxLength": 20
                       },
@@ -470,7 +477,10 @@
                                 },
                                 "Amount": {
                                   "description": "The amount that applies to the type of financial information (so the invoice amount).",
-                                  "type": "number"
+                                  "type": "number",
+                                  "format": "double",
+                                  "minimum": -1.7976931348623157e+308,
+                                  "maximum": 1.7976931348623157e+308
                                 },
                                 "CurrencyCode": {
                                   "type": "string",

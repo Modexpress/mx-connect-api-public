@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Modexpress MX Connect REST API v1
   description: Modexpress MX Connect REST API to manage the order lifecycle
-  version: 1.0.0
+  version: 1.1.0
 paths:
   /sku:
     post:
@@ -248,6 +248,41 @@ paths:
                                       type: integer
                                       minimum: 1
                                       maximum: 9999
+                                    Tarriccode:
+                                      description: |
+                                        The tariff code intended for the classification of goods at customs
+                                      type: string
+                                      example: 6110.2099.00
+                                    CountryOfOrigin:
+                                      description: The country of origin of the SKU. Use ISO-2 country code.
+                                      type: string
+                                      minLength: 2
+                                      maxLength: 2
+                                      example: NL
+                                    PackagingUnits:
+                                      type: object
+                                      properties:
+                                        PackagingUnit:
+                                          type: array
+                                          items:
+                                            type: object
+                                            properties:
+                                              Type:
+                                                description: null
+                                                type: string
+                                                enum:
+                                                  - PIECE
+                                                  - BOX
+                                                example: PIECE
+                                              Quantity:
+                                                type: integer
+                                                minimum: 1
+                                                example: 1
+                                                description: null
+                                              Weight:
+                                                type: number
+                                                multipleOf: 0.001
+                                                example: 3
                                   required:
                                     - Type
                                     - Value
@@ -807,6 +842,10 @@ paths:
                                       A relevant description for the type of financial information. In case of type 'Invoice', this concerns the invoice number (for customs declaration, the invoice number is limited to format A35).
                                     type: string
                                     maxLength: 50
+                                  InvoiceId:
+                                    type: string
+                                    example: FKT3456790-23
+                                    description: The ID of the invoice
                                   Date:
                                     description: |
                                       A relevant date for the type of financial information. In case of 'Invoice', this concerns the invoice date.
@@ -816,6 +855,8 @@ paths:
                                     description: |
                                       The amount that applies to the type of financial information (so the invoice amount, the freight cost, the insurance cost).
                                     type: number
+                                    format: double
+                                    example: '2378,00'
                                   CurrencyCode:
                                     type: string
                                     description: ISO-4217 Code indicating the currency in which the amount is expressed.
@@ -845,13 +886,15 @@ paths:
                                     minimum: 1
                                     maximum: 999999999
                                   CountryOfOrigin:
-                                    description: The country of origin of the article to be delivered (country of production). Use an ISO-2 country code.
+                                    description: |
+                                      The country of origin of the article to be delivered (country of production). Use an ISO-2 country code.
                                     type: string
                                     minLength: 2
                                     maxLength: 2
                                     example: NL
                                   Prepacked:
-                                    description: 'Indication whether the delivered article, together with other articles, has been packed in secondary packaging (for example, size curve box) and must be removed from this packaging when it arrives.'
+                                    description: |
+                                      Indication whether the delivered article, together with other articles, has been packed in secondary packaging (for example, size curve box) and must be removed from this packaging when it arrives.
                                     type: string
                                     minLength: 1
                                     maxLength: 1
@@ -859,7 +902,8 @@ paths:
                                       - 'Y'
                                       - 'N'
                                   LotNumber:
-                                    description: "The lot/batch number of the SKU to be received.\r\nIt is possible to have different types of stock for a SKU (attribute StockType). In addition, there may be a distinction between different lots/batches for the stock regarding a type (both in the operation and administratively)."
+                                    description: |
+                                      The lot/batch number of the SKU to be received.\r\nIt is possible to have different types of stock for a SKU (attribute StockType). In addition, there may be a distinction between different lots/batches for the stock regarding a type (both in the operation and administratively).
                                     type: string
                                     maxLength: 20
                                   AdditionalLineFinInfo:
@@ -889,9 +933,12 @@ paths:
                                                 A relevant date for the type of financial information. In case of 'Invoice', this concerns the invoice date.
                                               type: string
                                               format: date
+                                              example: 01-02-2021
                                             Amount:
                                               description: The amount that applies to the type of financial information (so the invoice amount).
                                               type: number
+                                              format: double
+                                              example: 12547.5
                                             CurrencyCode:
                                               type: string
                                               description: ISO-4217 Code indicating the currency in which the amount is expressed.
