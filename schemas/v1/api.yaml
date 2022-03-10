@@ -248,45 +248,9 @@ paths:
                                       type: integer
                                       minimum: 1
                                       maximum: 9999
-                                    Tarriccode:
-                                      description: |
-                                        The tariff code intended for the classification of goods at customs
-                                      type: string
-                                      example: 6110.2099.00
-                                    CountryOfOrigin:
-                                      description: The country of origin of the SKU. Use ISO-2 country code.
-                                      type: string
-                                      minLength: 2
-                                      maxLength: 2
-                                      example: NL
-                                    PackagingUnits:
-                                      type: object
-                                      properties:
-                                        PackagingUnit:
-                                          type: array
-                                          items:
-                                            type: object
-                                            properties:
-                                              Type:
-                                                description: null
-                                                type: string
-                                                enum:
-                                                  - PIECE
-                                                  - BOX
-                                                example: PIECE
-                                              Quantity:
-                                                type: integer
-                                                minimum: 1
-                                                example: 1
-                                                description: null
-                                              Weight:
-                                                type: number
-                                                multipleOf: 0.001
-                                                example: 3
                                   required:
                                     - Type
                                     - Value
-                                  additionalProperties: false
                             additionalProperties: false
                           Composition:
                             description: |
@@ -3085,6 +3049,20 @@ paths:
           schema:
             type: string
           description: Filter by STOCKTYPE value
+        - in: query
+          name: FromDate
+          schema:
+            type: string
+          description: |
+            Filter by From Date value. 
+            Example 2021-10-01T00:00:00 or 2021-10-01 00:00:00.
+        - in: query
+          name: ToDate
+          schema:
+            type: string
+          description: |
+            Filter by To Date value. 
+            Example 2021-10-01T00:00:00 or 2021-10-01 00:00:00.
       responses:
         '200':
           description: successful operation

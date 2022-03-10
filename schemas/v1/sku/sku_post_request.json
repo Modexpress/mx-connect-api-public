@@ -241,53 +241,12 @@
                           "type": "integer",
                           "minimum": 1,
                           "maximum": 9999
-                        },
-                        "Tarriccode": {
-                          "description": "The tariff code intended for the classification of goods at customs\n",
-                          "type": "string"
-                        },
-                        "CountryOfOrigin": {
-                          "description": "The country of origin of the SKU. Use ISO-2 country code.",
-                          "type": "string",
-                          "minLength": 2,
-                          "maxLength": 2
-                        },
-                        "PackagingUnits": {
-                          "type": "object",
-                          "properties": {
-                            "PackagingUnit": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "Type": {
-                                    "description": null,
-                                    "type": "string",
-                                    "enum": [
-                                      "PIECE",
-                                      "BOX"
-                                    ]
-                                  },
-                                  "Quantity": {
-                                    "type": "integer",
-                                    "minimum": 1,
-                                    "description": null
-                                  },
-                                  "Weight": {
-                                    "type": "number",
-                                    "multipleOf": 0.001
-                                  }
-                                }
-                              }
-                            }
-                          }
                         }
                       },
                       "required": [
                         "Type",
                         "Value"
-                      ],
-                      "additionalProperties": false
+                      ]
                     }
                   }
                 },
