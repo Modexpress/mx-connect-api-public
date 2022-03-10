@@ -1,0 +1,124 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "boolean",
+      "enum": [
+        true,
+        false
+      ]
+    },
+    "message": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "DateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "TotalItems": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The total number of items"
+        },
+        "TotalPages": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The total number of pages. Values in the range of 1 up to `TotalPages` can be used for the query string parameter `page`.\n"
+        },
+        "PageSize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "The maximum number of items to retrieve per request."
+        },
+        "CurrentPage": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The value submitted in the query string parameter `page`."
+        },
+        "InventoryLevels": {
+          "type": "object",
+          "properties": {
+            "InventoryLevel": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "SequenceNumber": {
+                    "description": "The sequence number of the stock level.\n",
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "DateTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date + time of the stock level.\n"
+                  },
+                  "StockType": {
+                    "description": "Designation of the type of stock. For details refer to the comment of attribute StockType in STM interface.\n- RGL\n- RGLRJC\nOther types assigned by Modexpress\n",
+                    "type": "string",
+                    "maxLength": 10
+                  },
+                  "QuantityInStock": {
+                    "description": "The number of items of the article that are present without taking outstanding orders into account.\nIt is possible that (part of) this number of items has been reserved for outstanding orders and is therefore no longer freely available for new orders. \nThis number of items is indicated as QuantityReserved. \nThe freely available stock of the article can therefore be defined as QuantityInStock minus QuantityReserved.\n",
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "QuantityReserved": {
+                    "description": "The number of items of the article that have been reserved for outstanding orders (only outstanding orders known to Modexpress).\n",
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "Article": {
+                    "type": "object",
+                    "properties": {
+                      "Id": {
+                        "description": "The identification that the owner uses for the article.\n",
+                        "type": "string"
+                      },
+                      "LotNumber": {
+                        "description": "The lot/batch number of the article.\n",
+                        "type": "string",
+                        "maxLength": 20
+                      },
+                      "Code": {
+                        "description": "A code used to recognise/identify the article. This is usually a code that is also affixed to the article as a barcode.\nIf several barcodes are known for the article one of these is used.\n",
+                        "type": "string",
+                        "maxLength": 35
+                      }
+                    }
+                  },
+                  "Owner": {
+                    "type": "object",
+                    "properties": {
+                      "RelationId": {
+                        "type": "string",
+                        "description": "Identification of the party that is the owner of the article.",
+                        "maxLength": 40
+                      },
+                      "RelationType": {
+                        "type": "string",
+                        "description": "Indication whether the Relation_Id is an internal or external id.\n- internal id: the id assigned and used by Modexpress\n- external id: the id assigned and used by the ordering party\n",
+                        "enum": [
+                          "INT",
+                          "EXT"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

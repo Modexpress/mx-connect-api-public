@@ -1,0 +1,411 @@
+{
+  "type": "object",
+  "required": [
+    "Articles"
+  ],
+  "properties": {
+    "SenderRelationId": {
+      "description": "Identification of the party that submits the SKU message.",
+      "type": "string",
+      "maxLength": 40
+    },
+    "OrderingPartyRelationId": {
+      "description": "Identification of the party on whose behalf the articles are registered.",
+      "type": "string",
+      "maxLength": 40
+    },
+    "Articles": {
+      "type": "object",
+      "required": [
+        "Article"
+      ],
+      "properties": {
+        "Article": {
+          "type": "array",
+          "required": [
+            "Id"
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "Id": {
+                "description": "The identification that the owner uses for the SKU. This is usually a logical Id. \nMany owners use the combination of STYLE+COLOUR+SIZE as a logical Id.\nIf the identification contains letters, they must be in uppercase. WMS interface limited to A24\nMandatory for Customs enabled customers\n",
+                "type": "string",
+                "maxLength": 24
+              },
+              "Description": {
+                "description": "The description of the SKU.",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 60
+              },
+              "StorageType": {
+                "description": "Indication of the way the SKU is stored (hanging or flat).\nFP=Flat Pack\nGOH=Garments on Hanger\n",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 3,
+                "enum": [
+                  "FP",
+                  "GOH"
+                ]
+              },
+              "Weight": {
+                "description": "The weight of the SKU expressed in kilos.\nMandatory for Customs enabled customers\n",
+                "type": "number"
+              },
+              "Volume": {
+                "description": "The volume of the SKU expressed in litres.",
+                "type": "number"
+              },
+              "Length": {
+                "description": "The length of the SKU expressed in millimetres.",
+                "type": "number"
+              },
+              "Width": {
+                "description": "The width of the SKU expressed in millimetres.",
+                "type": "number"
+              },
+              "Height": {
+                "description": "The height of the SKU expressed in millimetres.",
+                "type": "number"
+              },
+              "CountryOfOrigin": {
+                "description": "The country of origin of the SKU. Use ISO-2 country code.\nMandatory for Customs enabled customers\n",
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2
+              },
+              "Owner": {
+                "type": "object",
+                "minProperties": 2,
+                "maxProperties": 2,
+                "properties": {
+                  "RelationId": {
+                    "description": "Identification of the party that must be regarded as being the owner of the article. Id assigned by Modexpress.",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                  },
+                  "RelationType": {
+                    "description": "Indication whether the Relation_Id is an internal or external id.\n- internal id: the id assigned and used by Modexpress\n- external id: the id assigned and used by the ordering party\n",
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 3,
+                    "enum": [
+                      "EXT",
+                      "INT"
+                    ]
+                  }
+                },
+                "required": [
+                  "RelationId",
+                  "RelationType"
+                ],
+                "additionalProperties": false
+              },
+              "Identifications": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "properties": {
+                    "Code": {
+                      "description": "A code on the basis of which the article can be recognised in the operation. \nThis is usually a code that is applied to the article as a barcode.\n",
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 35
+                    }
+                  },
+                  "required": [
+                    "Code"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "Grouping": {
+                "type": "object",
+                "properties": {
+                  "Group": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Type": {
+                          "description": "The indication of a group/classification in which the SKU has been included, for example:\n- AFDKD: department_code; SKU classification according to departments\n- LEVKD: supplier_code; SKU classification according to suppliers\n- PRTTYPE: product_type; SKU classification according to product type\n- THEME: product_style; SKU classification according to product theme\n\nOnly types agreed in advance with Modexpress can be indicated. A group/classification is included if it can be used in the operation to realise a particular control or if it is relevant as information to be displayed in documents or in the operation. The types agreed with Modexpress.\n",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 8,
+                          "enum": [
+                            "AFDKD",
+                            "LEVKD",
+                            "PRTTYPE",
+                            "THEME"
+                          ]
+                        },
+                        "Value": {
+                          "description": "The value that applies to the SKU for the group/classification of the indicated type.\nIf these values are relevant for controlling the operation (WMS), they should be coordinated in advance with Modexpress.\n",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 8
+                        },
+                        "Description": {
+                          "description": "The description/name that corresponds with the value of the type. \nParticularly if the value of the type is a code, it can also be relevant to specify a name/description for this code.\n",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 240
+                        }
+                      },
+                      "required": [
+                        "Type",
+                        "Value"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "AdditionalInfo": {
+                "type": "object",
+                "properties": {
+                  "Info": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Type": {
+                          "description": "The indication of an information element that is relevant for the SKU, for example:\n- MATERIAL: material name\n- FABRIC: Fabric composition\n- BRANDNM: Name of the brand\n\nOnly types agreed in advance with Modexpress can be indicated. An information element is included if it must be indicated in a document or if it is relevant in the operation (for example to display when executing an order related to the SKU). The types agreed with Modexpress.\n",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 8,
+                          "enum": [
+                            "MATERIAL",
+                            "FABRIC",
+                            "BRANDNM"
+                          ]
+                        },
+                        "Value": {
+                          "description": "The value that applies to the SKU for the specified type of information.",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 250
+                        }
+                      },
+                      "required": [
+                        "Type",
+                        "Value"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "Characteristics": {
+                "type": "object",
+                "properties": {
+                  "Characteristic": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Type": {
+                          "description": "A characteristic that is relevant for the SKU.",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 10,
+                          "enum": [
+                            "STYLE",
+                            "COLOUR",
+                            "SIZE",
+                            "SIZE2",
+                            "SEASON",
+                            "TARIC"
+                          ]
+                        },
+                        "Value": {
+                          "description": "The value that applies to the SKU for the specified type:\n- STYLE (**maximum length**: 40): the style name/number of the SKU\n- COLOUR (**maximum length**: 50); the colour code of the SKU\n- SIZE (**maximum length**: 35); the size of the SKU (the size code)\n- SIZE2 (**maximum length**: 35); a second size of the SKU (for example measure of length)\n- SEASON (**maximum length**: 35); the season of the SKU\n- TARIC (**maximum length**: 10); the TARIC of the SKU (part of it is the HS code), The TARIC is 10 positions or 8 positions supplemented with '00'.\n  A 10 positions Taric is mandatory for Customs enabled customers.\n",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 70
+                        },
+                        "Description": {
+                          "description": "The description/name that corresponds with the value of the type. For example the colour name for the colour code.\nFor printing documents the maximum length in use is:\n- Style (**maximum length**: 60)\n- Colour (**maximum length**: 30)\n\nSIZE, SIZE2, SEASON, TARIC, CUSTSTYLE; not in use\n",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 240
+                        },
+                        "SortingNumber": {
+                          "description": "A number that specifies the sequence of the size codes (relevant for type SIZE/SIZE2). The number is used to specify the display order on the packing slip.\\r\\n\\r\\nIn case of type SIZE/SIZE2 the sortingnumber of the size codes (in attribute value) is particularly relevant if the size codes cannot be logically sorted. For example in case of size codes like XS, X, M, XXL.\\r\\nIf there are several size groups in use, the sortingnumber must be unique for the size codes within the size group. However the size group is not known in the Modexpress SKU registration, so for the packing slip the SKU style is used to determine the size codes that have to be used on the packing slip. The sortingnumber is used to determine the order of the size codes on the packing slip.\n",
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9999
+                        }
+                      },
+                      "required": [
+                        "Type",
+                        "Value"
+                      ]
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "Composition": {
+                "description": "Any SKUs that are part of the SKU (bill of material). For a pre-pack SKU, for example, it can be indicated here which SKUs are part of the pre-pack SKU. \nThis is on condition that these SKUs are individually known and were therefore registered earlier.\n",
+                "type": "object",
+                "properties": {
+                  "Part": {
+                    "type": "array",
+                    "required": [
+                      "Id",
+                      "PartQuantity"
+                    ],
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Id": {
+                          "description": "The reference to a SKU that is part of the current SKU; the reference is made using the Id of the SKU. \nWMS interface limited to A24.\n",
+                          "type": "string",
+                          "maxLength": 250
+                        },
+                        "Code": {
+                          "description": "The reference to a SKU that is part of the current SKU; the reference is made using the identification (barcode) of the SKU.\nA condition for the use of this reference is that the SKU can be clearly determined on the basis of this identification (barcode).\n",
+                          "type": "string",
+                          "maxLength": 35
+                        },
+                        "PartQuantity": {
+                          "description": "The number of items of the SKU in the current SKU.",
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 999
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              },
+              "Prices": {
+                "type": "object",
+                "properties": {
+                  "Price": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Type": {
+                          "description": "A price that is relevant for the SKU.\nThe 'Exportvalue' is used for the exportinvoice.\nThe type 'Sale' is meant to be the price to pay.\nThe type 'From' is meant te be the original sale price (from price).\n",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 15,
+                          "enum": [
+                            "Exportvalue",
+                            "Purchase",
+                            "Sale",
+                            "From"
+                          ]
+                        },
+                        "Amount": {
+                          "description": "The amount indicating the price (regarding 1 single unit of the SKU). (N9,2 = Up to 7 digits before the comma and 2 decimals)\n",
+                          "type": "number"
+                        },
+                        "CurrencyCode": {
+                          "type": "string",
+                          "description": "ISO-4217 Code indicating the currency in which the amount is expressed.",
+                          "minLength": 3,
+                          "maxLength": 3
+                        },
+                        "Country": {
+                          "type": "string",
+                          "description": "ISO 3166 ALPHA-2 country code. The country that applies to the party. The designation should be made according to iso2 code. \nOrder of display on documents: line 8 (country name will be displayed). Mandatory for the %Address party types.\n",
+                          "minLength": 2,
+                          "maxLength": 2
+                        },
+                        "Region": {
+                          "description": "Code indicating the region for which the price is valid (for example: EU)\n",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 25
+                        },
+                        "VATCode": {
+                          "description": "Code that indicates whether the price is including (I) or excluding (E) VAT.\nFor customs usage prices are exclusive of VAT.\n",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1,
+                          "enum": [
+                            "I",
+                            "E"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "Type",
+                        "Amount",
+                        "CurrencyCode"
+                      ]
+                    }
+                  }
+                }
+              },
+              "PackagingUnits": {
+                "type": "object",
+                "properties": {
+                  "PackagingUnit": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Type": {
+                          "description": "A packaging unit that is used for an article (SKU).",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 15,
+                          "enum": [
+                            "PIECE",
+                            "BOX"
+                          ]
+                        },
+                        "Quantity": {
+                          "description": "The number of pieces (SKU's) in the unit \n(in case of type PIECE the quantity is 1)\n",
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 999999
+                        },
+                        "Weight": {
+                          "description": "The weight of the unit expressed in kilos",
+                          "type": "number"
+                        },
+                        "Volume": {
+                          "description": "The volume of the unit expressed in litres",
+                          "type": "number"
+                        },
+                        "Length": {
+                          "description": "The length of the unit expressed in millimetres",
+                          "type": "number"
+                        },
+                        "Width": {
+                          "description": "The width of the unit expressed in millimetres",
+                          "type": "number"
+                        },
+                        "Height": {
+                          "description": "The height of the unit expressed in millimetres",
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "Type",
+                        "Quantity"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}
