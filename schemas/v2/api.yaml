@@ -49,13 +49,14 @@ paths:
                               The identification that the owner uses for the SKU. This is usually a logical Id. 
                               Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.
                               If the identification contains letters, they must be in uppercase. WMS interface limited to A24
-                              Mandatory for Customs enabled customers
                             type: string
                             maxLength: 24
                             example:
                               - STYLE-COLOUR-SIZE
                           Description:
-                            description: The description of the SKU.
+                            description: |
+                              The description of the SKU.
+                              Mandatory for Customs enabled customers
                             type: string
                             minLength: 1
                             maxLength: 60
@@ -548,6 +549,26 @@ paths:
                             For example, if the ordering party has any questions concerning the status of the order and that order cannot be identified by means of a unique id.
                           type: string
                           format: date
+                        MRN:
+                          description: |
+                            Inbound Movement Reference Number(MRN) if applicable and known at the time of sending the RCP message.
+                            This reference is assigned by the customs authorities and it uniquely identifies any movement going in our out of the EU.
+                          type: string
+                          minLength: 18
+                          maxLength: 18
+                        BondedAdministration:
+                          description: |
+                            Inbound in Bonded Warehouse administration
+                            Customer can opt for bonded warehouse administration for goods provinient from outside the EU (for goods from inside the EU community this field is no relevant). 
+                            Y - Received goods are taken into the bonded warehouse administration (default for Bonded enabled customers) 
+                            N - Received goods will be directly cleared into EU by arrival at Modexpress.
+
+                            Only applicable for Customs enabled Customers.
+                          type: string
+                          maxLength: 1
+                          enum:
+                            - 'Y'
+                            - 'N'
                         Parties:
                           type: object
                           properties:
@@ -559,15 +580,26 @@ paths:
                                   Type:
                                     description: |
                                       Designation of a party/address that applies to the order:
-                                      - ShipperAddress; the shipper/seller of the shipment (is required in case of customs declaration)
+                                       - SellerAddress; the shipper/seller of the shipment
+                                       - ExporterAddress; the exporter of the shipment (not necessarily the seller)
+                                       (when ExportAddress is not provided SellerAddress is used as ExporterAddress)
+
+                                       Mandatory for Customs enabled Customers.
+                                       "ShipperAddress" has been replaced with "SellerAddress" in this version of the RCP message. 
                                     type: string
                                     maxLength: 20
                                     enum:
-                                      - ShipperAddress
+                                      - SellerAddress
+                                      - ExporterAddress
                                   ExternalId:
                                     description: The Id that is used as the identification of the party/address.
                                     type: string
                                     maxLength: 35
+                                  EORI:
+                                    description: |
+                                      Supplier EORI number is mandatory for suppliers from EU, for non-EU suppliers with an invoice statement then is EORI also mandatory, however this will not be validated in the RCP message.  
+                                    type: string
+                                    maxLength: 25
                                   Name1:
                                     description: The name of the party.
                                     type: string
@@ -600,7 +632,9 @@ paths:
                                   Country:
                                     type: string
                                     description: |
-                                      ISO 3166 ALPHA-2 country code. The country that applies to the party. The designation should be made according to iso2 code. Order of display on documents: line 8 (country name will be displayed). Mandatory for the %Address party types.
+                                      ISO 3166 ALPHA-2 country code. The country that applies to the party. 
+                                      The designation should be made according to iso2 code. Order of display on documents: line 8 (country name will be displayed). 
+                                      Mandatory for the %Address party types.
                                     minLength: 2
                                     maxLength: 2
                                     example: NL
@@ -628,6 +662,55 @@ paths:
                                     description: Indication of the instruction by means of a description.
                                     type: string
                                     maxLength: 70
+                        CertificateInfo:
+                          type: object
+                          properties:
+                            Certificate:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  CertificateType:
+                                    description: |
+                                      Indication of the type of Certificate  information
+                                       - Type 'EUR.1' certificate
+                                      A EUR.1 certificate is only used for goods of preferential origin. 
+                                      To get a discount or exemption on import duties when imported from a contracting country, ask your supplier to enclose a EUR.1 certificate with the shipment.
+
+                                       - Type 'EUR-MED'
+                                      A EUR-MED certificate is a variant of the EUR.1 and is only valid if you trade with countries where the Pan-Euro-Mediterranean Agreement applies. 
+                                      This agreement makes it possible for raw materials and products of preferential origin from these countries to count towards the determination of origin (so-called cumulation). 
+                                      You use a EUR-MED instead of a EUR.1 and offers more options for re-export to another partner country within this country group.
+
+                                       - Type 'ATR'
+                                      An ATR certificate is a customs document that you can use for trade between countries from the EU and Turkey. 
+                                      The EU forms a customs union with Turkey, so you can import goods from Turkey without import duties. 
+                                      Origin means that the product was produced in Turkey or was previously imported into Turkey from another country. 
+                                      The Turkish origin is recorded in the ATR certificate. Your Turkish supplier requests the certificate from Turkish customs.
+
+                                       - Type 'CVO'
+                                      A Certificate of Origin (CVO) is proof of the origin of a product. 
+                                      A CVO contains the description and origin of your products, and the name and address details of the seller and buyer. 
+                                      In the Netherlands, the Chamber of Commerce confirms the origin on CVOs with a digital stamp and signature.
+
+                                      Up to 2 certificates can apply to the same ShipmentLine, the following combinations are possible:
+                                      - EUR.1 + CVO
+                                      - ATR + CVO
+                                      - EUR-MED + CVO
+                                    type: string
+                                    maxLength: 10
+                                    enum:
+                                      - EUR.1
+                                      - EUR-MED
+                                      - ATR
+                                      - CVO
+                                  CertificateNumber:
+                                    description: Certificate number/identification.
+                                    type: string
+                                    maxLength: 10
+                                  Docdata:
+                                    description: Base64 encoded PDF document.
+                                    type: string
                         PurchaseOrderLines:
                           type: object
                           properties:
@@ -761,54 +844,176 @@ paths:
                         IncoTerm:
                           description: |
                             A pre-defined commercial term published by the International Chamber of Commerce (ICC) relating to international commercial law. The Incoterms rules are intended primarily to clearly communicate the tasks, costs, and risks associated with the transportation and delivery of goods.
-                            - CFR - Cost and Freight
-                            - CIF - Cost, Insurance and Freight
-                            - CIP - Carriage and Insurance Paid
-                            - CPT - Carriage Paid To
-                            - DAF - Delivered At Frontier
-                            - DAP - Delivered At Place
-                            - DAT - Delivered At Terminal
-                            - DDP - Delivered Duty Paid
-                            - DDU - Delivered Duty Unpaid
-                            - DEQ - Delivered Ex Quay
-                            - DES - Delivered Ex Ship
-                            - EXW - Ex Works
-                            - FAS - Free Alongside Ship
-                            - FCA - Free Carrier
-                            - FOB - Free On Board
-                            - FOP - Free On Plane
-                            - FOR - Free on Rail
-                            - FOT - Free On Truck
-                          type: string
+
+                            EXW - Ex Works
+                            FCA - Free Carrier
+                            FAS - Free Alongside Ship (only allowed for Sea MeansOfTransportBorder)
+                            FOB - Free on Board  (only allowed for Sea MeansOfTransportBorder)
+                            CPT - Carriage Paid To
+                            CIP - Carriage and Insurance Paid To
+                            CFR - Cost and Freight  (only allowed for Sea MeansOfTransportBorder)
+                            CIF - Cost Insurance and Freight  (only allowed for Sea MeansOfTransportBorder)
+                            DAP - Delivered At Place
+                            DPU - Delivered at Place Unloaded
+                            DDP - Delivered Duty Paid
+
+                            2010 and 2020 Incoterms, older incoterms not supported anymore.
+                            Mandatory for Customs enabled Customers and when CountryOfDeparture = (outside EU)                      
+                            type: string
                           minLength: 3
                           maxLength: 3
-                          enum:
-                            - CFR
-                            - CIF
-                            - CIP
-                            - CPT
-                            - DAF
-                            - DAP
-                            - DAT
-                            - DDP
-                            - DDU
-                            - DEQ
-                            - DES
-                            - EXW
-                            - FAS
-                            - FCA
-                            - FOB
-                            - FOP
-                            - FOR
-                            - FOT
+                          enum: '-EXW -FCA -FAS -FOB -CPT -CIP -CFR -CIF -DAP -DPU -DDP'
                         IncoTermPlace:
-                          description: The agreed place of delivery/destination.
+                          description: |
+                            The agreed place of delivery/destination.
+                            Mandatory for Customs enabled Customers and when CountryOfDeparture = (outside EU) 
                           type: string
                           maxLength: 50
-                        FreightReference:
-                          description: An unique delivery number/reference for the customs declaration of the shipment.
+                        IncoTermCountry:
+                          description: |
+                            The agreed Country of delivery/destination.
+                            Mandatory for Customs enabled Customers and when CountryOfDeparture = (outside EU) 
+                            Use an ISO-2 country code. 
                           type: string
-                          maxLength: 14
+                          minLength: 2
+                          maxLength: 2
+                        FreightReference:
+                          description: |
+                            An unique delivery number/reference for the customs declaration of the shipment.
+                            Mandatory for Customs enabled Customers
+                          type: string
+                          maxLength: 22
+                        MeansOfTransportBorder:
+                          description: |
+                            Means of transport at border. Note: Until further notice this will be added manually by MX personnel in each import declaration. Code A27 list
+                            1 - Sea
+                            2 - Train
+                            3 - Road
+                            4 - Air
+                            Mandatory for Customs enabled Customers.
+                          type: integer
+                          minimum: 1
+                          maximum: 4
+                        TransportArrivalLicencePlate:
+                          description: |
+                            Transport identification by means of Licence Plate.
+                          type: string
+                          maxLength: 25
+                        Containers:
+                          description: |
+                            Containers information
+                            Only applicable for Customs enabled Customers
+                            Needed for Full Container Load (FCL)
+                            An inbound shipment cannot be spread over multiple containers (MX requirement), therefore only one container can be stated. This might change in the future
+                          type: object
+                          properties:
+                            Container:
+                              description: Container information
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  SequenceNumber:
+                                    description: |
+                                      Sequence number
+                                    type: integer
+                                    minimum: 1
+                                    maximum: 999
+                                  ContainerNumber:
+                                    description: |
+                                      Container number identification
+                                    type: string
+                                    maxLength: 17
+                                  SealNumber1:
+                                    type: string
+                                    description: Seal number identification
+                                    maxLength: 17
+                                  SealNumber2:
+                                    type: string
+                                    description: Additional seal number identification
+                                    maxLength: 17
+                                required:
+                                  - ContainerNumber
+                                  - SealNumber1
+                        ShipmentPackages:
+                          type: object
+                          description: ShipmentPackages composition. Mandatory for Customs enabled customers.
+                          properties:
+                            ShipmentPackage:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Type:
+                                    description: |
+                                      Indication of the type of packages. 
+
+                                      CT - Cardboard box
+                                      OH - Euro pallet
+                                      ED - Pallet box
+                                      OC - Chep pallet
+                                      PP - Pieces
+
+                                      PP should only be used to denote Hanging Goods.
+                                      Other types may be added at a later stage. 
+                                    type: string
+                                    maxLength: 10
+                                    enum:
+                                      - CT
+                                      - OH
+                                      - ED
+                                      - OC
+                                      - PP
+                                  Quantity:
+                                    description: |
+                                      Amount of packages
+                                    type: integer
+                                    minimum: 1
+                                    maximum: 999999999
+                                required:
+                                  - Type
+                                  - Quantity
+                        TransportDocuments:
+                          type: object
+                          properties:
+                            TransportDocument:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Type:
+                                    description: |
+                                      Indication of the type of documents.
+
+                                      - PL: PackingList -> N721
+                                      - BL: BillOfLading (Sea)->N705
+                                      - AWB: AirWayBill (Air)->N740
+                                      - CMR: Convention relative au Contrat de Transport International de Marchandises par Route (Road)->N730
+                                      - CIM: Contrat de Transport International ferroviaire des Marchandises (Rail) -> N720
+                                      - HWB: House(air)WayBill (in case of consolidation, Master (Air)Way Bill is applicable) -> N703
+
+                                      BL, AWB,  CIM or HWB is mandatory for Sea, Air and Rail transport modes + PL for inbound shipments coming from abroad (outside NL)
+                                    type: string
+                                    maxLength: 30
+                                    enum:
+                                      - PL
+                                      - BL
+                                      - AWB
+                                      - CMR
+                                      - CIM
+                                      - HWB
+                                  Identification:
+                                    description: |
+                                      Document identification
+                                    type: string
+                                    maxLength: 50
+                                  Docdata:
+                                    type: string
+                                    description: Base64 encoded PDF document
+                                required:
+                                  - Type
+                                  - Identification
+                                  - Docdata
                         AdditionalFinInfo:
                           type: object
                           properties:
@@ -821,8 +1026,8 @@ paths:
                                     description: |
                                       Indication of the type of financial information:
                                       - Type 'Invoice' is used for customs declaration
-                                      - Type ´Freightcost´ is used for customs declaration
-                                      - Type ´Insurancecost´ is used for customs declaration
+                                      - Type 'Freightcost' is used for customs declaration
+                                      - Type 'Insurancecost' is used for customs declaration
                                     type: string
                                     maxLength: 15
                                     enum:
@@ -855,8 +1060,55 @@ paths:
                                     minLength: 3
                                     maxLength: 3
                                     example: EUR
+                                  Docdata:
+                                    type: string
+                                    description: 'Base64 encoded PDF document, relevant for InfoType=Invoice'
                                 required:
                                   - InfoType
+                                InvoiceStatementInfo:
+                                  type: array
+                                  description: 'Invoice Statement information, if applicable in case of InfoType=Invoice'
+                                  items:
+                                    type: object
+                                    properties:
+                                      Type:
+                                        description: |
+                                          Indication of the type of InvoiceStatement  information:
+                                           - Type 'REX', Registered Exporter, 
+                                          With the status of REX, an exporter can put a so-called 'certificate of origin' on its invoices. This gives importers a preference when importing products into the European Union. A certificate of origin is valid for 12 months.
+                                          Companies can see in a database of the European Union whether an exporter is REX. After registration as a REX, the authorities no longer issue a Form A certificate.
+
+
+                                           - Type 'TE', Allowed Exporter
+                                          For companies that regularly export with a EUR.1 or EUR-MED document, who have a clear delivery program and have sufficient knowledge of import and export, there is the 'Toegelaten Exporteur' (TE) scheme. After an extensive application procedure, these exporters are granted an Authorized Exporter Self-Issuing Preferential Proofs of Origin license. From that moment on, they can use an invoice declaration instead of a EUR.1 or EUR-MED certificate. The license number is stated in this invoice declaration. The exporter can provide his sales invoice with this statement without the intervention of the Chamber of Commerce and present it to Dutch Customs in the country of destination. The function and responsibilities remain the same for all parties involved as for the use of EUR.1 or EUR-MED documents.
+
+                                           - Type 'PREF-ORG', Preferential OriginStatement for other than REX or TE Exporter. 
+                                          In case reduction of import duties is applicable. 
+                                          For 'PREF-ORG' LicenceNumber is optional
+
+                                          Only one InvoiceStatement (if applicable) type is allowed per Shipment 
+                                        type: string
+                                        maxLength: 10
+                                        enum:
+                                          - REX
+                                          - TE-EUR1
+                                          - TE-MED
+                                          - PREF-ORG
+                                      LicenceNumber:
+                                        type: string
+                                        description: |
+                                          InvoiceStatement Licence number
+
+                                          Mandatory in case of REX or TE-EUR1, TE-MED. 
+                                          For PREF-ORG, if the value of the inbound invoice is above 6000,- euro then this field is mandatory. 
+                                           - For Canada a Business Number must be used 
+                                           - For Japan a Corporate Number must be used 
+                                           - For Singapore a Unique Entity Number must be used 
+                                           - For United Kingdom an (UK)EORI Number must be used 
+                                           - For Vietnam it's not allowed to use a PREF-ORG when the value of the Invoice is above 6000,- euro.  
+                                        maxLength: 40
+                                      required:
+                                        - Type
                         ShipmentLines:
                           type: object
                           required:
@@ -898,6 +1150,12 @@ paths:
                                       The lot/batch number of the SKU to be received.\r\nIt is possible to have different types of stock for a SKU (attribute StockType). In addition, there may be a distinction between different lots/batches for the stock regarding a type (both in the operation and administratively).
                                     type: string
                                     maxLength: 20
+                                  GrossWeight:
+                                    description: |
+                                      Gross Weight per ShipmentLine (in Kg)
+                                    type: number
+                                    format: double
+                                    example: 12547.5
                                   AdditionalLineFinInfo:
                                     type: object
                                     properties:

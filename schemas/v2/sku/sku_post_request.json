@@ -29,12 +29,12 @@
             "type": "object",
             "properties": {
               "Id": {
-                "description": "The identification that the owner uses for the SKU. This is usually a logical Id. \nMany owners use the combination of STYLE+COLOUR+SIZE as a logical Id.\nIf the identification contains letters, they must be in uppercase. WMS interface limited to A24\nMandatory for Customs enabled customers\n",
+                "description": "The identification that the owner uses for the SKU. This is usually a logical Id. \nMany owners use the combination of STYLE+COLOUR+SIZE as a logical Id.\nIf the identification contains letters, they must be in uppercase. WMS interface limited to A24\n",
                 "type": "string",
                 "maxLength": 24
               },
               "Description": {
-                "description": "The description of the SKU.",
+                "description": "The description of the SKU.\nMandatory for Customs enabled customers\n",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 60
