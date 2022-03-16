@@ -41,6 +41,8 @@
       "properties": {
         "Party": {
           "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
           "items": {
             "required": [
               "Type",
