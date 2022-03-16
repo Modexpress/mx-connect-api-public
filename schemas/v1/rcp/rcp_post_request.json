@@ -378,10 +378,6 @@
                         "type": "string",
                         "maxLength": 50
                       },
-                      "InvoiceId": {
-                        "type": "string",
-                        "description": "The ID of the invoice"
-                      },
                       "Date": {
                         "description": "A relevant date for the type of financial information. In case of 'Invoice', this concerns the invoice date.\n",
                         "type": "string",
@@ -389,10 +385,7 @@
                       },
                       "Amount": {
                         "description": "The amount that applies to the type of financial information (so the invoice amount, the freight cost, the insurance cost).\n",
-                        "type": "number",
-                        "format": "double",
-                        "minimum": -1.7976931348623157e+308,
-                        "maximum": 1.7976931348623157e+308
+                        "type": "number"
                       },
                       "CurrencyCode": {
                         "type": "string",
@@ -477,10 +470,7 @@
                                 },
                                 "Amount": {
                                   "description": "The amount that applies to the type of financial information (so the invoice amount).",
-                                  "type": "number",
-                                  "format": "double",
-                                  "minimum": -1.7976931348623157e+308,
-                                  "maximum": 1.7976931348623157e+308
+                                  "type": "number"
                                 },
                                 "CurrencyCode": {
                                   "type": "string",
@@ -557,6 +547,7 @@
                       }
                     },
                     "required": [
+                      "Id",
                       "Quantity"
                     ]
                   }

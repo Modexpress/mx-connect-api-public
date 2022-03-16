@@ -177,12 +177,7 @@
                           "description": "The indication of an information element that is relevant for the SKU, for example:\n- MATERIAL: material name\n- FABRIC: Fabric composition\n- BRANDNM: Name of the brand\n\nOnly types agreed in advance with Modexpress can be indicated. An information element is included if it must be indicated in a document or if it is relevant in the operation (for example to display when executing an order related to the SKU). The types agreed with Modexpress.\n",
                           "type": "string",
                           "minLength": 1,
-                          "maxLength": 8,
-                          "enum": [
-                            "MATERIAL",
-                            "FABRIC",
-                            "BRANDNM"
-                          ]
+                          "maxLength": 8
                         },
                         "Value": {
                           "description": "The value that applies to the SKU for the specified type of information.",

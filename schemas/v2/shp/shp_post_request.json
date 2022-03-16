@@ -31,11 +31,13 @@
     },
     "Type": {
       "type": "string",
-      "description": "Designation of the order type. Only the types indicated by Modexpress are permitted:\n- LB2BF: delivery B2B Fashion\n- LB2CF: delivery B2C Fashion\n"
+      "description": "Designation of the order type. Only the types indicated by Modexpress are permitted:\n- LB2BF: delivery B2B Fashion\n- LB2CF: delivery B2C Fashion\n",
+      "maxLength": 6
     },
     "DeliveryTime": {
       "type": "string",
-      "description": "Designation of the period in which the order must be executed:\n- D - Day (24H); send off to carrier within 1 working day, however, this will be overruled by a specified date (see attribute FirstDeliveryDate)\n- H - Pack and Hold; packaging within 1 or 2 working days, send off to carrier on specified date (see attribute FirstDeliveryDate)\n\nIf no delivery time is indicated, **D** is the default. For delivery time **D**, the order must be received before the agreed cut-off time (on a working day) so that it can be send off to the carrier on time. Orders received after the cut-off time will be produced and send off to the carrier one working day later.\n"
+      "description": "Designation of the period in which the order must be executed:\n- D - Day (24H); send off to carrier within 1 working day, however, this will be overruled by a specified date (see attribute FirstDeliveryDate)\n- H - Pack and Hold; packaging within 1 or 2 working days, send off to carrier on specified date (see attribute FirstDeliveryDate)\n\nIf no delivery time is indicated, **D** is the default. For delivery time **D**, the order must be received before the agreed cut-off time (on a working day) so that it can be send off to the carrier on time. Orders received after the cut-off time will be produced and send off to the carrier one working day later.\n",
+      "maxLength": 1
     },
     "OrderReference": {
       "type": "string",
@@ -49,7 +51,8 @@
     },
     "ShipmentCode": {
       "type": "string",
-      "description": "Designation of the desired transport for the order. A customer can agree to a default means of transport. This means of transport will then be used if no means of transport has been specified. If a means of transport has indeed been specified, it overrules the default means of transport. Possible values: \n- D01: DPD General account Modexpress Fashion\n- T06: PostNL General account Modexpress Fashion\n- U01: UPS General account Modexpress Fashion\n- DHL: DHL customer account\n- CBFC: CBF Self Collector\n- CBFF: CBF Standard (CBF arranges transport)\n- CBFR: CBF Reservation order with storage (Pack and Hold / postponement of shipment for a (non-) specific longer time)\n- CBFS: CBF Special customer with buffering on shipping floor (postponement of shipment for a short time)\n- CBFU: CBF UPS account customer\n- CBFX: CBF pre-advise customers (CBF will contact the recipient)\n"
+      "description": "Designation of the desired transport for the order. \nA customer can agree to a default means of transport. \nThis means of transport will then be used if no means of transport has been specified. \nIf a means of transport has indeed been specified, it overrules the default means of transport.\n",
+      "maxLength": 5
     },
     "ShipmentService": {
       "type": "string",
@@ -69,12 +72,12 @@
     "FirstDeliveryDate": {
       "type": "string",
       "description": "The date on which the goods must be hand over to the carrier. This attribute is intended for use in combination with attribute DeliveryTime is 'H' (Pack and Hold). In case of DeliveryTime is 'D' (Day) the FirstDeliveryDate can also be used and overrules this DeliveryTime.",
-      "format": "date-time"
+      "format": "date"
     },
     "LastDeliveryDate": {
       "type": "string",
       "description": "The last/latest desired date on which the recipient wants the goods to be delivered in case of an order with delivery time 'L' (not yet implemented)",
-      "format": "date-time"
+      "format": "date"
     },
     "SubType": {
       "type": "string",
@@ -98,10 +101,8 @@
     "Priority": {
       "type": "integer",
       "description": "Priority of the order. Can be used to make a distinction in the priority of orders (priority 1 is higher than priority 2, etc.).",
-      "minimum": 0,
-      "exclusiveMinimum": true,
-      "maximum": 100,
-      "exclusiveMaximum": true
+      "minimum": 1,
+      "maximum": 99
     },
     "IncoTerm": {
       "type": "string",
@@ -122,7 +123,8 @@
         "FOP",
         "FOR",
         "FOT"
-      ]
+      ],
+      "maxLength": 3
     },
     "IncoTermPlace": {
       "type": "string",
@@ -132,10 +134,8 @@
     "ReturnPeriod": {
       "type": "integer",
       "description": "Period, in days. Relevant if Modexpress is generating the RMA orders, this defines how long they will remain active.",
-      "minimum": 0,
-      "exclusiveMinimum": true,
-      "maximum": 1000,
-      "exclusiveMaximum": true
+      "minimum": 1,
+      "maximum": 999
     },
     "AdditionalFinInfo": {
       "required": [
@@ -144,11 +144,11 @@
       "type": "object",
       "properties": {
         "FinInfo": {
+          "type": "array",
           "description": "Financial information of a particular type",
           "required": [
             "InfoType"
           ],
-          "type": "object",
           "properties": {
             "InfoType": {
               "type": "string",
@@ -163,7 +163,8 @@
                 "PayedAmount",
                 "Duties",
                 "Taxes"
-              ]
+              ],
+              "maxLength": 15
             },
             "Description": {
               "type": "string",
@@ -177,10 +178,7 @@
             },
             "Amount": {
               "type": "number",
-              "description": "The amount that applies to the type of financial information (so the invoice amount).",
-              "format": "double",
-              "minimum": -1.7976931348623157e+308,
-              "maximum": 1.7976931348623157e+308
+              "description": "The amount that applies to the type of financial information (so the invoice amount)."
             },
             "CurrencyCode": {
               "type": "string",
@@ -200,10 +198,7 @@
             },
             "VATPercentage": {
               "type": "number",
-              "description": "The VAT percentage that applies to the amount.",
-              "format": "double",
-              "minimum": -1.7976931348623157e+308,
-              "maximum": 1.7976931348623157e+308
+              "description": "The VAT percentage that applies to the amount."
             }
           }
         }
@@ -238,7 +233,7 @@
                   "BuyerId",
                   "ReceiverId"
                 ],
-                "maxLength": 28
+                "maxLength": 20
               },
               "Id": {
                 "type": "integer",
@@ -266,6 +261,7 @@
               "AddressLine1": {
                 "type": "string",
                 "description": "The street that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types. Mandatory for the %Address party types.\n",
+                "minLength": 1,
                 "maxLength": 50
               },
               "AddressLine2": {
@@ -275,10 +271,7 @@
               },
               "HouseNumber": {
                 "type": "integer",
-                "description": "The house number that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types.\n",
-                "format": "int32",
-                "minimum": -2147483648,
-                "maximum": 2147483647
+                "description": "The house number that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types.\n"
               },
               "HouseNumberExtension": {
                 "type": "string",
@@ -349,12 +342,13 @@
       "type": "object",
       "properties": {
         "Instruction": {
+          "type": "array",
           "description": "Details about handling",
           "required": [
             "SequenceNumber",
-            "Type"
+            "Type",
+            "Code"
           ],
-          "type": "object",
           "properties": {
             "Type": {
               "type": "string",
@@ -382,7 +376,7 @@
             "Description": {
               "type": "string",
               "description": "Indication of the instruction by means of a description.\nAn example description is **packaging shipment in red wrapping paper**.\nIf no specific description is relevant than the instruction code must be declared.\nThis field is not used for Instructiontype FILE.\n",
-              "maxLength": 70
+              "maxLength": 156
             },
             "Info": {
               "type": "string",
@@ -400,13 +394,13 @@
       "type": "object",
       "properties": {
         "OrderLine": {
+          "type": "array",
           "description": "Order line information",
           "required": [
             "Article",
             "Id",
             "Quantity"
           ],
-          "type": "object",
           "properties": {
             "Id": {
               "type": "string",
@@ -447,7 +441,8 @@
               "enum": [
                 "Y",
                 "N"
-              ]
+              ],
+              "minLength": 1
             },
             "Article": {
               "required": [
@@ -504,12 +499,13 @@
               "type": "object",
               "properties": {
                 "Instruction": {
+                  "type": "array",
                   "description": "Details about handling",
                   "required": [
                     "SequenceNumber",
-                    "Type"
+                    "Type",
+                    "Code"
                   ],
-                  "type": "object",
                   "properties": {
                     "Type": {
                       "type": "string",
@@ -537,7 +533,7 @@
                     "Description": {
                       "type": "string",
                       "description": "Indication of the instruction by means of a description.\nAn example description is **packaging shipment in red wrapping paper**.\nIf no specific description is relevant than the instruction code must be declared.\nThis field is not used for Instructiontype FILE.\n",
-                      "maxLength": 70
+                      "maxLength": 156
                     },
                     "Info": {
                       "type": "string",
@@ -578,10 +574,7 @@
                       },
                       "Amount": {
                         "type": "number",
-                        "description": "The amount indicating the price (regarding 1 single unit of the SKU). (N9,2 = Up to 7 digits before the comma and 2 decimals)",
-                        "format": "double",
-                        "minimum": -1.7976931348623157e+308,
-                        "maximum": 1.7976931348623157e+308
+                        "description": "The amount indicating the price (regarding 1 single unit of the SKU). (N9,2 = Up to 7 digits before the comma and 2 decimals)"
                       },
                       "CurrencyCode": {
                         "type": "string",
@@ -597,7 +590,8 @@
                       },
                       "Region": {
                         "type": "string",
-                        "description": "Code indicating the region for which the price is valid (for example: EU)\n"
+                        "description": "Code indicating the region for which the price is valid (for example: EU)\n",
+                        "maxLength": 25
                       },
                       "VATCode": {
                         "type": "string",
@@ -611,10 +605,7 @@
                       },
                       "VATPercentage": {
                         "type": "number",
-                        "description": "VAT percentage",
-                        "format": "double",
-                        "minimum": -1.7976931348623157e+308,
-                        "maximum": 1.7976931348623157e+308
+                        "description": "VAT percentage"
                       }
                     }
                   }

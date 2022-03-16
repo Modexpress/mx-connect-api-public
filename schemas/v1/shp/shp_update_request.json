@@ -62,7 +62,7 @@
                   "BuyerId",
                   "ReceiverId"
                 ],
-                "maxLength": 28
+                "maxLength": 20
               },
               "Id": {
                 "type": "integer",
@@ -90,6 +90,7 @@
               "AddressLine1": {
                 "type": "string",
                 "description": "The street that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types. Mandatory for the %Address party types.\n",
+                "minLength": 1,
                 "maxLength": 50
               },
               "AddressLine2": {
@@ -99,10 +100,7 @@
               },
               "HouseNumber": {
                 "type": "integer",
-                "description": "The house number that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types.\n",
-                "format": "int32",
-                "minimum": -2147483648,
-                "maximum": 2147483647
+                "description": "The house number that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types.\n"
               },
               "HouseNumberExtension": {
                 "type": "string",
