@@ -1818,60 +1818,62 @@ paths:
                   properties:
                     FinInfo:
                       type: array
-                      description: Financial information of a particular type
-                      required:
-                        - InfoType
-                      properties:
-                        InfoType:
-                          type: string
-                          description: 'Indication of the type of financial information: - Type ''Invoice'' is used for customs declaration, - Type ''CodSurcharge'' is used to indicate a Cash On Delivery surcharge (Amount and CurrencyCode must be indicated), - Type xxxxx (Amount, CurrencyCode, VATCode and VATPercentage must be indicated)'
-                          enum:
-                            - Invoice
-                            - CodSurcharge
-                            - Discount
-                            - Handling
-                            - Packaging
-                            - Transport
-                            - PayedAmount
-                            - Duties
-                            - Taxes
-                          maxLength: 15
-                          example: Invoice
-                        Description:
-                          type: string
-                          description: 'A relevant description for the type of financial information. In case of **Invoice**, this concerns the invoice number.'
-                          maxLength: 50
-                          example: 'invoicenr:123456'
-                        Date:
-                          type: string
-                          description: 'A relevant date for the type of financial information. In case of ''Invoice'', this concerns the invoice date.'
-                          format: date
-                          example: '2021-01-01'
-                        Amount:
-                          type: number
-                          description: The amount that applies to the type of financial information (so the invoice amount).
-                          example: 10.25
-                        CurrencyCode:
-                          type: string
-                          description: ISO-4217 Code indicating the currency in which the amount is expressed.
-                          minLength: 3
-                          maxLength: 3
-                          example: EUR
-                        VATCode:
-                          type: string
-                          description: |
-                            Code that indicates whether the amount/price is including (I) or excluding (E) VAT.
-                            For customs usage the prices are exclusive of VAT.
-                          minLength: 1
-                          maxLength: 1
-                          enum:
-                            - I
-                            - E
-                          example: I
-                        VATPercentage:
-                          type: number
-                          description: The VAT percentage that applies to the amount.
-                          example: 21.25
+                      items:
+                        description: Financial information of a particular type
+                        required:
+                          - InfoType
+                        type: object
+                        properties:
+                          InfoType:
+                            type: string
+                            description: 'Indication of the type of financial information: - Type ''Invoice'' is used for customs declaration, - Type ''CodSurcharge'' is used to indicate a Cash On Delivery surcharge (Amount and CurrencyCode must be indicated), - Type xxxxx (Amount, CurrencyCode, VATCode and VATPercentage must be indicated)'
+                            enum:
+                              - Invoice
+                              - CodSurcharge
+                              - Discount
+                              - Handling
+                              - Packaging
+                              - Transport
+                              - PayedAmount
+                              - Duties
+                              - Taxes
+                            maxLength: 15
+                            example: Invoice
+                          Description:
+                            type: string
+                            description: 'A relevant description for the type of financial information. In case of **Invoice**, this concerns the invoice number.'
+                            maxLength: 50
+                            example: 'invoicenr:123456'
+                          Date:
+                            type: string
+                            description: 'A relevant date for the type of financial information. In case of ''Invoice'', this concerns the invoice date.'
+                            format: date
+                            example: '2021-01-01'
+                          Amount:
+                            type: number
+                            description: The amount that applies to the type of financial information (so the invoice amount).
+                            example: 10.25
+                          CurrencyCode:
+                            type: string
+                            description: ISO-4217 Code indicating the currency in which the amount is expressed.
+                            minLength: 3
+                            maxLength: 3
+                            example: EUR
+                          VATCode:
+                            type: string
+                            description: |
+                              Code that indicates whether the amount/price is including (I) or excluding (E) VAT.
+                              For customs usage the prices are exclusive of VAT.
+                            minLength: 1
+                            maxLength: 1
+                            enum:
+                              - I
+                              - E
+                            example: I
+                          VATPercentage:
+                            type: number
+                            description: The VAT percentage that applies to the amount.
+                            example: 21.25
                 Parties:
                   required:
                     - Party
@@ -2031,66 +2033,68 @@ paths:
                   properties:
                     Instruction:
                       type: array
-                      description: Details about handling
-                      required:
-                        - SequenceNumber
-                        - Type
-                        - Code
-                      properties:
-                        Type:
-                          type: string
-                          description: |
-                            Designation of the instruction type:
-                            - **VAS**: control of VAS
-                            - **HANDLING**: instruction that is used in the execution of activities
-                            - **FILE**: indication that a separate file is supplied with the order, containing documents to be printed for the shipment
-                            - **TEXT**: xxxxxx
-                          enum:
-                            - VAS
-                            - HANDLING
-                            - FILE
-                            - TEXT
-                          example: VAS
-                        SequenceNumber:
-                          type: integer
-                          description: The execution sequence number of the instruction. This can be used to send the sequence in which the instructions should be implemented. The number must be unique among all the order instructions.
-                          format: int32
-                          minimum: 1
-                          maximum: 999
-                          example: 1
-                        Code:
-                          type: string
-                          description: |
-                            Indication of the instruction by means of a code:
-                            - In case of VAS an example code is 10 (= remove price label F,GOH)
-                            - In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')
-                            - In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**
-                            - In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**
-                            - In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**
-                            If no specific code and no description is relevant than the instruction type must also be declared as instruction code.
-                          minLength: 1
-                          maxLength: 10
-                          example: COD
-                        Description:
-                          type: string
-                          description: |
-                            Indication of the instruction by means of a description.
-                            An example description is **packaging shipment in red wrapping paper**.
-                            If no specific description is relevant than the instruction code must be declared.
-                            This field is not used for Instructiontype FILE.
-                          maxLength: 156
-                          example: Description
-                        Info:
-                          type: string
-                          description: |
-                            The info to be used/printed:
-                            - In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.
-                            - In case of type HANDLING with code PICK the pick strategy must be given:
-                                - STYLE, STYLECOLOUR or STYLECOLOURSIZE
-                            - In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file.
-                            - In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.
-                          maxLength: 70
-                          example: This line is printed on the package
+                      items:
+                        description: Details about handling
+                        type: object
+                        required:
+                          - SequenceNumber
+                          - Type
+                          - Code
+                        properties:
+                          Type:
+                            type: string
+                            description: |
+                              Designation of the instruction type:
+                              - **VAS**: control of VAS
+                              - **HANDLING**: instruction that is used in the execution of activities
+                              - **FILE**: indication that a separate file is supplied with the order, containing documents to be printed for the shipment
+                              - **TEXT**: xxxxxx
+                            enum:
+                              - VAS
+                              - HANDLING
+                              - FILE
+                              - TEXT
+                            example: VAS
+                          SequenceNumber:
+                            type: integer
+                            description: The execution sequence number of the instruction. This can be used to send the sequence in which the instructions should be implemented. The number must be unique among all the order instructions.
+                            format: int32
+                            minimum: 1
+                            maximum: 999
+                            example: 1
+                          Code:
+                            type: string
+                            description: |
+                              Indication of the instruction by means of a code:
+                              - In case of VAS an example code is 10 (= remove price label F,GOH)
+                              - In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')
+                              - In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**
+                              - In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**
+                              - In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**
+                              If no specific code and no description is relevant than the instruction type must also be declared as instruction code.
+                            minLength: 1
+                            maxLength: 10
+                            example: COD
+                          Description:
+                            type: string
+                            description: |
+                              Indication of the instruction by means of a description.
+                              An example description is **packaging shipment in red wrapping paper**.
+                              If no specific description is relevant than the instruction code must be declared.
+                              This field is not used for Instructiontype FILE.
+                            maxLength: 156
+                            example: Description
+                          Info:
+                            type: string
+                            description: |
+                              The info to be used/printed:
+                              - In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.
+                              - In case of type HANDLING with code PICK the pick strategy must be given:
+                                  - STYLE, STYLECOLOUR or STYLECOLOURSIZE
+                              - In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file.
+                              - In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.
+                            maxLength: 70
+                            example: This line is printed on the package
                 OrderLines:
                   required:
                     - OrderLine
@@ -2098,249 +2102,253 @@ paths:
                   properties:
                     OrderLine:
                       type: array
-                      description: Order line information
-                      required:
-                        - Article
-                        - Id
-                        - Quantity
-                      properties:
-                        Id:
-                          type: string
-                          description: The identification that the ordering party uses for the order line.
-                          minLength: 1
-                          maxLength: 50
-                          example: 1
-                        LineReference:
-                          type: string
-                          description: The reference that the ordering party uses for the order line.
-                          maxLength: 10
-                          example: 001Ref
-                        Quantity:
-                          type: integer
-                          description: The number of items of the article to be delivered.
-                          format: int32
-                          minimum: 1
-                          maximum: 999999
-                          example: 2
-                        StockType:
-                          type: string
-                          maxLength: 10
-                          description: |
-                            Designation of the type of stock that must be delivered. Using the stock type, it is possible to differentiate according to different types of stock that must be maintained separately for an article (both in the operation and administratively).
-                            The standard stock types are (other types are possible):
-                            - RGL: regular or A-choice stock
-                            - RGLRJC - regular reject or B-choice stock.
-                            If no StockType is indicated the delivery is assumed to be regular stock (RGL).
-                          example: RGL
-                        AlternativeDescription:
-                          type: string
-                          maxLength: 60
-                          description: |
-                            Description of the article to be displayed on the packing slip. This description is the alternative to the description registered in the SKU data.
-                          example: Blue jacket
-                        ClientReference:
-                          type: string
-                          description: Reference used by the buyer/recipient for the order line.
-                          maxLength: 10
-                          example: R001
-                        BackorderIndication:
-                          type: string
-                          description: |
-                            Indication whether it is permissible to take an order in backorder. 
-                            This is particularly relevant if insufficient stock can be reserved for the order line.
-                            The handling is also dependent on 'PartialDelivery' on order level.
-                            It is possible to take a part of an orderline into backorder. Standard value = YES (on line level).
-                          enum:
-                            - 'Y'
-                            - 'N'
-                          minLength: 1
-                          example: 'Y'
-                        Article:
-                          required:
-                            - Id
-                          type: object
-                          properties:
-                            Id:
-                              type: string
-                              description: |
-                                The identification that the owner uses for the SKU to be delivered. 
-                                This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.
-                              minLength: 1
-                              maxLength: 250
-                              example: SKU001
-                            LotNumber:
-                              description: |
-                                The lot/batch number of the SKU to be delivered. It is possible to have different types of stock for a SKU (attribute StockType).
-                                In addition, there may be a distinction between different lots/batches for the stock regarding a type (both in the operation and administratively).
-                              type: string
-                              maxLength: 20
-                            ClientId:
-                              type: string
-                              description: A different identifier (logical id) that the buyer/recipient uses for the article and that must be displayed on shipment documents.
-                              maxLength: 70
-                              example: ExampleClientId
-                            ClientCode:
-                              type: string
-                              description: A different identifier (barcode) that the buyer/recipient uses for the article and that must be displayed on shipment documents.
-                              maxLength: 70
-                              example: ExampleClientCode
-                        Owner:
-                          required:
-                            - RelationId
-                            - RelationType
-                          type: object
-                          properties:
-                            RelationId:
-                              type: string
-                              description: Identification of the party that is the owner of the article to be delivered.
-                              example: 1111111
-                              maxLength: 40
-                            RelationType:
-                              type: string
-                              description: |
-                                Indication whether the Relation_Id is an internal or external id.
-                                - internal id: the id assigned and used by Modexpress
-                                - external id: the id assigned and used by the ordering party
-                              enum:
-                                - INT
-                                - EXT
-                              example: INT
-                        Instructions:
-                          type: object
-                          properties:
-                            Instruction:
-                              type: array
-                              description: Details about handling
-                              required:
-                                - SequenceNumber
-                                - Type
-                                - Code
-                              properties:
-                                Type:
-                                  type: string
-                                  description: |
-                                    Designation of the instruction type:
-                                    - **VAS**: control of VAS
-                                    - **HANDLING**: instruction that is used in the execution of activities
-                                    - **FILE**: indication that a separate file is supplied with the order, containing documents to be printed for the shipment
-                                    - **TEXT**: xxxxxx
-                                  enum:
-                                    - VAS
-                                    - HANDLING
-                                    - FILE
-                                    - TEXT
-                                  example: VAS
-                                SequenceNumber:
-                                  type: integer
-                                  description: The execution sequence number of the instruction. This can be used to send the sequence in which the instructions should be implemented. The number must be unique among all the order instructions.
-                                  format: int32
-                                  minimum: 1
-                                  maximum: 999
-                                  example: 1
-                                Code:
-                                  type: string
-                                  description: |
-                                    Indication of the instruction by means of a code:
-                                    - In case of VAS an example code is 10 (= remove price label F,GOH)
-                                    - In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')
-                                    - In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**
-                                    - In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**
-                                    - In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**
-                                    If no specific code and no description is relevant than the instruction type must also be declared as instruction code.
-                                  minLength: 1
-                                  maxLength: 10
-                                  example: COD
-                                Description:
-                                  type: string
-                                  description: |
-                                    Indication of the instruction by means of a description.
-                                    An example description is **packaging shipment in red wrapping paper**.
-                                    If no specific description is relevant than the instruction code must be declared.
-                                    This field is not used for Instructiontype FILE.
-                                  maxLength: 156
-                                  example: Description
-                                Info:
-                                  type: string
-                                  description: |
-                                    The info to be used/printed:
-                                    - In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.
-                                    - In case of type HANDLING with code PICK the pick strategy must be given:
-                                        - STYLE, STYLECOLOUR or STYLECOLOURSIZE
-                                    - In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file.
-                                    - In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.
-                                  maxLength: 70
-                                  example: This line is printed on the package
-                        Prices:
-                          required:
-                            - Price
-                          type: object
-                          properties:
-                            Price:
-                              type: array
-                              description: A price that applies to the SKU of the orderline. The indicated price for the SKU in a orderline overrides the comparable price in the SKU data.
-                              items:
-                                required:
-                                  - Amount
-                                  - CurrencyCode
-                                  - Type
-                                type: object
-                                properties:
-                                  Type:
-                                    type: string
-                                    description: |
-                                      The indication of a price that is relevant for the SKU:
+                      items:
+                        description: Order line information
+                        required:
+                          - Article
+                          - Id
+                          - Quantity
+                        type: object
+                        properties:
+                          Id:
+                            type: string
+                            description: The identification that the ordering party uses for the order line.
+                            minLength: 1
+                            maxLength: 50
+                            example: 1
+                          LineReference:
+                            type: string
+                            description: The reference that the ordering party uses for the order line.
+                            maxLength: 10
+                            example: 001Ref
+                          Quantity:
+                            type: integer
+                            description: The number of items of the article to be delivered.
+                            format: int32
+                            minimum: 1
+                            maximum: 999999
+                            example: 2
+                          StockType:
+                            type: string
+                            maxLength: 10
+                            description: |
+                              Designation of the type of stock that must be delivered. Using the stock type, it is possible to differentiate according to different types of stock that must be maintained separately for an article (both in the operation and administratively).
+                              The standard stock types are (other types are possible):
+                              - RGL: regular or A-choice stock
+                              - RGLRJC - regular reject or B-choice stock.
+                              If no StockType is indicated the delivery is assumed to be regular stock (RGL).
+                            example: RGL
+                          AlternativeDescription:
+                            type: string
+                            maxLength: 60
+                            description: |
+                              Description of the article to be displayed on the packing slip. This description is the alternative to the description registered in the SKU data.
+                            example: Blue jacket
+                          ClientReference:
+                            type: string
+                            description: Reference used by the buyer/recipient for the order line.
+                            maxLength: 10
+                            example: R001
+                          BackorderIndication:
+                            type: string
+                            description: |
+                              Indication whether it is permissible to take an order in backorder. 
+                              This is particularly relevant if insufficient stock can be reserved for the order line.
+                              The handling is also dependent on 'PartialDelivery' on order level.
+                              It is possible to take a part of an orderline into backorder. Standard value = YES (on line level).
+                            enum:
+                              - 'Y'
+                              - 'N'
+                            minLength: 1
+                            example: 'Y'
+                          Article:
+                            required:
+                              - Id
+                            type: object
+                            properties:
+                              Id:
+                                type: string
+                                description: |
+                                  The identification that the owner uses for the SKU to be delivered. 
+                                  This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.
+                                minLength: 1
+                                maxLength: 250
+                                example: SKU001
+                              LotNumber:
+                                description: |
+                                  The lot/batch number of the SKU to be delivered. It is possible to have different types of stock for a SKU (attribute StockType).
+                                  In addition, there may be a distinction between different lots/batches for the stock regarding a type (both in the operation and administratively).
+                                type: string
+                                maxLength: 20
+                              ClientId:
+                                type: string
+                                description: A different identifier (logical id) that the buyer/recipient uses for the article and that must be displayed on shipment documents.
+                                maxLength: 70
+                                example: ExampleClientId
+                              ClientCode:
+                                type: string
+                                description: A different identifier (barcode) that the buyer/recipient uses for the article and that must be displayed on shipment documents.
+                                maxLength: 70
+                                example: ExampleClientCode
+                          Owner:
+                            required:
+                              - RelationId
+                              - RelationType
+                            type: object
+                            properties:
+                              RelationId:
+                                type: string
+                                description: Identification of the party that is the owner of the article to be delivered.
+                                example: 1111111
+                                maxLength: 40
+                              RelationType:
+                                type: string
+                                description: |
+                                  Indication whether the Relation_Id is an internal or external id.
+                                  - internal id: the id assigned and used by Modexpress
+                                  - external id: the id assigned and used by the ordering party
+                                enum:
+                                  - INT
+                                  - EXT
+                                example: INT
+                          Instructions:
+                            type: object
+                            properties:
+                              Instruction:
+                                type: array
+                                items:
+                                  description: Details about handling
+                                  type: object
+                                  required:
+                                    - SequenceNumber
+                                    - Type
+                                    - Code
+                                  properties:
+                                    Type:
+                                      type: string
+                                      description: |
+                                        Designation of the instruction type:
+                                        - **VAS**: control of VAS
+                                        - **HANDLING**: instruction that is used in the execution of activities
+                                        - **FILE**: indication that a separate file is supplied with the order, containing documents to be printed for the shipment
+                                        - **TEXT**: xxxxxx
+                                      enum:
+                                        - VAS
+                                        - HANDLING
+                                        - FILE
+                                        - TEXT
+                                      example: VAS
+                                    SequenceNumber:
+                                      type: integer
+                                      description: The execution sequence number of the instruction. This can be used to send the sequence in which the instructions should be implemented. The number must be unique among all the order instructions.
+                                      format: int32
+                                      minimum: 1
+                                      maximum: 999
+                                      example: 1
+                                    Code:
+                                      type: string
+                                      description: |
+                                        Indication of the instruction by means of a code:
+                                        - In case of VAS an example code is 10 (= remove price label F,GOH)
+                                        - In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')
+                                        - In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**
+                                        - In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**
+                                        - In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**
+                                        If no specific code and no description is relevant than the instruction type must also be declared as instruction code.
+                                      minLength: 1
+                                      maxLength: 10
+                                      example: COD
+                                    Description:
+                                      type: string
+                                      description: |
+                                        Indication of the instruction by means of a description.
+                                        An example description is **packaging shipment in red wrapping paper**.
+                                        If no specific description is relevant than the instruction code must be declared.
+                                        This field is not used for Instructiontype FILE.
+                                      maxLength: 156
+                                      example: Description
+                                    Info:
+                                      type: string
+                                      description: |
+                                        The info to be used/printed:
+                                        - In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.
+                                        - In case of type HANDLING with code PICK the pick strategy must be given:
+                                            - STYLE, STYLECOLOUR or STYLECOLOURSIZE
+                                        - In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file.
+                                        - In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.
+                                      maxLength: 70
+                                      example: This line is printed on the package
+                          Prices:
+                            required:
+                              - Price
+                            type: object
+                            properties:
+                              Price:
+                                type: array
+                                description: A price that applies to the SKU of the orderline. The indicated price for the SKU in a orderline overrides the comparable price in the SKU data.
+                                items:
+                                  required:
+                                    - Amount
+                                    - CurrencyCode
+                                    - Type
+                                  type: object
+                                  properties:
+                                    Type:
+                                      type: string
+                                      description: |
+                                        The indication of a price that is relevant for the SKU:
 
-                                      - Type 'Exportvalue' is used for the exportinvoice
-                                      - Type 'Purchase' is used to be the purchase price
-                                      - Type 'Sale' is meant to be the price to pay
-                                      - Type 'From' is meant te be the original sale price (from price)
-                                      - Type 'Srp' is the Suggested Retail Price
-                                    example: From
-                                    maxLength: 15
-                                    enum:
-                                      - Exportvalue
-                                      - Purchase
-                                      - Sale
-                                      - From
-                                      - Srp
-                                  Amount:
-                                    type: number
-                                    description: 'The amount indicating the price (regarding 1 single unit of the SKU). (N9,2 = Up to 7 digits before the comma and 2 decimals)'
-                                    example: 25.95
-                                  CurrencyCode:
-                                    type: string
-                                    description: ISO-4217 Code indicating the currency in which the amount is expressed.
-                                    minLength: 3
-                                    maxLength: 3
-                                    example: EUR
-                                  Country:
-                                    type: string
-                                    description: |
-                                      ISO 3166 ALPHA-2 country code. The country that applies to the party. The designation should be made according to iso2 code. Order of display on documents: line 8 (country name will be displayed). Mandatory for the %Address party types.
-                                    minLength: 2
-                                    maxLength: 2
-                                    example: NL
-                                  Region:
-                                    type: string
-                                    description: |
-                                      Code indicating the region for which the price is valid (for example: EU)
-                                    maxLength: 25
-                                    example: Western-Europe
-                                  VATCode:
-                                    type: string
-                                    description: |
-                                      Code that indicates whether the amount/price is including (I) or excluding (E) VAT.
-                                      For customs usage the prices are exclusive of VAT.
-                                    example: I
-                                    minLength: 1
-                                    maxLength: 1
-                                    enum:
-                                      - I
-                                      - E
-                                  VATPercentage:
-                                    type: number
-                                    description: VAT percentage
-                                    example: 21
+                                        - Type 'Exportvalue' is used for the exportinvoice
+                                        - Type 'Purchase' is used to be the purchase price
+                                        - Type 'Sale' is meant to be the price to pay
+                                        - Type 'From' is meant te be the original sale price (from price)
+                                        - Type 'Srp' is the Suggested Retail Price
+                                      example: From
+                                      maxLength: 15
+                                      enum:
+                                        - Exportvalue
+                                        - Purchase
+                                        - Sale
+                                        - From
+                                        - Srp
+                                    Amount:
+                                      type: number
+                                      description: 'The amount indicating the price (regarding 1 single unit of the SKU). (N9,2 = Up to 7 digits before the comma and 2 decimals)'
+                                      example: 25.95
+                                    CurrencyCode:
+                                      type: string
+                                      description: ISO-4217 Code indicating the currency in which the amount is expressed.
+                                      minLength: 3
+                                      maxLength: 3
+                                      example: EUR
+                                    Country:
+                                      type: string
+                                      description: |
+                                        ISO 3166 ALPHA-2 country code. The country that applies to the party. The designation should be made according to iso2 code. Order of display on documents: line 8 (country name will be displayed). Mandatory for the %Address party types.
+                                      minLength: 2
+                                      maxLength: 2
+                                      example: NL
+                                    Region:
+                                      type: string
+                                      description: |
+                                        Code indicating the region for which the price is valid (for example: EU)
+                                      maxLength: 25
+                                      example: Western-Europe
+                                    VATCode:
+                                      type: string
+                                      description: |
+                                        Code that indicates whether the amount/price is including (I) or excluding (E) VAT.
+                                        For customs usage the prices are exclusive of VAT.
+                                      example: I
+                                      minLength: 1
+                                      maxLength: 1
+                                      enum:
+                                        - I
+                                        - E
+                                    VATPercentage:
+                                      type: number
+                                      description: VAT percentage
+                                      example: 21
               xml:
                 name: PlaceOrder
         required: false
