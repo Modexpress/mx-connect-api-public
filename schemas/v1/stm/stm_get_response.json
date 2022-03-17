@@ -53,6 +53,14 @@
                   "Id": {
                     "type": "integer"
                   },
+                  "TransactionType1": {
+                    "type": "string",
+                    "maxLength": 50
+                  },
+                  "TransactionType2": {
+                    "type": "string",
+                    "maxLength": 50
+                  },
                   "TransactionLines": {
                     "type": "object",
                     "properties": {
@@ -112,7 +120,8 @@
                               "properties": {
                                 "Id": {
                                   "description": "The identification that the owner uses for the article.",
-                                  "type": "string"
+                                  "type": "string",
+                                  "maxLength": 250
                                 },
                                 "LotNumber": {
                                   "description": "The lot/batch number of the article.",
@@ -124,7 +133,10 @@
                                   "type": "string",
                                   "maxLength": 35
                                 }
-                              }
+                              },
+                              "required": [
+                                "Id"
+                              ]
                             },
                             "Owner": {
                               "type": "object",
@@ -142,19 +154,50 @@
                                     "EXT"
                                   ]
                                 }
-                              }
+                              },
+                              "required": [
+                                "RelationId",
+                                "RelationType"
+                              ]
                             }
-                          }
+                          },
+                          "required": [
+                            "SequenceNumber",
+                            "DateTime",
+                            "TransactionLineType",
+                            "StockType",
+                            "TransactionSign",
+                            "Quantity",
+                            "Article",
+                            "Owner"
+                          ]
                         }
                       }
-                    }
+                    },
+                    "required": [
+                      "TransactionLine"
+                    ]
                   }
-                }
+                },
+                "required": [
+                  "Id",
+                  "TransactionLines"
+                ]
               }
             }
-          }
+          },
+          "required": [
+            "Transaction"
+          ]
         }
-      }
+      },
+      "required": [
+        "TotalItems",
+        "TotalPages",
+        "PageSize",
+        "CurrentPage",
+        "Transactions"
+      ]
     }
   },
   "$schema": "http://json-schema.org/draft-04/schema#"

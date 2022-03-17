@@ -2296,6 +2296,7 @@ paths:
                                       - Type 'From' is meant te be the original sale price (from price)
                                       - Type 'Srp' is the Suggested Retail Price
                                     example: From
+                                    maxLength: 15
                                     enum:
                                       - Exportvalue
                                       - Purchase
@@ -2680,6 +2681,10 @@ paths:
                                                     description: The identification that the owner uses for the delivered SKU.
                                                     type: string
                                                     maxLength: 250
+                                                  LotNumber:
+                                                    description: The lot/batch number of the delivered SKU.
+                                                    type: string
+                                                    maxLength: 20
                                                   Code:
                                                     description: "A code used to recognise/identify the delivered article in the unit. This is usually a code that is also affixed to the article as a barcode.\r\nIf several barcodes are known for the article one of these is used."
                                                     type: string
@@ -3132,6 +3137,10 @@ paths:
                                                     description: The identification that the owner uses for the delivered SKU.
                                                     type: string
                                                     maxLength: 250
+                                                  LotNumber:
+                                                    description: The lot/batch number of the delivered SKU.
+                                                    type: string
+                                                    maxLength: 20
                                                   Code:
                                                     description: "A code used to recognise/identify the delivered article in the unit. This is usually a code that is also affixed to the article as a barcode.\r\nIf several barcodes are known for the article one of these is used."
                                                     type: string
@@ -3313,6 +3322,8 @@ paths:
                                         If several barcodes are known for the article one of these is used.
                                       type: string
                                       maxLength: 35
+                                  required:
+                                    - Id
                                 Owner:
                                   type: object
                                   properties:
@@ -3331,6 +3342,21 @@ paths:
                                         - INT
                                         - EXT
                                       example: INT
+                              required:
+                                - SequenceNumber
+                                - DateTime
+                                - StockType
+                                - QuantityInStock
+                                - QuantityReserved
+                                - Article
+                        required:
+                          - InventoryLevel
+                    required:
+                      - TotalItems
+                      - TotalPages
+                      - PageSize
+                      - CurrentPage
+                      - InventoryLevels
         '404':
           description: 'Unsuccessful operation due an invalid (combination of) value(s) for the query string parameters `Id`, `StockType`, and/or `Style`'
           content:
@@ -3452,6 +3478,12 @@ paths:
                                 Id:
                                   type: integer
                                   example: 1
+                                TransactionType1:
+                                  type: string
+                                  maxLength: 50
+                                TransactionType2:
+                                  type: string
+                                  maxLength: 50
                                 TransactionLines:
                                   type: object
                                   properties:
@@ -3543,6 +3575,7 @@ paths:
                                                 description: The identification that the owner uses for the article.
                                                 type: string
                                                 example: 230095003999OS
+                                                maxLength: 250
                                               LotNumber:
                                                 description: The lot/batch number of the article.
                                                 type: string
@@ -3553,6 +3586,8 @@ paths:
                                                   If several barcodes are known for the article one of these is used.
                                                 type: string
                                                 maxLength: 35
+                                            required:
+                                              - Id
                                           Owner:
                                             type: object
                                             properties:
@@ -3571,6 +3606,30 @@ paths:
                                                   - INT
                                                   - EXT
                                                 example: INT
+                                            required:
+                                              - RelationId
+                                              - RelationType
+                                        required:
+                                          - SequenceNumber
+                                          - DateTime
+                                          - TransactionLineType
+                                          - StockType
+                                          - TransactionSign
+                                          - Quantity
+                                          - Article
+                                  required:
+                                    - TransactionLine
+                              required:
+                                - Id
+                                - TransactionLines
+                        required:
+                          - Transaction
+                    required:
+                      - TotalItems
+                      - TotalPages
+                      - PageSize
+                      - CurrentPage
+                      - Transactions
         '404':
           description: 'Unsuccessful operation due an invalid (combination of) value(s) for the query string parameters `Id`, `StockType`, and/or `Style`'
           content:

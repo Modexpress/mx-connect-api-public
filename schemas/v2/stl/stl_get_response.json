@@ -92,7 +92,10 @@
                         "type": "string",
                         "maxLength": 35
                       }
-                    }
+                    },
+                    "required": [
+                      "Id"
+                    ]
                   },
                   "Owner": {
                     "type": "object",
@@ -112,12 +115,30 @@
                       }
                     }
                   }
-                }
+                },
+                "required": [
+                  "SequenceNumber",
+                  "DateTime",
+                  "StockType",
+                  "QuantityInStock",
+                  "QuantityReserved",
+                  "Article"
+                ]
               }
             }
-          }
+          },
+          "required": [
+            "InventoryLevel"
+          ]
         }
-      }
+      },
+      "required": [
+        "TotalItems",
+        "TotalPages",
+        "PageSize",
+        "CurrentPage",
+        "InventoryLevels"
+      ]
     }
   },
   "$schema": "http://json-schema.org/draft-04/schema#"

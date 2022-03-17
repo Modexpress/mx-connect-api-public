@@ -566,6 +566,7 @@
                       "Type": {
                         "type": "string",
                         "description": "The indication of a price that is relevant for the SKU:\n\n- Type 'Exportvalue' is used for the exportinvoice\n- Type 'Purchase' is used to be the purchase price\n- Type 'Sale' is meant to be the price to pay\n- Type 'From' is meant te be the original sale price (from price)\n- Type 'Srp' is the Suggested Retail Price\n",
+                        "maxLength": 15,
                         "enum": [
                           "Exportvalue",
                           "Purchase",

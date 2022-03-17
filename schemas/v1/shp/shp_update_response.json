@@ -207,6 +207,11 @@
                                       "type": "string",
                                       "maxLength": 250
                                     },
+                                    "LotNumber": {
+                                      "description": "The lot/batch number of the delivered SKU.",
+                                      "type": "string",
+                                      "maxLength": 20
+                                    },
                                     "Code": {
                                       "description": "A code used to recognise/identify the delivered article in the unit. This is usually a code that is also affixed to the article as a barcode.\r\nIf several barcodes are known for the article one of these is used.",
                                       "type": "string",
