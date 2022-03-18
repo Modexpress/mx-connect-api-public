@@ -1111,50 +1111,6 @@ paths:
                                         - Type
                                 required:
                                   - InfoType
-                                InvoiceStatementInfo:
-                                  type: array
-                                  description: 'Invoice Statement information, if applicable in case of InfoType=Invoice'
-                                  items:
-                                    type: object
-                                    properties:
-                                      Type:
-                                        description: |
-                                          Indication of the type of InvoiceStatement  information:
-                                           - Type 'REX', Registered Exporter, 
-                                          With the status of REX, an exporter can put a so-called 'certificate of origin' on its invoices. This gives importers a preference when importing products into the European Union. A certificate of origin is valid for 12 months.
-                                          Companies can see in a database of the European Union whether an exporter is REX. After registration as a REX, the authorities no longer issue a Form A certificate.
-
-
-                                           - Type 'TE', Allowed Exporter
-                                          For companies that regularly export with a EUR.1 or EUR-MED document, who have a clear delivery program and have sufficient knowledge of import and export, there is the 'Toegelaten Exporteur' (TE) scheme. After an extensive application procedure, these exporters are granted an Authorized Exporter Self-Issuing Preferential Proofs of Origin license. From that moment on, they can use an invoice declaration instead of a EUR.1 or EUR-MED certificate. The license number is stated in this invoice declaration. The exporter can provide his sales invoice with this statement without the intervention of the Chamber of Commerce and present it to Dutch Customs in the country of destination. The function and responsibilities remain the same for all parties involved as for the use of EUR.1 or EUR-MED documents.
-
-                                           - Type 'PREF-ORG', Preferential OriginStatement for other than REX or TE Exporter. 
-                                          In case reduction of import duties is applicable. 
-                                          For 'PREF-ORG' LicenceNumber is optional
-
-                                          Only one InvoiceStatement (if applicable) type is allowed per Shipment 
-                                        type: string
-                                        maxLength: 10
-                                        enum:
-                                          - REX
-                                          - TE-EUR1
-                                          - TE-MED
-                                          - PREF-ORG
-                                      LicenceNumber:
-                                        type: string
-                                        description: |
-                                          InvoiceStatement Licence number
-
-                                          Mandatory in case of REX or TE-EUR1, TE-MED. 
-                                          For PREF-ORG, if the value of the inbound invoice is above 6000,- euro then this field is mandatory. 
-                                           - For Canada a Business Number must be used 
-                                           - For Japan a Corporate Number must be used 
-                                           - For Singapore a Unique Entity Number must be used 
-                                           - For United Kingdom an (UK)EORI Number must be used 
-                                           - For Vietnam it's not allowed to use a PREF-ORG when the value of the Invoice is above 6000,- euro.  
-                                        maxLength: 40
-                                      required:
-                                        - Type
                         ShipmentLines:
                           type: object
                           required:
@@ -2351,17 +2307,26 @@ paths:
                                       example: 21
               xml:
                 name: PlaceOrder
-        required: false
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
-              example:
-                status: true
-                result:
-                  Id: MX-001-143
-                message: null
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  result:
+                    type: object
+                    properties:
+                      Id:
+                        type: string
+                        example: MX-001-143
+                  message:
+                    type: string
+                    nullable: true
         '400':
           description: Invalid request body
           content:
