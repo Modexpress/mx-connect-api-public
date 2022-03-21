@@ -106,23 +106,19 @@
     },
     "IncoTerm": {
       "type": "string",
-      "description": "A pre-defined commercial term published by the International Chamber of Commerce (ICC) relating to international commercial law. The Incoterms rules are intended primarily to clearly communicate the tasks, costs, and risks associated with the transportation and delivery of goods.\n  - CFR: Cost and Freight\n  - CIF: Cost, Insurance and Freight\n  - CIP: Carriage and Insurance Paid\n  - CPT: Carriage Paid To\n  - DAF: Delivered At Frontier\n  - DAP: Delivered At Place\n  - DAT: Delivered At Terminal\n  - DDP: Delivered Duty Paid\n  - DDU: Delivered Duty Unpaid\n  - DEQ: Delivered Ex Quay\n  - DES: Delivered Ex Ship\n  - EXW: Ex Works\n  - FAS: Free Alongside Ship\n  - FCA: Free Carrier\n  - FOB: Free On Board\n  - FOP: Free On Plane\n  - FOR: Free on Rail\n  - FOT: Free On Truck\n",
+      "description": "A pre-defined commercial term published by the International Chamber of Commerce (ICC) relating to international commercial law. \nThe Incoterms rules are intended primarily to clearly communicate the tasks, costs, and risks associated with the transportation and delivery of goods.\n  - EXW - Ex Works\n  - FCA - Free Carrier\n  - FAS - Free Alongside Ship\n  - FOB - Free on Board\n  - CPT - Carriage Paid To\n  - CIP - Carriage and Insurance Paid To\n  - CFR - Cost and Freight\n  - CIF - Cost Insurance and Freight\n  - DAP - Delivered At Place\n  - DPU - Delivered at Place Unloaded\n  - DDP - Delivered Duty Paid\n",
       "enum": [
-        "CPT",
-        "DAF",
-        "DAP",
-        "DAT",
-        "DDP",
-        "DDU",
-        "DEQ",
-        "DES",
         "EXW",
-        "FAS",
         "FCA",
+        "FAS",
         "FOB",
-        "FOP",
-        "FOR",
-        "FOT"
+        "CPT",
+        "CIP",
+        "CFR",
+        "CIF",
+        "DAP",
+        "DPU",
+        "DDP"
       ],
       "maxLength": 3
     },
@@ -130,6 +126,12 @@
       "type": "string",
       "description": "The agreed place of delivery/destination.",
       "maxLength": 50
+    },
+    "IncoTermCountry": {
+      "type": "string",
+      "description": "The agreed country of delivery/destination. \nISO 3166 ALPHA-2 country code.\n",
+      "maxLength": 2,
+      "minLength": 2
     },
     "ReturnPeriod": {
       "type": "integer",

@@ -44,6 +44,11 @@
                 "C"
               ]
             },
+            "MRN": {
+              "description": "Outbound MRN Number if applicable, retrieved from CMS. \nThe MRN field is only included if applicable.\n",
+              "type": "string",
+              "maxLength": 18
+            },
             "Orderlines": {
               "type": "object",
               "properties": {
