@@ -1379,7 +1379,7 @@ paths:
                             format: date-time
                           CompletionDateTime:
                             description: |
-                              Date – where relevant, with the time – when the order was reported
+                              Date - where relevant, with the time - when the order was reported
                               ready/executed.
                             type: string
                             format: date-time
@@ -1397,6 +1397,11 @@ paths:
                               - 'N'
                               - P
                               - C
+                          MRN:
+                            description: Inbound Movement Reference Number(MRN) if applicable to the receipt.
+                            type: string
+                            minLength: 18
+                            maxLength: 18
                           OrderLines:
                             type: object
                             properties:
