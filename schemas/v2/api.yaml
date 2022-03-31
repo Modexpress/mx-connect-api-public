@@ -703,7 +703,7 @@ paths:
                                   CertificateNumber:
                                     description: Certificate number/identification.
                                     type: string
-                                    maxLength: 10
+                                    maxLength: 20
                                   Docdata:
                                     description: Base64 encoded PDF document.
                                     type: string
