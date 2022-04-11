@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision: 24356 $
+$Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://content.cb.nl/xsd/saleskitfashion/fashion_rcp_impres_3.0.xsd" targetNamespace="http://content.cb.nl/xsd/saleskitfashion/fashion_rcp_impres_3.0.xsd" elementFormDefault="qualified">
+	<xs:include schemaLocation="http://content.cb.nl/xsd/saleskitfashion/simple_types_3.0.xsd"/>
+	<!--
+|| Below the message-structure
+-->
+	<xs:element name="Message">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Header" type="tns:Header"/>
+				<xs:element name="OrderingParty" type="tns:Relation"/>
+				<xs:element name="Orders" type="tns:Orders"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="Header">
+		<xs:sequence>
+			<xs:element name="Version" type="tns:Text10"/>
+			<xs:element name="Identification" type="tns:Text20"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Orders">
+		<xs:sequence>
+			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Order">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:OText25"/>
+			<xs:element name="PurchaseOrder" type="tns:PurchaseOrder" minOccurs="0"/>
+			<xs:element name="Shipment" type="tns:Shipment" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PurchaseOrder">
+		<xs:sequence>
+			<xs:element name="Type" type="tns:PurchaseOrderType"/>
+			<xs:element name="Subtype" type="tns:OText20" minOccurs="0"/>
+			<xs:element name="Reference" type="tns:OText20" minOccurs="0"/>
+			<xs:element name="SenderInternalId" type="tns:ONum7" minOccurs="0"/>
+			<xs:element name="SenderExternalId" type="tns:OText20" minOccurs="0"/>
+			<xs:element name="SenderName" type="tns:OText70" minOccurs="0"/>
+			<xs:element name="Date" type="tns:Date" minOccurs="0"/>
+			<xs:element name="ProcessingStatus" type="tns:ProcessingStatus"/>
+			<xs:element name="Notification" type="tns:Text" minOccurs="0"/>
+			<xs:element name="PurchaseOrderLines" type="tns:PurchaseOrderLines"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PurchaseOrderLines">
+		<xs:sequence>
+			<xs:element name="PurchaseOrderLine" type="tns:PurchaseOrderLine" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PurchaseOrderLine">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text250"/>
+			<xs:element name="Quantity" type="tns:Num9"/>
+			<xs:element name="Reference" type="tns:OText10" minOccurs="0"/>
+			<xs:element name="ProcessingStatus" type="tns:ProcessingLineStatus"/>
+			<xs:element name="Notification" type="tns:Text" minOccurs="0"/>
+			<xs:element name="Article" type="tns:ArticleOrCode"/>
+			<xs:element name="Owner" type="tns:Relation"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Shipment">
+		<xs:sequence>
+			<xs:element name="Reference" type="tns:OText25" minOccurs="0"/>
+			<xs:element name="Type" type="tns:ShipmentType"/>
+			<xs:element name="ArrivalDateTime" type="tns:DateTime" minOccurs="0"/>
+			<xs:element name="ProcessingStatus" type="tns:ProcessingStatus"/>
+			<xs:element name="Notification" type="tns:Text" minOccurs="0"/>
+			<xs:element name="ShipmentLines" type="tns:ShipmentLines" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShipmentLines">
+		<xs:sequence>
+			<xs:element name="ShipmentLine" type="tns:ShipmentLine" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShipmentLine">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text250"/>
+			<xs:element name="Quantity" type="tns:Num9"/>
+			<xs:element name="CountryOfOrigin" type="tns:OText3" minOccurs="0"/>
+			<xs:element name="Prepacked" type="tns:Prepacked" minOccurs="0"/>
+			<xs:element name="ProcessingStatus" type="tns:ProcessingLineStatus"/>
+			<xs:element name="Notification" type="tns:Text" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
