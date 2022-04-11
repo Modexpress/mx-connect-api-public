@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  $Revision: 29583 $
+$Date: 2018-03-05 16:10:22 +0100 (ma, 05 mrt 2018) $
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://github.com/Modexpress/mx-connect-api-public/blob/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" targetNamespace="https://github.com/Modexpress/mx-connect-api-public/blob/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" elementFormDefault="qualified">
+	<xs:include schemaLocation="https://github.com/Modexpress/mx-connect-api-public/blob/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
+	<!-- 
+|| Below the message-structure
+ -->
+	<xs:element name="Message">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Header" type="tns:Header"/>
+				<xs:element name="OrderingParty" type="tns:Relation"/>
+				<xs:element name="Articles" type="tns:Articles"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="Header">
+		<xs:sequence>
+			<xs:element name="Version" type="tns:Text10"/>
+			<xs:element name="Identification" type="tns:Text20"/>
+			<xs:element name="Sender" type="tns:RelationInt"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Articles">
+		<xs:sequence>
+			<xs:element name="Article" type="tns:SKU" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SKU">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:TypSkuId"/>
+			<xs:element name="Description" type="tns:OText60" minOccurs="0"/>
+			<xs:element name="StorageType" type="tns:StorageType" minOccurs="0"/>
+			<xs:element name="Weight" type="tns:ONum12.3" minOccurs="0"/>
+			<xs:element name="Volume" type="tns:ONum11.2" minOccurs="0"/>
+			<xs:element name="Length" type="tns:ONum11.2" minOccurs="0"/>
+			<xs:element name="Width" type="tns:ONum11.2" minOccurs="0"/>
+			<xs:element name="Height" type="tns:ONum11.2" minOccurs="0"/>
+			<xs:element name="CountryOfOrigin" type="tns:OText3" minOccurs="0"/>
+			<xs:element name="Owner" type="tns:Relation"/>
+			<xs:element name="Identifications" type="tns:Identifications" minOccurs="0"/>
+			<xs:element name="Grouping" type="tns:Grouping" minOccurs="0"/>
+			<xs:element name="AdditionalInfo" type="tns:AdditionalInfo" minOccurs="0"/>
+			<xs:element name="Characteristics" type="tns:Characteristics" minOccurs="0"/>
+			<xs:element name="Composition" type="tns:Composition" minOccurs="0"/>
+			<xs:element name="Prices" type="tns:Prices" minOccurs="0"/>
+			<xs:element name="PackagingUnits" type="tns:PackagingUnits" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Identifications">
+		<xs:sequence>
+			<xs:element name="Code" type="tns:Text35" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Grouping">
+		<xs:sequence>
+			<xs:element name="Group" type="tns:Group" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Group">
+		<xs:sequence>
+			<xs:element name="Type" type="tns:ArticleGroupType"/>
+			<xs:element name="Value" type="tns:Text8"/>
+			<xs:element name="Description" type="tns:OText240" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdditionalInfo">
+		<xs:sequence>
+			<xs:element name="Info" type="tns:Info" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Info">
+		<xs:sequence>
+			<xs:element name="Type" type="tns:ArticleAdditionalInfoType"/>
+			<xs:element name="Value" type="tns:Text70"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Characteristics">
+		<xs:sequence>
+			<xs:element name="Characteristic" type="tns:Characteristic" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Characteristic">
+		<xs:sequence>
+			<xs:element name="Type" type="tns:CharacteristicType"/>
+			<xs:element name="Value" type="tns:Text70"/>
+			<xs:element name="Description" type="tns:OText240" minOccurs="0"/>
+			<xs:element name="SortingNumber" type="tns:ONum4" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Composition">
+		<xs:sequence>
+			<xs:element name="Part" type="tns:Part" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Part">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Id" type="tns:TypSkuId"/>
+				<xs:element name="Code" type="tns:Text35"/>
+			</xs:choice>
+			<xs:element name="PartQuantity" type="tns:Num9" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Prices">
+		<xs:sequence>
+			<xs:element name="Price" type="tns:Price" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Price">
+		<xs:sequence>
+			<xs:element name="Type" type="tns:Text15"/>
+			<xs:element name="Amount" type="tns:Num9.2"/>
+			<xs:element name="CurrencyCode" type="tns:Text3"/>
+			<xs:element name="Country" type="tns:OText2" minOccurs="0"/>
+			<xs:element name="Region" type="tns:OText25" minOccurs="0"/>
+			<xs:element name="VATCode" type="tns:VATCode" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackagingUnits">
+		<xs:sequence>
+			<xs:element name="PackagingUnit" type="tns:PackagingUnit" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackagingUnit">
+		<xs:sequence>
+			<xs:element name="Type" type="tns:Text15"/>
+			<xs:element name="Quantity" type="tns:Num6"/>
+			<xs:element name="Weight" type="tns:ONum12.3" minOccurs="0"/>
+			<xs:element name="Volume" type="tns:ONum11.2" minOccurs="0"/>
+			<xs:element name="Length" type="tns:ONum11.2" minOccurs="0"/>
+			<xs:element name="Width" type="tns:ONum11.2" minOccurs="0"/>
+			<xs:element name="Height" type="tns:ONum11.2" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
