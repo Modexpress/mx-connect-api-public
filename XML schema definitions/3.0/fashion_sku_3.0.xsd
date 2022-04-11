@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Revision: 24356 $
-$Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
--->
+<!--  $Revision: 29583 $
+$Date: 2018-03-05 16:10:22 +0100 (ma, 05 mrt 2018) $
+ -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://content.cb.nl/xsd/saleskitfashion/fashion_sku_3.0.xsd" targetNamespace="http://content.cb.nl/xsd/saleskitfashion/fashion_sku_3.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="http://content.cb.nl/xsd/saleskitfashion/simple_types_3.0.xsd"/>
-	<!--
+	<!-- 
 || Below the message-structure
--->
+ -->
 	<xs:element name="Message">
 		<xs:complexType>
 			<xs:sequence>
@@ -46,6 +46,7 @@ $Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
 			<xs:element name="Characteristics" type="tns:Characteristics" minOccurs="0"/>
 			<xs:element name="Composition" type="tns:Composition" minOccurs="0"/>
 			<xs:element name="Prices" type="tns:Prices" minOccurs="0"/>
+			<xs:element name="PackagingUnits" type="tns:PackagingUnits" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Identifications">
@@ -105,7 +106,7 @@ $Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
 	</xs:complexType>
 	<xs:complexType name="Prices">
 		<xs:sequence>
-			<xs:element name="Price" type="tns:Price" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Price" type="tns:Price" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Price">
@@ -116,6 +117,22 @@ $Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
 			<xs:element name="Country" type="tns:OText2" minOccurs="0"/>
 			<xs:element name="Region" type="tns:OText25" minOccurs="0"/>
 			<xs:element name="VATCode" type="tns:VATCode" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackagingUnits">
+		<xs:sequence>
+			<xs:element name="PackagingUnit" type="tns:PackagingUnit" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackagingUnit">
+		<xs:sequence>
+			<xs:element name="Type" type="tns:Text15"/>
+			<xs:element name="Quantity" type="tns:Num6"/>
+			<xs:element name="Weight" type="tns:ONum12.3" minOccurs="0"/>
+			<xs:element name="Volume" type="tns:ONum11.2" minOccurs="0"/>
+			<xs:element name="Length" type="tns:ONum11.2" minOccurs="0"/>
+			<xs:element name="Width" type="tns:ONum11.2" minOccurs="0"/>
+			<xs:element name="Height" type="tns:ONum11.2" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
