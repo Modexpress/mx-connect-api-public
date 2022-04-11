@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 rel. 4 sp1 (http://www.altova.com) by Centraal Boekenhui (Centraal Boekhuis B.V.) -->
+<!-- $Revision: 24356 $
+$Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://content.cb.nl/xsd/saleskitfashion/fashion_shp_impres_3.0.xsd" targetNamespace="http://content.cb.nl/xsd/saleskitfashion/fashion_shp_impres_3.0.xsd" elementFormDefault="qualified">
+	<xs:include schemaLocation="http://content.cb.nl/xsd/saleskitfashion/simple_types_3.0.xsd"/>
+	<!--
+|| Below the message-structure
+-->
+	<xs:element name="Message">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Header" type="tns:Header"/>
+				<xs:element name="OrderingParty" type="tns:Relation"/>
+				<xs:element name="Orders" type="tns:Orders"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="Header">
+		<xs:sequence>
+			<xs:element name="Version" type="tns:Text10"/>
+			<xs:element name="Identification" type="tns:Text20"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Orders">
+		<xs:sequence>
+			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Order">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text40"/>
+			<xs:element name="OrderReference" type="tns:OText25" minOccurs="0"/>
+			<xs:element name="ClientReference" type="tns:OText35" minOccurs="0"/>
+			<xs:element name="ProcessingStatus" type="tns:ProcessingStatus"/>
+			<xs:element name="Notification" type="tns:Text" minOccurs="0"/>
+			<xs:element name="OrderLines" type="tns:OrderLines"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrderLines">
+		<xs:sequence>
+			<xs:element name="OrderLine" type="tns:OrderLine" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrderLine">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text50"/>
+			<xs:element name="LineReference" type="tns:OText10" minOccurs="0"/>
+			<xs:element name="Quantity" type="tns:Num9"/>
+			<xs:element name="StockType" type="tns:OText10" minOccurs="0"/>
+			<xs:element name="ProcessingStatus" type="tns:ProcessingLineStatus"/>
+			<xs:element name="Notification" type="tns:Text" minOccurs="0"/>
+			<xs:element name="Article" type="tns:Article"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

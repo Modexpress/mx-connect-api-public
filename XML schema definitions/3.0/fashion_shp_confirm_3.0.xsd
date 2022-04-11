@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 rel. 4 sp1 (http://www.altova.com) by Centraal Boekenhui (Centraal Boekhuis B.V.) -->
+<!-- $Revision: 24356 $
+$Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://content.cb.nl/xsd/saleskitfashion/fashion_shp_confirm_3.0.xsd" targetNamespace="http://content.cb.nl/xsd/saleskitfashion/fashion_shp_confirm_3.0.xsd" elementFormDefault="qualified">
+	<xs:include schemaLocation="http://content.cb.nl/xsd/saleskitfashion/simple_types_3.0.xsd"/>
+	<!--
+|| Below the message-structure
+-->
+	<xs:element name="Message">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Header" type="tns:Header"/>
+				<xs:element name="OrderingParty" type="tns:Relation"/>
+				<xs:element name="Orders" type="tns:Orders"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="Header">
+		<xs:sequence>
+			<xs:element name="Version" type="tns:Text10"/>
+			<xs:element name="Identification" type="tns:Text20"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Orders">
+		<xs:sequence>
+			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Order">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text40"/>
+			<xs:element name="OrderReference" type="tns:OText25" minOccurs="0"/>
+			<xs:element name="ProcessingNumber" type="tns:ONum10" minOccurs="0"/>
+			<xs:element name="Notification" type="tns:OText255" minOccurs="0"/>
+			<xs:element name="DocumentNumber" type="tns:OText35" minOccurs="0"/>
+			<xs:element name="Orderlines" type="tns:Orderlines"/>
+			<xs:element name="ShippingUnits" type="tns:ShippingUnits" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Orderlines">
+		<xs:sequence>
+			<xs:element name="Orderline" type="tns:Orderline" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Orderline">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text50"/>
+			<xs:element name="QuantityOrdered" type="tns:Num9"/>
+			<xs:element name="QuantityDelivered" type="tns:Num9"/>
+			<xs:element name="QuantityNotDelivered" type="tns:Num9"/>
+			<xs:element name="StockType" type="tns:OText10" minOccurs="0"/>
+			<xs:element name="DateTimeOfCompletion" type="tns:DateTime"/>
+			<xs:element name="Article" type="tns:Article"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShippingUnits">
+		<xs:sequence>
+			<xs:element name="ShippingUnit" type="tns:ShippingUnit" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShippingUnit">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text35"/>
+			<xs:element name="Code" type="tns:Text35"/>
+			<xs:element name="Weight" type="tns:ONum9" minOccurs="0"/>
+			<xs:element name="Length" type="tns:ONum10" minOccurs="0"/>
+			<xs:element name="Width" type="tns:ONum10" minOccurs="0"/>
+			<xs:element name="Heigth" type="tns:ONum10" minOccurs="0"/>
+			<xs:element name="Carrier" type="tns:OText40" minOccurs="0"/>
+			<xs:element name="ShipmentCode" type="tns:OText6" minOccurs="0"/>
+			<xs:element name="TrackingId" type="tns:OText35" minOccurs="0"/>
+			<xs:element name="DateTimeOfCompletion" type="tns:DateTime"/>
+			<xs:element name="ReturnTrackingId" type="tns:OText35" minOccurs="0"/>
+			<xs:element name="Compositions" type="tns:Compositions"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Compositions">
+		<xs:sequence>
+			<xs:element name="Composition" type="tns:Composition" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Composition">
+		<xs:sequence>
+			<xs:element name="QuantityDelivered" type="tns:Num9"/>
+			<xs:element name="Stocktype" type="tns:Text10"/>
+			<xs:element name="Article" type="tns:Article"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
