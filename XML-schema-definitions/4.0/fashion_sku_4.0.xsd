@@ -2,8 +2,9 @@
 <!--  $Revision: 29583 $
 $Date: 2018-03-05 16:10:22 +0100 (ma, 05 mrt 2018) $
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://github.com/Modexpress/mx-connect-api-public/blob/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" targetNamespace="https://github.com/Modexpress/mx-connect-api-public/blob/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" elementFormDefault="qualified">
-	<xs:include schemaLocation="https://github.com/Modexpress/mx-connect-api-public/blob/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" 
+targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" elementFormDefault="qualified">
+	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/blob/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
 	<!-- 
 || Below the message-structure
  -->
