@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Revision: 35029 $
-$Date: 2018-11-30 16:29:54 +0100 (vr, 30 nov 2018) $
--->
+<!--  $Revision: 35029 $
+$Date: 2018-11-30 16:29:54 +0100 (Fri, 30 Nov 2018) $
+ -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-	<!--
+	<!-- 
 || Some general simple-type definitions
--->
+ -->
 	<xs:simpleType name="Text">
 		<xs:restriction base="xs:normalizedString"/>
 	</xs:simpleType>
@@ -100,7 +100,7 @@ $Date: 2018-11-30 16:29:54 +0100 (vr, 30 nov 2018) $
 			<xs:maxLength value="10"/>
 		</xs:restriction>
 	</xs:simpleType>
-  	<xs:simpleType name="OText14">
+	<xs:simpleType name="OText14">
 		<xs:restriction base="xs:normalizedString">
 			<xs:maxLength value="14"/>
 		</xs:restriction>
@@ -159,7 +159,7 @@ $Date: 2018-11-30 16:29:54 +0100 (vr, 30 nov 2018) $
 		<xs:restriction base="xs:normalizedString">
 			<xs:maxLength value="80"/>
 		</xs:restriction>
-	</xs:simpleType>  
+	</xs:simpleType>
 	<xs:simpleType name="OText156">
 		<xs:restriction base="xs:normalizedString">
 			<xs:maxLength value="156"/>
@@ -321,7 +321,7 @@ $Date: 2018-11-30 16:29:54 +0100 (vr, 30 nov 2018) $
 	<xs:complexType name="Article">
 		<xs:sequence>
 			<xs:element name="Id" type="TypSkuId"/>
-      <xs:element name="LotNumber" type="OText20" minOccurs="0"/>
+			<xs:element name="LotNumber" type="OText20" minOccurs="0"/>
 			<xs:element name="Code" type="OText35" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -329,15 +329,15 @@ $Date: 2018-11-30 16:29:54 +0100 (vr, 30 nov 2018) $
 		<xs:sequence>
 			<xs:choice>
 				<xs:element name="Id" type="TypSkuId"/>
-        <xs:element name="Code" type="Text35"/>
+				<xs:element name="Code" type="Text35"/>
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ArticleSHP">
 		<xs:sequence>
 			<xs:element name="Id" type="TypSkuId"/>
-      <xs:element name="LotNumber" type="OText20" minOccurs="0"/>
-      <xs:element name="ClientId" type="OText70" minOccurs="0"/>
+			<xs:element name="LotNumber" type="OText20" minOccurs="0"/>
+			<xs:element name="ClientId" type="OText70" minOccurs="0"/>
 			<xs:element name="ClientCode" type="OText70" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -346,7 +346,7 @@ $Date: 2018-11-30 16:29:54 +0100 (vr, 30 nov 2018) $
 			<xs:maxLength value="20"/>
 			<xs:enumeration value="PURCHASE"/>
 			<xs:enumeration value="RETURN"/>
-      <xs:enumeration value="XDOCKLOT"/>
+			<xs:enumeration value="XDOCKLOT"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="ShipmentType">
@@ -430,7 +430,7 @@ $Date: 2018-11-30 16:29:54 +0100 (vr, 30 nov 2018) $
 			<xs:enumeration value="WEB-ORDER"/>
 			<xs:enumeration value="PRE-ORDER"/>
 			<xs:enumeration value="RE-ORDER"/>
-      <xs:enumeration value="ZALANDO"/>
+			<xs:enumeration value="ZALANDO"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="PartialDelivery">

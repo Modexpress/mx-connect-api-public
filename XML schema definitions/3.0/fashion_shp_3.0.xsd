@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Revision: 40858 $
-$Date: 2019-10-03 08:53:32 +0200 (do, 03 okt 2019) $
--->
+<!--  $Revision: 48470 $
+$Date: 2021-04-16 14:52:40 +0200 (Fri, 16 Apr 2021) $
+ -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://content.cb.nl/xsd/saleskitfashion/fashion_shp_3.0.xsd" targetNamespace="http://content.cb.nl/xsd/saleskitfashion/fashion_shp_3.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="http://content.cb.nl/xsd/saleskitfashion/simple_types_3.0.xsd"/>
-	<!--
+	<!-- 
 || Some general simple-type definitions
--->
-  <xs:simpleType name="FinInfoType">
+ -->
+	<xs:simpleType name="FinInfoType">
 		<xs:restriction base="xs:normalizedString">
 			<xs:maxLength value="15"/>
 			<xs:enumeration value="Invoice"/>
-      <xs:enumeration value="CodSurcharge"/>
-      <xs:enumeration value="Discount"/>
-      <xs:enumeration value="Handling"/>
-      <xs:enumeration value="Packaging"/>
-      <xs:enumeration value="Transport"/>
-      <xs:enumeration value="PayedAmount"/>
+			<xs:enumeration value="CodSurcharge"/>
+			<xs:enumeration value="Discount"/>
+			<xs:enumeration value="Handling"/>
+			<xs:enumeration value="Packaging"/>
+			<xs:enumeration value="Transport"/>
+			<xs:enumeration value="PayedAmount"/>
+			<xs:enumeration value="Taxes"/>
+			<xs:enumeration value="Duties"/>
 		</xs:restriction>
-	</xs:simpleType>    
-  <xs:simpleType name="OrderIncoTerm">
+	</xs:simpleType>
+	<xs:simpleType name="OrderIncoTerm">
 		<xs:restriction base="xs:normalizedString">
 			<xs:maxLength value="3"/>
 			<xs:enumeration value="CFR"/>
 			<xs:enumeration value="CIF"/>
-      <xs:enumeration value="CIP"/>
+			<xs:enumeration value="CIP"/>
 			<xs:enumeration value="CPT"/>
-      <xs:enumeration value="DAF"/>
+			<xs:enumeration value="DAF"/>
 			<xs:enumeration value="DAP"/>
-      <xs:enumeration value="DAT"/>
+			<xs:enumeration value="DAT"/>
 			<xs:enumeration value="DDP"/>
-      <xs:enumeration value="DDU"/>
+			<xs:enumeration value="DDU"/>
 			<xs:enumeration value="DEQ"/>
-      <xs:enumeration value="DES"/>
+			<xs:enumeration value="DES"/>
 			<xs:enumeration value="EXW"/>
-      <xs:enumeration value="FAS"/>
+			<xs:enumeration value="FAS"/>
 			<xs:enumeration value="FCA"/>
-      <xs:enumeration value="FOB"/>
+			<xs:enumeration value="FOB"/>
 			<xs:enumeration value="FOP"/>
-      <xs:enumeration value="FOR"/>
+			<xs:enumeration value="FOR"/>
 		</xs:restriction>
-	</xs:simpleType>   
-	<!--
+	</xs:simpleType>
+	<!-- 
 || Below the message-structure
--->
+ -->
 	<xs:element name="Message">
 		<xs:complexType>
 			<xs:sequence>
@@ -86,14 +88,14 @@ $Date: 2019-10-03 08:53:32 +0200 (do, 03 okt 2019) $
 			<xs:element name="Priority" type="tns:ONum2" minOccurs="0"/>
 			<xs:element name="IncoTerm" type="tns:OrderIncoTerm" minOccurs="0"/>
 			<xs:element name="IncoTermPlace" type="tns:OText50" minOccurs="0"/>
-      <xs:element name="ReturnPeriod" type="tns:ONum3" minOccurs="0"/>
-      <xs:element name="AdditionalFinInfo" type="tns:AdditionalFinInfo" minOccurs="0"/>
+			<xs:element name="ReturnPeriod" type="tns:ONum3" minOccurs="0"/>
+			<xs:element name="AdditionalFinInfo" type="tns:AdditionalFinInfo" minOccurs="0"/>
 			<xs:element name="Parties" type="tns:Parties"/>
 			<xs:element name="Instructions" type="tns:Instructions" minOccurs="0"/>
 			<xs:element name="OrderLines" type="tns:OrderLines"/>
 		</xs:sequence>
 	</xs:complexType>
-  <xs:complexType name="AdditionalFinInfo">
+	<xs:complexType name="AdditionalFinInfo">
 		<xs:sequence>
 			<xs:element name="FinInfo" type="tns:FinInfo" minOccurs="1" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -102,11 +104,11 @@ $Date: 2019-10-03 08:53:32 +0200 (do, 03 okt 2019) $
 		<xs:sequence>
 			<xs:element name="InfoType" type="tns:FinInfoType" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="Description" type="tns:OText50" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="Date" type="tns:Date" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="Amount" type="tns:Num9.2" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="CurrencyCode" type="tns:OText3" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="VATCode" type="tns:VATCode" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="VATPercentage" type="tns:Num5.2" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Date" type="tns:Date" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Amount" type="tns:Num9.2" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="CurrencyCode" type="tns:OText3" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="VATCode" type="tns:VATCode" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="VATPercentage" type="tns:Num5.2" minOccurs="0" maxOccurs="1"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Parties">
@@ -198,7 +200,7 @@ $Date: 2019-10-03 08:53:32 +0200 (do, 03 okt 2019) $
 			<xs:element name="Country" type="tns:OText2" minOccurs="0"/>
 			<xs:element name="Region" type="tns:OText25" minOccurs="0"/>
 			<xs:element name="VATCode" type="tns:VATCode" minOccurs="0"/>
-      <xs:element name="VATPercentage" type="tns:Num5.2" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="VATPercentage" type="tns:Num5.2" minOccurs="0" maxOccurs="1"/>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
