@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  $Revision: 35029 $
+$Date: 2018-11-30 16:29:54 +0100 (Fri, 30 Nov 2018) $
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!-- 
+|| Some general simple-type definitions
+ -->
+	<xs:simpleType name="Text">
+		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
+	<xs:simpleType name="Text3">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text8">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text10">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text15">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text20">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text25">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text35">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text40">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text50">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text70">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="70"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text250">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="250"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText2">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText3">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText5">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText6">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText10">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText14">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="14"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText20">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText25">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText30">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText35">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText40">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText43">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="43"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText50">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText55">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="55"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText60">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText70">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="70"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText80">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText156">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="156"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText240">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="240"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText250">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="250"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText254">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="254"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText255">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ONum2">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2"/>
+			<xs:pattern value="[0-9]{0,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ONum3">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="3"/>
+			<xs:pattern value="[0-9]{0,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ONum4">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4"/>
+			<xs:pattern value="[0-9]{0,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ONum6">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[0-9]{0,6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ONum7">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="7"/>
+			<xs:pattern value="[0-9]{0,7}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ONum9">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[0-9]{0,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ONum10">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[0-9]{0,10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ONum11.2">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="12"/>
+			<xs:pattern value="[0-9]{1,9}([\.][0-9]{1,2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ONum12.3">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="13"/>
+			<xs:pattern value="[0-9]{1,9}([\.][0-9]{1,3})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Num3">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+			<xs:pattern value="[0-9]{1,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Num5.2">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[0-9]{1,7}([\.][0-9]{1,2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Num6">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[0-9]{1,6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Num9">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[0-9]{1,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Num9.2">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[0-9]{1,7}([\.][0-9]{1,2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Date">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="Prepacked">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="Y"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RelationType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="3"/>
+			<xs:enumeration value="EXT"/>
+			<xs:enumeration value="INT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Relation">
+		<xs:sequence>
+			<xs:element name="RelationId" type="Text40"/>
+			<xs:element name="RelationType" type="RelationType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="RelationTypeInt">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="3"/>
+			<xs:enumeration value="INT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="RelationInt">
+		<xs:sequence>
+			<xs:element name="RelationId" type="Text40"/>
+			<xs:element name="RelationType" type="RelationTypeInt"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="TypSkuId">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="250"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Article">
+		<xs:sequence>
+			<xs:element name="Id" type="TypSkuId"/>
+			<xs:element name="LotNumber" type="OText20" minOccurs="0"/>
+			<xs:element name="Code" type="OText35" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArticleOrCode">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Id" type="TypSkuId"/>
+				<xs:element name="Code" type="Text35"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArticleSHP">
+		<xs:sequence>
+			<xs:element name="Id" type="TypSkuId"/>
+			<xs:element name="LotNumber" type="OText20" minOccurs="0"/>
+			<xs:element name="ClientId" type="OText70" minOccurs="0"/>
+			<xs:element name="ClientCode" type="OText70" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PurchaseOrderType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="20"/>
+			<xs:enumeration value="PURCHASE"/>
+			<xs:enumeration value="RETURN"/>
+			<xs:enumeration value="XDOCKLOT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ShipmentType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="20"/>
+			<xs:enumeration value="PREORDER"/>
+			<xs:enumeration value="REORDER"/>
+			<xs:enumeration value="STANDARD"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProcessingLineStatus">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="P"/>
+			<xs:enumeration value="E"/>
+			<xs:enumeration value="W"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProcessingStatus">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="P"/>
+			<xs:enumeration value="E"/>
+			<xs:enumeration value="W"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PartyType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="20"/>
+			<xs:enumeration value="BuyerId"/>
+			<xs:enumeration value="ReceiverId"/>
+			<xs:enumeration value="ReceiverAddress"/>
+			<xs:enumeration value="SellerAddress"/>
+			<xs:enumeration value="BuyerAddress"/>
+			<xs:enumeration value="InvoiceAddress"/>
+			<xs:enumeration value="DropSiteAddress"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LanguageCode">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="3"/>
+			<xs:enumeration value="NLD"/>
+			<xs:enumeration value="ENG"/>
+			<xs:enumeration value="DEU"/>
+			<xs:enumeration value="FRA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Indication">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="Y"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Indication01">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OrderType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="6"/>
+			<xs:enumeration value="LB2BF"/>
+			<xs:enumeration value="LB2CF"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeliveryTime">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="D"/>
+			<xs:enumeration value="N"/>
+			<xs:enumeration value="L"/>
+			<xs:enumeration value="H"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OrderSubType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="10"/>
+			<xs:enumeration value="WEB-ORDER"/>
+			<xs:enumeration value="PRE-ORDER"/>
+			<xs:enumeration value="RE-ORDER"/>
+			<xs:enumeration value="ZALANDO"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PartialDelivery">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="14"/>
+			<xs:enumeration value="DIRECT"/>
+			<xs:enumeration value="ONDELIVERYDATE"/>
+			<xs:enumeration value="NEVER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VATCode">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="I"/>
+			<xs:enumeration value="E"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CharacteristicType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="10"/>
+			<xs:enumeration value="STYLE"/>
+			<xs:enumeration value="COLOUR"/>
+			<xs:enumeration value="SIZE"/>
+			<xs:enumeration value="SIZE2"/>
+			<xs:enumeration value="SEASON"/>
+			<xs:enumeration value="TARIC"/>
+			<xs:enumeration value="CUSTSTYLE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StorageType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="3"/>
+			<xs:enumeration value="FP"/>
+			<xs:enumeration value="GOH"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ArticleGroupType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ArticleAdditionalInfoType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StockTransactionLineType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="10"/>
+			<xs:enumeration value="RECEIPT"/>
+			<xs:enumeration value="RETURN"/>
+			<xs:enumeration value="SHIPMENT"/>
+			<xs:enumeration value="MUTATION"/>
+			<xs:enumeration value="RESSTOCK"/>
+			<xs:enumeration value="PRERECPT"/>
+			<xs:enumeration value="PRERETRN"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StockTransactionSign">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="5"/>
+			<xs:enumeration value="PLUS"/>
+			<xs:enumeration value="MINUS"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
