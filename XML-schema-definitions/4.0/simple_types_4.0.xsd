@@ -33,6 +33,12 @@ $Date: 2018-11-30 16:29:54 +0100 (Fri, 30 Nov 2018) $
 			<xs:maxLength value="15"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="Text17">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="17"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="Text20">
 		<xs:restriction base="xs:normalizedString">
 			<xs:minLength value="1"/>
@@ -75,6 +81,12 @@ $Date: 2018-11-30 16:29:54 +0100 (Fri, 30 Nov 2018) $
 			<xs:maxLength value="250"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="MText18">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="18"/>
+			<xs:maxLength value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="OText2">
 		<xs:restriction base="xs:normalizedString">
 			<xs:maxLength value="2"/>
@@ -108,6 +120,11 @@ $Date: 2018-11-30 16:29:54 +0100 (Fri, 30 Nov 2018) $
 	<xs:simpleType name="OText20">
 		<xs:restriction base="xs:normalizedString">
 			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OText22">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="22"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="OText25">
@@ -279,6 +296,70 @@ $Date: 2018-11-30 16:29:54 +0100 (Fri, 30 Nov 2018) $
 	</xs:simpleType>
 	<xs:simpleType name="Date">
 		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="CertificateType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="10"/>
+			<xs:enumeration value="EUR.1"/>
+			<xs:enumeration value="EUR-MED"/>
+			<xs:enumeration value="ATR"/>
+			<xs:enumeration value="CVO"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Incoterm">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="3"/>
+			<xs:enumeration value="EXW"/>
+			<xs:enumeration value="FCA"/>
+			<xs:enumeration value="FAS"/>
+			<xs:enumeration value="FOB"/>
+			<xs:enumeration value="CPT"/>
+			<xs:enumeration value="CIP"/>
+			<xs:enumeration value="CFR"/>
+			<xs:enumeration value="CIF"/>
+			<xs:enumeration value="DAP"/>
+			<xs:enumeration value="DPU"/>
+			<xs:enumeration value="DDP"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MeansOfTransport">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PackageType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="10"/>
+			<xs:enumeration value="CT"/>
+			<xs:enumeration value="OH"/>
+			<xs:enumeration value="ED"/>
+			<xs:enumeration value="OC"/>
+			<xs:enumeration value="PP"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="30"/>
+			<xs:enumeration value="BL"/>
+			<xs:enumeration value="AWB"/>
+			<xs:enumeration value="CMR"/>
+			<xs:enumeration value="CIM"/>
+			<xs:enumeration value="HWB"/>
+			<xs:enumeration value="PL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InvoiceStatementType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="10"/>
+			<xs:enumeration value="REX"/>
+			<xs:enumeration value="TE-EUR1"/>
+			<xs:enumeration value="TE-MED"/>
+			<xs:enumeration value="PREF-ORG"/>
+		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="Prepacked">
 		<xs:restriction base="xs:normalizedString">
