@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  $Revision: 24356 $
+$Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_stock_mutation_4.0.xsd" 
+targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_stock_mutation_4.0.xsd" elementFormDefault="qualified">
+	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
+	<!-- 
+|| Below the message-structure
+ -->
+	<xs:element name="Message">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Header" type="tns:Header"/>
+				<xs:element name="OrderingParty" type="tns:Relation"/>
+				<xs:element name="Transactions" type="tns:Transactions"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="Header">
+		<xs:sequence>
+			<xs:element name="Version" type="tns:Text10"/>
+			<xs:element name="Identification" type="tns:Text20"/>
+			<xs:element name="DateTime" type="tns:DateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Transactions">
+		<xs:sequence>
+			<xs:element name="Transaction" type="tns:Transaction" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Transaction">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text20"/>
+			<xs:element name="TransactionType1" type="tns:OText50" minOccurs="0"/>
+			<xs:element name="TransactionType2" type="tns:OText50" minOccurs="0"/>
+			<xs:element name="TransactionLines" type="tns:TransactionLines"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionLines">
+		<xs:sequence>
+			<xs:element name="TransactionLine" type="tns:TransactionLine" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionLine">
+		<xs:sequence>
+			<xs:element name="SequenceNumber" type="tns:Num6"/>
+			<xs:element name="DateTime" type="tns:DateTime"/>
+			<xs:element name="TransactionLineType" type="tns:StockTransactionLineType" minOccurs="0"/>
+			<xs:element name="StockType" type="tns:OText10" minOccurs="0"/>
+			<xs:element name="TransactionSign" type="tns:StockTransactionSign"/>
+			<xs:element name="Reason" type="tns:OText3" minOccurs="0"/>
+			<xs:element name="Quantity" type="tns:Num9"/>
+			<xs:element name="Article" type="tns:Article"/>
+			<xs:element name="Owner" type="tns:Relation" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

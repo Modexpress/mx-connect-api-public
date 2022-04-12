@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  $Revision: 220412 $ 
+$Date: 2022-04-22 11:00:00 +0200 (Tue, 12 Apr 2022) $
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_4.0.xsd" elementFormDefault="qualified">
+	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
+	<!-- 
+|| Some general simple-type definitions
+ -->
+	<xs:simpleType name="FinInfoType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="15"/>
+			<xs:enumeration value="Invoice"/>
+			<xs:enumeration value="CodSurcharge"/>
+			<xs:enumeration value="Discount"/>
+			<xs:enumeration value="Handling"/>
+			<xs:enumeration value="Packaging"/>
+			<xs:enumeration value="Transport"/>
+			<xs:enumeration value="PayedAmount"/>
+			<xs:enumeration value="Taxes"/>
+			<xs:enumeration value="Duties"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- 
+|| Below the message-structure
+ -->
+	<xs:element name="Message">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Header" type="tns:Header"/>
+				<xs:element name="OrderingParty" type="tns:Relation"/>
+				<xs:element name="Orders" type="tns:Orders"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="Header">
+		<xs:sequence>
+			<xs:element name="Version" type="tns:Text10"/>
+			<xs:element name="Identification" type="tns:Text20"/>
+			<xs:element name="ConfirmationOfReceipt" type="tns:Indication01"/>
+			<xs:element name="Sender" type="tns:RelationInt"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Orders">
+		<xs:sequence>
+			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Order">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text40"/>
+			<xs:element name="DateTime" type="tns:DateTime" minOccurs="0"/>
+			<xs:element name="Type" type="tns:OrderType"/>
+			<xs:element name="DeliveryTime" type="tns:DeliveryTime" minOccurs="0"/>
+			<xs:element name="OrderReference" type="tns:OText25" minOccurs="0"/>
+			<xs:element name="ClientReference" type="tns:OText35" minOccurs="0"/>
+			<xs:element name="ShipmentCode" type="tns:OText5" minOccurs="0"/>
+			<xs:element name="ShipmentService" type="tns:OText20" minOccurs="0"/>
+			<xs:element name="ReturnShipmentCode" type="tns:OText5" minOccurs="0"/>
+			<xs:element name="ReturnShipmentService" type="tns:OText20" minOccurs="0"/>
+			<xs:element name="FirstDeliveryDate" type="tns:Date" minOccurs="0"/>
+			<xs:element name="LastDeliveryDate" type="tns:Date" minOccurs="0"/>
+			<xs:element name="SubType" type="tns:OrderSubType" minOccurs="0"/>
+			<xs:element name="PartialDelivery" type="tns:PartialDelivery"/>
+			<xs:element name="Explanation" type="tns:OText255" minOccurs="0"/>
+			<xs:element name="Priority" type="tns:ONum2" minOccurs="0"/>
+			<xs:element name="IncoTerm" type="tns:Incoterm" minOccurs="0"/>
+			<xs:element name="IncoTermPlace" type="tns:OText50" minOccurs="0"/>
+			<xs:element name="IncoTermCountry" type="tns:OText3" minOccurs="0"/>
+			<xs:element name="ReturnPeriod" type="tns:ONum3" minOccurs="0"/>
+			<xs:element name="AdditionalFinInfo" type="tns:AdditionalFinInfo" minOccurs="0"/>
+			<xs:element name="Parties" type="tns:Parties"/>
+			<xs:element name="Instructions" type="tns:Instructions" minOccurs="0"/>
+			<xs:element name="OrderLines" type="tns:OrderLines"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdditionalFinInfo">
+		<xs:sequence>
+			<xs:element name="FinInfo" type="tns:FinInfo" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FinInfo">
+		<xs:sequence>
+			<xs:element name="InfoType" type="tns:FinInfoType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Description" type="tns:OText50" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Date" type="tns:Date" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Amount" type="tns:Num9.2" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="CurrencyCode" type="tns:OText3" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="VATCode" type="tns:VATCode" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="VATPercentage" type="tns:Num5.2" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Parties">
+		<xs:sequence>
+			<xs:element name="Party" type="tns:Party" maxOccurs="4"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Party">
+		<xs:sequence>
+			<xs:element name="Type" type="tns:PartyType"/>
+			<xs:element name="Id" type="tns:ONum7" minOccurs="0"/>
+			<xs:element name="ExternalId" type="tns:OText35" minOccurs="0"/>
+			<xs:element name="Name1" type="tns:OText50" minOccurs="0"/>
+			<xs:element name="Name2" type="tns:OText50" minOccurs="0"/>
+			<xs:element name="AddressLine1" type="tns:OText50" minOccurs="0"/>
+			<xs:element name="AddressLine2" type="tns:OText50" minOccurs="0"/>
+			<xs:element name="HouseNumber" type="tns:ONum6" minOccurs="0"/>
+			<xs:element name="HouseNumberExtension" type="tns:OText10" minOccurs="0"/>
+			<xs:element name="DeliveryInstruction" type="tns:OText30" minOccurs="0"/>
+			<xs:element name="PostalCode" type="tns:OText20" minOccurs="0"/>
+			<xs:element name="City" type="tns:OText50" minOccurs="0"/>
+			<xs:element name="Region" type="tns:OText35" minOccurs="0"/>
+			<xs:element name="Country" type="tns:OText2" minOccurs="0"/>
+			<xs:element name="EmailAddress" type="tns:OText254" minOccurs="0"/>
+			<xs:element name="PhoneNumber" type="tns:OText40" minOccurs="0"/>
+			<xs:element name="MobileNumber" type="tns:OText40" minOccurs="0"/>
+			<xs:element name="LanguageCode" type="tns:LanguageCode" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Instructions">
+		<xs:sequence>
+			<xs:element name="Instruction" type="tns:Instruction" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Instruction">
+		<xs:sequence>
+			<xs:element name="Type" type="tns:Text10"/>
+			<xs:element name="SequenceNumber" type="tns:Num3"/>
+			<xs:element name="Code" type="tns:OText10" minOccurs="0"/>
+			<xs:element name="Description" type="tns:OText156" minOccurs="0"/>
+			<xs:element name="Info" type="tns:OText70" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrderLines">
+		<xs:sequence>
+			<xs:element name="OrderLine" type="tns:OrderLine" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrderLine">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text50"/>
+			<xs:element name="LineReference" type="tns:OText10" minOccurs="0"/>
+			<xs:element name="Quantity" type="tns:Num6"/>
+			<xs:element name="StockType" type="tns:OText10" minOccurs="0"/>
+			<xs:element name="AlternativeDescription" type="tns:OText60" minOccurs="0"/>
+			<xs:element name="OrderReference" type="tns:OText10" minOccurs="0"/>
+			<xs:element name="ClientReference" type="tns:OText10" minOccurs="0"/>
+			<xs:element name="BackorderIndication" type="tns:Indication" minOccurs="0"/>
+			<xs:element name="Article" type="tns:ArticleSHP"/>
+			<xs:element name="Owner" type="tns:Relation"/>
+			<xs:element name="Instructions" type="tns:LineInstructions" minOccurs="0"/>
+			<xs:element name="Prices" type="tns:Prices" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LineInstructions">
+		<xs:sequence>
+			<xs:element name="Instruction" type="tns:LineInstruction" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LineInstruction">
+		<xs:sequence>
+			<xs:element name="Type" type="tns:Text10"/>
+			<xs:element name="SequenceNumber" type="tns:Num3"/>
+			<xs:element name="Code" type="tns:OText10" minOccurs="0"/>
+			<xs:element name="Description" type="tns:OText70" minOccurs="0"/>
+			<xs:element name="Info" type="tns:OText70" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Prices">
+		<xs:sequence>
+			<xs:element name="Price" type="tns:Price" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Price">
+		<xs:sequence>
+			<xs:element name="Type" type="tns:Text15"/>
+			<xs:element name="Amount" type="tns:Num9.2"/>
+			<xs:element name="CurrencyCode" type="tns:Text3"/>
+			<xs:element name="Country" type="tns:OText2" minOccurs="0"/>
+			<xs:element name="Region" type="tns:OText25" minOccurs="0"/>
+			<xs:element name="VATCode" type="tns:VATCode" minOccurs="0"/>
+			<xs:element name="VATPercentage" type="tns:Num5.2" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
