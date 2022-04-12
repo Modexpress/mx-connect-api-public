@@ -1,57 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 24356 $
-$Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
+<!--  $Revision: 220412 $ 
+$Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_stock_mutation_4.0.xsd" 
-targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_stock_mutation_4.0.xsd" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_stock_mutation_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_stock_mutation_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
 	<!-- 
 || Below the message-structure
  -->
 	<xs:element name="Message">
+		<xs:annotation>
+			<xs:documentation>The message to indicate the execution of stock movements.</xs:documentation>
+		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Header" type="tns:Header"/>
-				<xs:element name="OrderingParty" type="tns:Relation"/>
-				<xs:element name="Transactions" type="tns:Transactions"/>
+				<xs:element name="Header" type="tns:Header">
+					<xs:annotation>
+						<xs:documentation>The message header</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OrderingParty" type="tns:Relation">
+					<xs:annotation>
+						<xs:documentation>The party on whose behalf goods are stored is the party for which the stock transactions are made.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Transactions" type="tns:Transactions">
+					<xs:annotation>
+						<xs:documentation>The stock movements grouped by relevant transaction types.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="Header">
 		<xs:sequence>
-			<xs:element name="Version" type="tns:Text10"/>
-			<xs:element name="Identification" type="tns:Text20"/>
-			<xs:element name="DateTime" type="tns:DateTime"/>
+			<xs:element name="Version" type="tns:Text10">
+				<xs:annotation>
+					<xs:documentation>Identification of the message version used.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Identification" type="tns:Text20">
+				<xs:annotation>
+					<xs:documentation>Identification of the message.
+The id is unique among all the stock movements and stock level messages that were sent.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateTime" type="tns:DateTime">
+				<xs:annotation>
+					<xs:documentation>Date + time on which the message was created.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Transactions">
 		<xs:sequence>
-			<xs:element name="Transaction" type="tns:Transaction" maxOccurs="unbounded"/>
+			<xs:element name="Transaction" type="tns:Transaction" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The stock movements grouped by a relevant transaction type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Transaction">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:Text20"/>
-			<xs:element name="TransactionType1" type="tns:OText50" minOccurs="0"/>
-			<xs:element name="TransactionType2" type="tns:OText50" minOccurs="0"/>
-			<xs:element name="TransactionLines" type="tns:TransactionLines"/>
+			<xs:element name="Id" type="tns:Text20">
+				<xs:annotation>
+					<xs:documentation>The identification for the transaction defined by Modexpress.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionType1" type="tns:OText50" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Designation of the type of transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionType2" type="tns:OText50" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Second designation of the type of transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionLines" type="tns:TransactionLines">
+				<xs:annotation>
+					<xs:documentation>The lines of the transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TransactionLines">
 		<xs:sequence>
-			<xs:element name="TransactionLine" type="tns:TransactionLine" maxOccurs="unbounded"/>
+			<xs:element name="TransactionLine" type="tns:TransactionLine" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A transaction line</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TransactionLine">
 		<xs:sequence>
-			<xs:element name="SequenceNumber" type="tns:Num6"/>
-			<xs:element name="DateTime" type="tns:DateTime"/>
-			<xs:element name="TransactionLineType" type="tns:StockTransactionLineType" minOccurs="0"/>
-			<xs:element name="StockType" type="tns:OText10" minOccurs="0"/>
-			<xs:element name="TransactionSign" type="tns:StockTransactionSign"/>
-			<xs:element name="Reason" type="tns:OText3" minOccurs="0"/>
-			<xs:element name="Quantity" type="tns:Num9"/>
-			<xs:element name="Article" type="tns:Article"/>
+			<xs:element name="SequenceNumber" type="tns:Num6">
+				<xs:annotation>
+					<xs:documentation>The sequence number of the line.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateTime" type="tns:DateTime">
+				<xs:annotation>
+					<xs:documentation>Date + time of execution of the stock movement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionLineType" type="tns:StockTransactionLineType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Designation of the type of transaction:
+- PRERECPT; Pre-receipt of stock (not send by default)
+- PRERETRN; Pre-return receipt of stock (not send by default)
+- RECEIPT; Receipt of stock (not send by default, assumption RCP-exec is used)
+- RETURN; Return receipt of stock (not send by default, assumption RCP-exec is used)
+- SHIPMENT; Shipment of stock (not send by default, assumption SHP-exec is used)
+- MUTATION; Other stock movement or stock correction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StockType" type="tns:OText10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Designation of the type of stock. Using the stock type, it is possible to differentiate according to different types of stock that must be maintained separately for an article (both in the operation and administratively).
+
+The standard stock types are (other types are possible):
+- RGL - regular stock (A-choice stock)
+- KWL - regular stock, blocked for quality control (not available for SHP)
+- BLK -  regular stock, blocked for other reason (not available for shipping)
+- RGLRJC - regular reject stock (B-choice stock)
+- KWLRJC - regular reject stock, blocked for quality control (not available for shipping)
+- BLKRJC - regular reject stock, blocked for other reason (not available for shipping)
+- INN - regular stock (A-choice stock), received in inbound area
+- INNRJC - regular reject stock (B-choice stock), received in inbound area
+- INR - regular stock (A-choice stock), received in return inbound area
+- INRRJC - regular reject stock (B-choice stock), received in return inbound area
+
+If the received stock in the RCP-exec interface is used to add the stock in your ERP, the stock movements regarding the INN(RJC) and INR(RJC) stocktypes will not be sent. However, it is still possible there will be stock corrections regarding the INN(RJC) and INR(RJC) stocktypes. Depending on the handling of the stock in your ERP, these corrections should probably be made to the RGL(RJC) stock.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionSign" type="tns:StockTransactionSign">
+				<xs:annotation>
+					<xs:documentation>Indication whether it involves an increase (+) or decrease (-/-) in the stock.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reason" type="tns:OText3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The reason for the transaction (only for type MUTATION and in case of a stock correction):
+- 2 -  Count discrepancy
+- 17 - Order pick count discrepancy
+- 18 - Order pick damaged
+- 26 - Cycle count discrepancy
+- 27 - Cycle count damaged
+- 28 - Reclassify stock
+- 29 - Destroy stock
+- 30 - Packaging material usage
+- 90 - Found stock
+- SY - Synchronisation correction (is internal reason)
+- Assembly corrections:
+  - 13 - Add up because of assembly of box/article (for the resulting box/article)
+  - 23 - Deduction because of assembly of box/article (for the assembly articles)
+- Unpack corrections:
+  - 14 - Add up because of unpack box/article (for the resulting unpacked articles)
+  - 24 - Deduction because of unpack box/article (for the unpacked box/article)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the transaction line.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Article" type="tns:Article">
+				<xs:annotation>
+					<xs:documentation>Designation of the article.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Owner" type="tns:Relation" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>

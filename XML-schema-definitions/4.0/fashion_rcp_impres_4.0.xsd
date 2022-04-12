@@ -1,93 +1,269 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 24356 $
-$Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
+<!--  $Revision: 220412 $ 
+$Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_impres_4.0.xsd" 
-targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_impres_4.0.xsd" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_impres_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_impres_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
 	<!-- 
 || Below the message-structure
  -->
 	<xs:element name="Message">
+		<xs:annotation>
+			<xs:documentation>The message to indicate the processing result of the registration of orders to receive goods.</xs:documentation>
+		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Header" type="tns:Header"/>
-				<xs:element name="OrderingParty" type="tns:Relation"/>
-				<xs:element name="Orders" type="tns:Orders"/>
+				<xs:element name="Header" type="tns:Header">
+					<xs:annotation>
+						<xs:documentation>The message header</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OrderingParty" type="tns:Relation">
+					<xs:annotation>
+						<xs:documentation>The party on whose behalf the goods in the order/message have to be received.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Orders" type="tns:Orders">
+					<xs:annotation>
+						<xs:documentation>The processing result of the orders to receive goods on behalf of the ordering party.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="Header">
 		<xs:sequence>
-			<xs:element name="Version" type="tns:Text10"/>
-			<xs:element name="Identification" type="tns:Text20"/>
+			<xs:element name="Version" type="tns:Text10">
+				<xs:annotation>
+					<xs:documentation>The processing result of the orders to receive goods on behalf of the ordering party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Identification" type="tns:Text20">
+				<xs:annotation>
+					<xs:documentation>Identification of the message.
+The id is unique among all the receipt import result messages that have been sent.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Orders">
 		<xs:sequence>
-			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded"/>
+			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The processing result of the order to receive goods (stock).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Order">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:OText25"/>
-			<xs:element name="PurchaseOrder" type="tns:PurchaseOrder" minOccurs="0"/>
-			<xs:element name="Shipment" type="tns:Shipment" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Id" type="tns:OText25">
+				<xs:annotation>
+					<xs:documentation>The identification that the ordering party uses for the order.
+If the ordering party has no identification that CB can use as a unique id, CB assigns a unique id to the order. This id is then indicated in the import result.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PurchaseOrder" type="tns:PurchaseOrder" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The processing result of the order from the ordering party to receive goods on behalf of the ordering party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Shipment" type="tns:Shipment" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The processing result of the registration of a shipment to be delivered by a supplier as part of a purchase order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PurchaseOrder">
 		<xs:sequence>
-			<xs:element name="Type" type="tns:PurchaseOrderType"/>
-			<xs:element name="Subtype" type="tns:OText20" minOccurs="0"/>
-			<xs:element name="Reference" type="tns:OText20" minOccurs="0"/>
-			<xs:element name="SenderInternalId" type="tns:ONum7" minOccurs="0"/>
-			<xs:element name="SenderExternalId" type="tns:OText20" minOccurs="0"/>
-			<xs:element name="SenderName" type="tns:OText70" minOccurs="0"/>
-			<xs:element name="Date" type="tns:Date" minOccurs="0"/>
-			<xs:element name="ProcessingStatus" type="tns:ProcessingStatus"/>
-			<xs:element name="Notification" type="tns:Text" minOccurs="0"/>
-			<xs:element name="PurchaseOrderLines" type="tns:PurchaseOrderLines"/>
+			<xs:element name="Type" type="tns:PurchaseOrderType">
+				<xs:annotation>
+					<xs:documentation>Designation of the order type.
+The XDOCKLOT orders are reported as PURCHASE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Subtype" type="tns:OText20" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Further subdivision of the order type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reference" type="tns:OText20" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reference for the order used by the ordering party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SenderInternalId" type="tns:ONum7" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identification of the party that delivers the goods for the order. The relevant party must be known to CB by the relevant Id.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SenderExternalId" type="tns:OText20" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identification of the party that delivers the goods for the order. The relevant party is not known to CB by the relevant Id.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SenderName" type="tns:OText70" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name/description of the party that delivers the goods for the order. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date" type="tns:Date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date that the ordering party uses for the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProcessingStatus" type="tns:ProcessingStatus">
+				<xs:annotation>
+					<xs:documentation>The processing status of the registration of orders to receive goods:
+P = Processed (order registration was processed without any problems)
+E = Error (order registration was not processed due to an error situation)
+W = Warning (order registration was processed, but with an issue)
+
+By default only the order registrations with an E or W status are specified.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Notification" type="tns:Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description of the error or warning.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PurchaseOrderLines" type="tns:PurchaseOrderLines">
+				<xs:annotation>
+					<xs:documentation>The lines of the purchase order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PurchaseOrderLines">
 		<xs:sequence>
-			<xs:element name="PurchaseOrderLine" type="tns:PurchaseOrderLine" maxOccurs="unbounded"/>
+			<xs:element name="PurchaseOrderLine" type="tns:PurchaseOrderLine" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A line of the consignment. A line specifies the goods that will be delivered for a particular article.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PurchaseOrderLine">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:Text250"/>
-			<xs:element name="Quantity" type="tns:Num9"/>
-			<xs:element name="Reference" type="tns:OText10" minOccurs="0"/>
-			<xs:element name="ProcessingStatus" type="tns:ProcessingLineStatus"/>
-			<xs:element name="Notification" type="tns:Text" minOccurs="0"/>
+			<xs:element name="Id" type="tns:Text250">
+				<xs:annotation>
+					<xs:documentation>Reference to the purchase order line (purchaseorderline.Id) for which this shipment line indicates the delivery.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article that will be delivered.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reference" type="tns:OText10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The reference that the ordering party uses for the order line and that the ordering party can use to recognise the line.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProcessingStatus" type="tns:ProcessingLineStatus">
+				<xs:annotation>
+					<xs:documentation>The processing status of the registration of order lines:
+P = Processed (order line registration was processed without any problems)
+E = Error (order line registration was not processed due to an error situation)
+W = Warning (order line registration was processed, but with an issue)
+N = New (order line registration was not processed due to an error on order level)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Notification" type="tns:Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description of the error or warning.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Article" type="tns:ArticleOrCode"/>
 			<xs:element name="Owner" type="tns:Relation"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Shipment">
 		<xs:sequence>
-			<xs:element name="Reference" type="tns:OText25" minOccurs="0"/>
-			<xs:element name="Type" type="tns:ShipmentType"/>
-			<xs:element name="ArrivalDateTime" type="tns:DateTime" minOccurs="0"/>
-			<xs:element name="ProcessingStatus" type="tns:ProcessingStatus"/>
-			<xs:element name="Notification" type="tns:Text" minOccurs="0"/>
-			<xs:element name="ShipmentLines" type="tns:ShipmentLines" minOccurs="0"/>
+			<xs:element name="Reference" type="tns:OText25" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reference used by the supplier for the consignment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Type" type="tns:ShipmentType">
+				<xs:annotation>
+					<xs:documentation>Designation of the order type.
+Only the types indicated by CB are permitted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArrivalDateTime" type="tns:DateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The delivery date/time at Modexpress of the consignment expected by the supplier.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProcessingStatus" type="tns:ProcessingStatus">
+				<xs:annotation>
+					<xs:documentation>The processing status of the registration of consignments orders:
+P = Processed (order was processed without any problems)
+E = Error (order was not processed due to an error situation)
+W = Warning (order was processed, but with an issue)
+
+By default only the orders with an E or W status are reported.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Notification" type="tns:Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description of the error or warning.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShipmentLines" type="tns:ShipmentLines" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The lines of the shipment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ShipmentLines">
 		<xs:sequence>
-			<xs:element name="ShipmentLine" type="tns:ShipmentLine" maxOccurs="unbounded"/>
+			<xs:element name="ShipmentLine" type="tns:ShipmentLine" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A line of the consignment. A line specifies the goods that will be delivered for a particular article.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ShipmentLine">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:Text250"/>
-			<xs:element name="Quantity" type="tns:Num9"/>
-			<xs:element name="CountryOfOrigin" type="tns:OText3" minOccurs="0"/>
-			<xs:element name="Prepacked" type="tns:Prepacked" minOccurs="0"/>
-			<xs:element name="ProcessingStatus" type="tns:ProcessingLineStatus"/>
-			<xs:element name="Notification" type="tns:Text" minOccurs="0"/>
+			<xs:element name="Id" type="tns:Text250">
+				<xs:annotation>
+					<xs:documentation>Reference to the purchase order line (purchaseorderline.Id) for which this shipment line indicates the delivery.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article that will be delivered.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryOfOrigin" type="tns:OText3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The country of origin of the article to be delivered.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Prepacked" type="tns:Prepacked" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indication whether the delivered article, together with other articles, has been packed in secondary packaging (for example, size curve box) and must be removed from this packaging when it arrives.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProcessingStatus" type="tns:ProcessingLineStatus">
+				<xs:annotation>
+					<xs:documentation>The processing status of the registration of shipment line:
+P = Processed (order line was processed without any problems)
+E = Error (order line was not processed due to an error situation)
+W = Warning (order line was processed, but with an issue)
+N = New (order line registration was not processed due to an error on order level)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Notification" type="tns:Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description of the error or warning.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

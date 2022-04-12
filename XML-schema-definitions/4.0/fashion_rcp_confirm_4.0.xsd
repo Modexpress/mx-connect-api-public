@@ -1,73 +1,226 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 24356 $
-$Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
+<!--  $Revision: 220412 $ 
+$Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_confirm_4.0.xsd" 
-targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_confirm_4.0.xsd" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_confirm_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_confirm_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
 	<!-- 
 || Below the message-structure
  -->
 	<xs:element name="Message">
+		<xs:annotation>
+			<xs:documentation>The message to indicate the execution result of the orders to receive goods.</xs:documentation>
+		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Header" type="tns:Header"/>
-				<xs:element name="OrderingParty" type="tns:Relation"/>
-				<xs:element name="Orders" type="tns:Orders"/>
+				<xs:element name="Header" type="tns:Header">
+					<xs:annotation>
+						<xs:documentation>The message header</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OrderingParty" type="tns:Relation">
+					<xs:annotation>
+						<xs:documentation>The party on whose behalf the goods in the order/message are received.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Orders" type="tns:Orders">
+					<xs:annotation>
+						<xs:documentation>The execution result of the orders to receive goods on behalf of the ordering party.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="Header">
 		<xs:sequence>
-			<xs:element name="Version" type="tns:Text10"/>
-			<xs:element name="Identification" type="tns:Text20"/>
-			<xs:element name="DateTime" type="tns:DateTime"/>
+			<xs:element name="Version" type="tns:Text10">
+				<xs:annotation>
+					<xs:documentation>Identification of the message version used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Identification" type="tns:Text20">
+				<xs:annotation>
+					<xs:documentation>Identification of the message.
+The id is unique among all the receipt execution result messages that have been sent.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateTime" type="tns:DateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time when the message was compiled.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Orders">
 		<xs:sequence>
-			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded"/>
+			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The execution result of the order to receive goods (stock).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Order">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:Text25"/>
-			<xs:element name="Type" type="tns:PurchaseOrderType"/>
-			<xs:element name="Reference" type="tns:OText20" minOccurs="0"/>
-			<xs:element name="SenderInternalId" type="tns:ONum7" minOccurs="0"/>
-			<xs:element name="SenderExternalId" type="tns:OText20" minOccurs="0"/>
-			<xs:element name="Date" type="tns:Date" minOccurs="0"/>
-			<xs:element name="ArrivalDateTime" type="tns:DateTime" minOccurs="0"/>
-			<xs:element name="CompletionDateTime" type="tns:DateTime" minOccurs="0"/>
-			<xs:element name="OrderLines" type="tns:OrderLines"/>
+			<xs:element name="Id" type="tns:Text25">
+				<xs:annotation>
+					<xs:documentation>The identification that the ordering party uses for the order.
+In some cases, an id is specified that Modexpress has assigned itself, namely when it involves:
+- a registered order for which the ordering party has not specified an id that Modexpress can use as a unique id
+- a blind receipt
+- an automatically created return order (based on an executed shipment)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Type" type="tns:PurchaseOrderType">
+				<xs:annotation>
+					<xs:documentation>Designation of the order type.
+The XDOCKLOT orders are reported as PURCHASE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubType" type="tns:OText20">
+				<xs:annotation>
+					<xs:documentation>A subdivision of the order type.
+In case of an automatically created return order the subtype will be 'AUTOMATISCH'.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reference" type="tns:OText20" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reference for the order used by the ordering party.
+
+In the case of an automatically created return order, this refers to the shipment (SHP) for which the return order was created. The reference is to the Order.Id (SHP 3-1-01). However, this is only possible when the format of the Order.Id is a maximum of A20.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SenderInternalId" type="tns:ONum7" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identification of the party that delivers the goods for the order. The relevant party must be known to Modexpress by the relevant Id.
+Not applicable in case of RETURN.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SenderExternalId" type="tns:OText20" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identification of the party that delivers the goods for the order. The relevant party is not known to Modexpress by the relevant Id.
+Not applicable in case of RETURN.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date" type="tns:Date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date that the ordering party uses for the order.
+Not applicable in case of RETURN.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArrivalDateTime" type="tns:DateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The delivery date/time at Modexpress of the shipment expected by the supplier.
+Not applicable in case of RETURN.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CompletionDateTime" type="tns:DateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date – where relevant, with the time – when the order was reported ready/executed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProcessingStatus" type="tns:RCPProcessingStatus" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indication of the status of the order:
+F - First receipt notification
+R - Receipt notification (final receipt, order has been closed)
+
+The status field is only included if the distinction between the first and final notification is applicable. If only t</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MRN" type="tns:MText18" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Inbound MRN Number if applicable and known at the time of sending the RCP message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderLines" type="tns:OrderLines">
+				<xs:annotation>
+					<xs:documentation>The lines of the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="OrderLines">
 		<xs:sequence>
-			<xs:element name="OrderLine" type="tns:OrderLine" maxOccurs="unbounded"/>
+			<xs:element name="OrderLine" type="tns:OrderLine" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A line of the order. A line specifies the goods that were received for a particular article.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="OrderLine">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:OText250" minOccurs="0"/>
-			<xs:element name="QuantityExpected" type="tns:ONum9"/>
-			<xs:element name="QuantityReceived" type="tns:Num9"/>
-			<xs:element name="Reference" type="tns:OText10" minOccurs="0"/>
-			<xs:element name="ReturnReason" type="tns:OText10" minOccurs="0"/>
-			<xs:element name="Article" type="tns:Article"/>
+			<xs:element name="Id" type="tns:OText250" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The identification that the ordering party uses for the order line. This is therefore the reference to the line submitted in the RCP message. 
+If lines (SKUs) have been added in the operation, no Id can be indicated because there is no submitted line.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QuantityExpected" type="tns:ONum9">
+				<xs:annotation>
+					<xs:documentation>The expected number of items in the order to receive goods. This number is only indicated if the receipt was based on an order submitted by the ordering party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QuantityReceived" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article actually received (regardless of stock type).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reference" type="tns:OText10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The reference that the ordering party uses for the order line and that the ordering party can use to recognise the line.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReturnReason" type="tns:OText10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The reason for the return of goods.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Article" type="tns:Article">
+				<xs:annotation>
+					<xs:documentation>The article for which goods have been received. The article can be indicated by means of the id and/or the code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Owner" type="tns:Relation"/>
-			<xs:element name="QuantityStockTypes" type="tns:QuantityStockTypes" minOccurs="0"/>
+			<xs:element name="QuantityStockTypes" type="tns:QuantityStockTypes" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The classification by stock types of the received quantity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="QuantityStockTypes">
 		<xs:sequence>
-			<xs:element name="QuantityStockType" type="tns:QuantityStockType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="QuantityStockType" type="tns:QuantityStockType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The classification by stock type of the number of items of the article that were actually received.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="QuantityStockType">
 		<xs:sequence>
-			<xs:element name="StockType" type="tns:Text10"/>
-			<xs:element name="QuantityReceived" type="tns:Num9"/>
+			<xs:element name="StockType" type="tns:Text10">
+				<xs:annotation>
+					<xs:documentation>Designation of the type of stock that was received. Using the stock type, it is possible to differentiate according to different types of stock that must be maintained separately for an article (both in the operation and administratively).
+
+The standaard stock types are (other types are possible):
+- RGL - regular or A-choice stock (received in pickarea)
+- RGLRJC - regular reject or B-choice stock
+- INN - regular or A-choice stock (received in inbound area)
+- INNRJC - regular reject or B-choice stock (received in inbound area)
+- INR - regular or A-choice stock (received in return inbound area)
+- INRRJC - regular reject or B-choice stock (received in return inbound area)
+
+In the RCP-exec file the area of the first receipt is mentioned. The stock movements from an inbound area to a pick area are separate transactions. These transaction are mentioned via the STM interface (a minus on INN stock and a plus on RGL stock). If the received stock in the RCP-exec interface is used to add the stock in your ERP, the stocktypes INN (inbound area new stock) and INR (inbound area return stock) have te be seen as RGL stock. In that case Modexpress can configure not to sent the transactions for the movement of the stock from de inbound area to the pick area via the STM interface.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QuantityReceived" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article that were actually received for the stock type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

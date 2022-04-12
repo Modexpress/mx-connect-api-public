@@ -1,42 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 24356 $
-$Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
+<!--  $Revision: 220412 $ 
+$Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_stock_level_4.0.xsd" 
-targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_stock_level_4.0.xsd" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_stock_level_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_stock_level_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
 	<!-- 
 || Below the message-structure
  -->
 	<xs:element name="Message">
+		<xs:annotation>
+			<xs:documentation>The message to indicate the stock level of articles.</xs:documentation>
+		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Header" type="tns:Header"/>
-				<xs:element name="OrderingParty" type="tns:Relation"/>
-				<xs:element name="InventoryLevels" type="tns:InventoryLevels"/>
+				<xs:element name="Header" type="tns:Header">
+					<xs:annotation>
+						<xs:documentation>The message header</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OrderingParty" type="tns:Relation">
+					<xs:annotation>
+						<xs:documentation>The party on whose behalf goods are stored is the party for which the stock levels are made.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="InventoryLevels" type="tns:InventoryLevels">
+					<xs:annotation>
+						<xs:documentation>The stock levels.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="Header">
 		<xs:sequence>
-			<xs:element name="Version" type="tns:Text10"/>
-			<xs:element name="Identification" type="tns:Text20"/>
-			<xs:element name="DateTime" type="tns:DateTime"/>
+			<xs:element name="Version" type="tns:Text10">
+				<xs:annotation>
+					<xs:documentation>Identification of the message version used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Identification" type="tns:Text20">
+				<xs:annotation>
+					<xs:documentation>Identification of the message.
+The id is unique among all the stock movements and stock level messages that were sent.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateTime" type="tns:DateTime">
+				<xs:annotation>
+					<xs:documentation>Date + time on which the message was created.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="InventoryLevels">
 		<xs:sequence>
-			<xs:element name="InventoryLevel" type="tns:InventoryLevel" maxOccurs="unbounded"/>
+			<xs:element name="InventoryLevel" type="tns:InventoryLevel" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A stock level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="InventoryLevel">
 		<xs:sequence>
-			<xs:element name="SequenceNumber" type="tns:Num6"/>
-			<xs:element name="DateTime" type="tns:DateTime"/>
-			<xs:element name="StockType" type="tns:OText10" minOccurs="0"/>
-			<xs:element name="QuantityInStock" type="tns:Num9"/>
-			<xs:element name="QuantityReserved" type="tns:Num9"/>
-			<xs:element name="Article" type="tns:Article"/>
+			<xs:element name="SequenceNumber" type="tns:Num6">
+				<xs:annotation>
+					<xs:documentation>The sequence number of the stock level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateTime" type="tns:DateTime">
+				<xs:annotation>
+					<xs:documentation>Date + time of the stock level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StockType" type="tns:OText10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Designation of the type of stock.
+
+For details refer to the comment of attribute StockType in STM interface.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QuantityInStock" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article that are present without taking outstanding orders into account.
+It is possible that (part of) this number of items has been reserved for outstanding orders and is therefore no longer freely available for new orders. This number of items is indicated as QuantityReserved. The freely available stock of the article can therefore be defined as QuantityInStock minus QuantityReserved.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QuantityReserved" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article that have been reserved for outstanding orders (only outstanding orders known to Modexpress).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Article" type="tns:Article">
+				<xs:annotation>
+					<xs:documentation>Designation of the article.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Owner" type="tns:Relation" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>

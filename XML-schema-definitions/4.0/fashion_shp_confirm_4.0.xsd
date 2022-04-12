@@ -1,43 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  edited with XMLSpy v2015 rel. 4 sp1 (http://www.altova.com) by Centraal Boekenhui (Centraal Boekhuis B.V.)  -->
-<!--  $Revision: 24356 $
-$Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
+<!--  $Revision: 220412 $ 
+$Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_confirm_4.0.xsd" 
-targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_confirm_4.0.xsd" elementFormDefault="qualified">
-	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_confirm_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_confirm_4.0.xsd" elementFormDefault="qualified">
+	<xs:include schemaLocation="C:\Users\bruno\mx-connect-api-public\XML-schema-definitions\4.0\simple_types_4.0.xsd"/>
+	<!-- <xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/> -->
 	<!-- 
 || Below the message-structure
  -->
 	<xs:element name="Message">
+		<xs:annotation>
+			<xs:documentation>The message to indicate the execution result of the orders to deliver goods.</xs:documentation>
+		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Header" type="tns:Header"/>
-				<xs:element name="OrderingParty" type="tns:Relation"/>
-				<xs:element name="Orders" type="tns:Orders"/>
+				<xs:element name="Header" type="tns:Header">
+					<xs:annotation>
+						<xs:documentation>The message header</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OrderingParty" type="tns:Relation">
+					<xs:annotation>
+						<xs:documentation>The party on whose behalf the goods in the order are delivered.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Orders" type="tns:Orders">
+					<xs:annotation>
+						<xs:documentation>The execution result of the orders to deliver goods on behalf of the ordering party.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="Header">
 		<xs:sequence>
-			<xs:element name="Version" type="tns:Text10"/>
-			<xs:element name="Identification" type="tns:Text20"/>
+			<xs:element name="Version" type="tns:Text10">
+				<xs:annotation>
+					<xs:documentation>Identification of the message version used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Identification" type="tns:Text20">
+				<xs:annotation>
+					<xs:documentation>Identification of the message.
+The id is unique among all the shipment execution result messages that were sent.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Orders">
 		<xs:sequence>
-			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded"/>
+			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The execution result of the order to deliver goods (stock).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Order">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:Text40"/>
-			<xs:element name="OrderReference" type="tns:OText25" minOccurs="0"/>
-			<xs:element name="ProcessingNumber" type="tns:ONum10" minOccurs="0"/>
-			<xs:element name="Notification" type="tns:OText255" minOccurs="0"/>
-			<xs:element name="DocumentNumber" type="tns:OText35" minOccurs="0"/>
-			<xs:element name="Orderlines" type="tns:Orderlines"/>
-			<xs:element name="ShippingUnits" type="tns:ShippingUnits" minOccurs="0"/>
+			<xs:element name="Id" type="tns:Text40">
+				<xs:annotation>
+					<xs:documentation>The identification that the ordering party uses for the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderReference" type="tns:OText25" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reference for the order used by the ordering party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProcessingNumber" type="tns:ONum10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>An error number that indicates why the order has not been executed.
+There may be certain situations in which an order cannot be executed and is then registered with an error number in the execution result. For example, because a requisite shipment document for the order was not received on time.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Notification" type="tns:OText255" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description of the error that corresponds with the indicated processing number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentNumber" type="tns:OText35" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of the document (packing slip) that was created for the shipment and that is also specified/printed on the document. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProcessingStatus" type="tns:SHPProcessingStatus" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indication of the status of the order:
+P - Packed (order is packed but has not yet its final status)
+S - Shipped (order has been transferred to the carrier and has been closed)
+
+The status field is only included if this is configured.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MRN" type="tns:MText18" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Outbound MRN Number if applicable, retrieved from CMS. 
+
+The MRN field is only included if applicable.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Orderlines" type="tns:Orderlines">
+				<xs:annotation>
+					<xs:documentation>The lines of the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShippingUnits" type="tns:ShippingUnits" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The units (packages/containers) that were produced for the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Orderlines">
@@ -47,46 +119,148 @@ targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-pub
 	</xs:complexType>
 	<xs:complexType name="Orderline">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:Text50"/>
-			<xs:element name="QuantityOrdered" type="tns:Num9"/>
-			<xs:element name="QuantityDelivered" type="tns:Num9"/>
-			<xs:element name="QuantityNotDelivered" type="tns:Num9"/>
-			<xs:element name="StockType" type="tns:OText10" minOccurs="0"/>
-			<xs:element name="DateTimeOfCompletion" type="tns:DateTime"/>
-			<xs:element name="Article" type="tns:Article"/>
+			<xs:element name="Id" type="tns:Text50">
+				<xs:annotation>
+					<xs:documentation>The identification that the ordering party uses for the order line.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QuantityOrdered" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article that must be delivered according to the submitted order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QuantityDelivered" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article that were delivered.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QuantityNotDelivered" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article that were not delivered.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StockType" type="tns:OText10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Designation of the type of stock that was delivered.
+
+For details refer to the comment of attribute StockType in SHP interface.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateTimeOfCompletion" type="tns:DateTime">
+				<xs:annotation>
+					<xs:documentation>Date + time on which the line was reported ready.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Article" type="tns:Article">
+				<xs:annotation>
+					<xs:documentation>Designation of the delivered article.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ShippingUnits">
 		<xs:sequence>
-			<xs:element name="ShippingUnit" type="tns:ShippingUnit" maxOccurs="unbounded"/>
+			<xs:element name="ShippingUnit" type="tns:ShippingUnit" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A unit (package/container) produced for the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ShippingUnit">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:Text35"/>
-			<xs:element name="Code" type="tns:Text35"/>
-			<xs:element name="Weight" type="tns:ONum9" minOccurs="0"/>
-			<xs:element name="Length" type="tns:ONum10" minOccurs="0"/>
-			<xs:element name="Width" type="tns:ONum10" minOccurs="0"/>
-			<xs:element name="Heigth" type="tns:ONum10" minOccurs="0"/>
-			<xs:element name="Carrier" type="tns:OText40" minOccurs="0"/>
-			<xs:element name="ShipmentCode" type="tns:OText6" minOccurs="0"/>
-			<xs:element name="TrackingId" type="tns:OText35" minOccurs="0"/>
-			<xs:element name="DateTimeOfCompletion" type="tns:DateTime"/>
-			<xs:element name="ReturnTrackingId" type="tns:OText35" minOccurs="0"/>
-			<xs:element name="Compositions" type="tns:Compositions"/>
+			<xs:element name="Id" type="tns:Text35">
+				<xs:annotation>
+					<xs:documentation>The identification for the unit defined by Modexpress.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Code" type="tns:Text35">
+				<xs:annotation>
+					<xs:documentation>The barcode that is affixed/applied to the unit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Weight" type="tns:ONum9" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The weight of the unit expressed in grams. There are two possibilities:
+- the weight is the actual weighed weight (including the packing materials). This weight can only be indicated if it has been agreed that items must be weighed in the operation.
+- the weight is the calculated weight of the contents (based on the weight of individual articles in the unit). This weight can only be indicated if a weight is known for the individual articles.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Length" type="tns:ONum10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The length of the unit expressed in millimetres.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Width" type="tns:ONum10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The width of the unit expressed in millimetres.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heigth" type="tns:ONum10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The height of the unit expressed in millimetres.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Carrier" type="tns:OText40" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The carrier that is responsible for transporting the package.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShipmentCode" type="tns:OText6" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Designation of the actual transport for the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TrackingId" type="tns:OText35" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Track and trace identification of the unit (assigned by the carrier).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateTimeOfCompletion" type="tns:DateTime">
+				<xs:annotation>
+					<xs:documentation>Date + time on which the unit was reported ready.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReturnTrackingId" type="tns:OText35" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Track and trace identification for a return unit (assigned by the carrier).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Compositions" type="tns:Compositions">
+				<xs:annotation>
+					<xs:documentation>Specification of the contents of the unit, so the number of items of articles in the unit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Compositions">
 		<xs:sequence>
-			<xs:element name="Composition" type="tns:Composition" maxOccurs="unbounded"/>
+			<xs:element name="Composition" type="tns:Composition" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The number of items of an article in the unit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Composition">
 		<xs:sequence>
-			<xs:element name="QuantityDelivered" type="tns:Num9"/>
-			<xs:element name="Stocktype" type="tns:Text10"/>
-			<xs:element name="Article" type="tns:Article"/>
+			<xs:element name="QuantityDelivered" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article that are delivered in the unit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Stocktype" type="tns:Text10">
+				<xs:annotation>
+					<xs:documentation>Designation of the type of stock that is delivered.
+
+For details refer to the comment of attribute StockType in SHP interface.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Article" type="tns:Article">
+				<xs:annotation>
+					<xs:documentation>Designation of the delivered article in the unit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

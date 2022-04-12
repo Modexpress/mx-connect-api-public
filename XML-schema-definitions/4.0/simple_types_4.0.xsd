@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--  $Revision: 220412 $ 
-$Date: 2022-04-22 11:00:00 +0200 (Tue, 12 Apr 2022) $
+$Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<!-- 
@@ -453,6 +453,20 @@ $Date: 2022-04-22 11:00:00 +0200 (Tue, 12 Apr 2022) $
 			<xs:enumeration value="P"/>
 			<xs:enumeration value="E"/>
 			<xs:enumeration value="W"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RCPProcessingStatus">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="F"/>
+			<xs:enumeration value="R"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SHPProcessingStatus">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="P"/>
+			<xs:enumeration value="S"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="PartyType">
