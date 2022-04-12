@@ -1,40 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2020 (x64) (http://www.altova.com) by Bruno Chaves (Modexpress B.V.) -->
 <!--  $Revision: 24356 $
 $Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_impres_4.0.xsd" 
-targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_impres_4.0.xsd" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_impres_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_impres_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
 	<!-- 
 || Below the message-structure
  -->
 	<xs:element name="Message">
+		<xs:annotation>
+			<xs:documentation>The message to indicate the processing result of the registration of new or changed articles.</xs:documentation>
+		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Header" type="tns:Header"/>
-				<xs:element name="OrderingParty" type="tns:Relation"/>
-				<xs:element name="Articles" type="tns:Articles"/>
+				<xs:element name="Header" type="tns:Header">
+					<xs:annotation>
+						<xs:documentation>The message header</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OrderingParty" type="tns:Relation">
+					<xs:annotation>
+						<xs:documentation>The ordering party of the registered articles (in accordance with the ordering party as indicated in the message to register the SKU).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Articles" type="tns:Articles">
+					<xs:annotation>
+						<xs:documentation>The ordering party’s articles for which the processing result is reported.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="Header">
+		<xs:annotation>
+			<xs:documentation>The message header</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Version" type="tns:Text10"/>
-			<xs:element name="Identificaton" type="tns:Text20"/>
-			<xs:element name="DateTime" type="tns:DateTime"/>
+			<xs:element name="Version" type="tns:Text10">
+				<xs:annotation>
+					<xs:documentation>Identification of the message version used.
+Allowed values: 3.0, 4.0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Identificaton" type="tns:Text20">
+				<xs:annotation>
+					<xs:documentation>Identification of the message.
+The identification is unique among all the SKU import result messages sent by Modexpress to the recipient.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateTime" type="tns:DateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time when the message was compiled.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Articles">
+		<xs:annotation>
+			<xs:documentation>The ordering party’s articles for which the processing result is reported.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Article" type="tns:SKU" maxOccurs="unbounded"/>
+			<xs:element name="Article" type="tns:SKU" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The processing result for a registered article belonging to the ordering party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="SKU">
 		<xs:sequence>
-			<xs:element name="ID" type="tns:TypSkuId"/>
-			<xs:element name="ProcessingStatus" type="tns:ProcessingStatus"/>
-			<xs:element name="Notification" type="tns:Text" minOccurs="0"/>
-			<xs:element name="Owner" type="tns:Relation"/>
+			<xs:element name="ID" type="tns:TypSkuId">
+				<xs:annotation>
+					<xs:documentation>The identification that the owner uses for the article (in accordance with the identification as indicated in the message to register the SKU).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProcessingStatus" type="tns:ProcessingStatus">
+				<xs:annotation>
+					<xs:documentation>The processing status of the registration of the new or changed article:
+P = Processed (article registration was processed without any problems)
+E = Error (due to an error situation, article registration was not processed)
+W = Warning (article registration was processed, but with an issue)
+
+By default only the article registrations with an E or W status are reported.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Notification" type="tns:Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description of the error or warning.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Owner" type="tns:Relation">
+				<xs:annotation>
+					<xs:documentation>The party that must be regarded as being the owner of the article.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

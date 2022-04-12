@@ -74,7 +74,7 @@ $Date: 2018-03-05 16:10:22 +0100 (ma, 05 mrt 2018) $
 	<xs:complexType name="Info">
 		<xs:sequence>
 			<xs:element name="Type" type="tns:ArticleAdditionalInfoType"/>
-			<xs:element name="Value" type="tns:Text70"/>
+			<xs:element name="Value" type="tns:Text250"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Characteristics">

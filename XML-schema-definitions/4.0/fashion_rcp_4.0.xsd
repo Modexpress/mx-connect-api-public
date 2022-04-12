@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2020 (x64) (http://www.altova.com) by Bruno Chaves (Modexpress B.V.) -->
 <!--  $Revision: 220412 $ 
 $Date: 2022-04-22 11:00:00 +0200 (Tue, 12 Apr 2022) $
  -->
@@ -32,80 +33,265 @@ $Date: 2022-04-22 11:00:00 +0200 (Tue, 12 Apr 2022) $
 || Below the message-structure
  -->
 	<xs:element name="Message">
+		<xs:annotation>
+			<xs:documentation>The message to register an order to receive goods.</xs:documentation>
+		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Header" type="tns:Header"/>
-				<xs:element name="OrderingParty" type="tns:Relation"/>
-				<xs:element name="Orders" type="tns:Orders"/>
+				<xs:element name="Header" type="tns:Header">
+					<xs:annotation>
+						<xs:documentation>The message header</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OrderingParty" type="tns:Relation">
+					<xs:annotation>
+						<xs:documentation>The party on whose behalf the goods in the order/message have to be received.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Orders" type="tns:Orders">
+					<xs:annotation>
+						<xs:documentation>The orders to receive goods on behalf of the ordering party.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="Header">
 		<xs:sequence>
-			<xs:element name="Version" type="tns:Text10"/>
-			<xs:element name="Identification" type="tns:Text20"/>
-			<xs:element name="Sender" type="tns:RelationInt"/>
+			<xs:element name="Version" type="tns:Text10">
+				<xs:annotation>
+					<xs:documentation>Identification of the message version used.
+Allowed values: 3.0, 4.0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Identification" type="tns:Text20">
+				<xs:annotation>
+					<xs:documentation>Identification of the message.
+The id must be unique among all the receipt messages submitted by the sender.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sender" type="tns:RelationInt">
+				<xs:annotation>
+					<xs:documentation>The party that submits the receipt message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Orders">
 		<xs:sequence>
-			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded"/>
+			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>An order to receive goods (stock).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Order">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:Text25" minOccurs="0"/>
-			<xs:element name="PurchaseOrder" type="tns:PurchaseOrder" minOccurs="0"/>
+			<xs:element name="Id" type="tns:Text25" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The identification that the ordering party uses for the order. 
+Based on this identification, Modexpress checks whether the registered order already exists for the ordering party. Cancelled orders or executed orders on which nothing has been received, are not taken into consideration. If an order already exists, the registration is rejected.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PurchaseOrder" type="tns:PurchaseOrder" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The order from the ordering party to receive goods on behalf of the ordering party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Shipment" type="tns:Shipment" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PurchaseOrder">
 		<xs:sequence>
-			<xs:element name="Type" type="tns:PurchaseOrderType"/>
-			<xs:element name="Subtype" type="tns:OText20" minOccurs="0"/>
-			<xs:element name="Reference" type="tns:OText20" minOccurs="0"/>
-			<xs:element name="SenderInternalId" type="tns:ONum7" minOccurs="0"/>
-			<xs:element name="SenderExternalId" type="tns:OText20" minOccurs="0"/>
-			<xs:element name="SenderName" type="tns:OText70" minOccurs="0"/>
-			<xs:element name="Date" type="tns:Date" minOccurs="0"/>
-			<xs:element name="MRN" type="tns:MText18" minOccurs="0"/>
-			<xs:element name="BondedAdministration" type="tns:Indication" minOccurs="0"/>
-			<xs:element name="Parties" type="tns:Parties" minOccurs="0"/>
-			<xs:element name="Instructions" type="tns:Instructions" minOccurs="0"/>
-			<xs:element name="PurchaseOrderLines" type="tns:PurchaseOrderLines"/>
+			<xs:element name="Type" type="tns:PurchaseOrderType">
+				<xs:annotation>
+					<xs:documentation>Designation of the order type.
+Only the types indicated by Modexpress are permitted.
+Type XDOCKLOT can only be used if this has been agreed upon.
+
+For return orders there also can be automatic return orders. These are created automatically on the basis of executed shipments and are therefore not submitted by means of this message but will be reported back as such using the RCP-exec message.
+
+- PURCHASE
+- RETURN
+- XDOCKLOT
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Subtype" type="tns:OText20" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A subdivision of the order type. For example RETAIL returns versus WHOLESALE returns.
+- RETAIL
+- WHOLESALE
+- C2C
+
+Only types coordinated with Modexpress are permitted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reference" type="tns:OText20" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reference for the order used by the ordering party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SenderInternalId" type="tns:ONum7" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identification of the party that delivers the goods for the order. The party must be known to Modexpress by the relevant Id.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SenderExternalId" type="tns:OText20" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identification of the party that delivers the goods for the order. The party is not known to Modexpress by the relevant Id.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SenderName" type="tns:OText70" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name/description of the party that delivers the goods for the order. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date" type="tns:Date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date that the ordering party uses for the order. For example, this can be the date on which the order was created by the ordering party. This date is reported back in the execution result of the order. 
+This date can be used to make the order recognisable. For example, if the ordering party has any questions concerning the status of the order and that order cannot be identified by means of a unique id.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MRN" type="tns:MText18" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Inbound MRN Number if applicable and known at the time of sending the RCP message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BondedAdministration" type="tns:Indication" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Inbound in Bonded Warehouse administration
+Customer can opt for bonded warehouse administration for goods provinient from outside the EU (for goods from inside the EU community this field is no relevant). 
+
+Y - Received goods are taken into the bonded warehouse administration, ... 
+N - Received goods will be directly cleared into EU by arrival at Modexpress.
+
+Only applicable for Customs enabled Customers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Parties" type="tns:Parties" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The parties/addresses that apply to the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Instructions" type="tns:Instructions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The instructions that apply to the order (for example VAL; Value Added Logistics).
+Examples of an instruction include 'remove price tag' or 'remove security tag'.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateInfo" type="tns:CertificateInfo" minOccurs="0"/>
+			<xs:element name="PurchaseOrderLines" type="tns:PurchaseOrderLines">
+				<xs:annotation>
+					<xs:documentation>The lines of the purchase order (PO/RMA).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Parties">
 		<xs:sequence>
-			<xs:element name="Party" type="tns:Party" maxOccurs="4"/>
+			<xs:element name="Party" type="tns:Party" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation>A party/address that applies to the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Party">
 		<xs:sequence>
-			<xs:element name="Type" type="tns:RcpPartyType"/>
-			<xs:element name="ExternalId" type="tns:Text35" minOccurs="1"/>
-			<xs:element name="EORI" type="tns:Text25" minOccurs="0"/>
-			<xs:element name="Name1" type="tns:OText80" minOccurs="0"/>
-			<xs:element name="Name2" type="tns:OText55" minOccurs="0"/>
-			<xs:element name="AddressLine1" type="tns:OText50" minOccurs="0"/>
-			<xs:element name="HouseNumber" type="tns:ONum6" minOccurs="0"/>
-			<xs:element name="HouseNumberExtension" type="tns:OText10" minOccurs="0"/>
-			<xs:element name="PostalCode" type="tns:OText20" minOccurs="0"/>
-			<xs:element name="City" type="tns:OText40" minOccurs="0"/>
-			<xs:element name="Country" type="tns:OText3" minOccurs="0"/>
+			<xs:element name="Type" type="tns:RcpPartyType">
+				<xs:annotation>
+					<xs:documentation>Designation of a party/address that applies to the order:
+- SellerAddress; the shipper/seller of the shipment)
+- ExporterAddress; the exporter of the shipment (not necessarily the seller)
+(when ExportAddress is not provided SellerAddress is used as ExporterAddress)
+
+Mandatory for Customs enabled Customers.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExternalId" type="tns:Text35" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The Id that is used as the identification of the party/address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EORI" type="tns:Text25" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Supplier EORI number mandatory for suppliers from EU, 
+for non-EU suppliers with an invoice statement then is EORI also mandatory, this will make processing the inbound shipment .. when the EORI number is missing this can cause delays processing the inbound. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name1" type="tns:OText80" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name2" type="tns:OText55" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The parties 'For attention of'.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddressLine1" type="tns:OText50" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The street that applies to the party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HouseNumber" type="tns:ONum6" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The house number that applies to the party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HouseNumberExtension" type="tns:OText10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The house number addition that applies to the party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostalCode" type="tns:OText20" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The postal code / ZIP code that applies to the party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="City" type="tns:OText40" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The town/city that applies to the party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="tns:OText3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The country that applies to the party. The designation should be made according to iso2 code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Instructions">
 		<xs:sequence>
-			<xs:element name="Instruction" type="tns:Instruction" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Instruction" type="tns:Instruction" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>An instruction for the orderline. The instruction is identified by means of a code or description.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Instruction">
 		<xs:sequence>
-			<xs:element name="SequenceNumber" type="tns:Num3"/>
+			<xs:element name="SequenceNumber" type="tns:Num3">
+				<xs:annotation>
+					<xs:documentation>A sequence number indicating the order of execution of the instruction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:choice>
-				<xs:element name="Code" type="tns:OText10"/>
-				<xs:element name="Description" type="tns:OText70"/>
+				<xs:element name="Code" type="tns:OText10">
+					<xs:annotation>
+						<xs:documentation>Indication of the instruction by means of a code.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Description" type="tns:OText70">
+					<xs:annotation>
+						<xs:documentation>Indication of the instruction by means of a description.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
@@ -116,101 +302,378 @@ $Date: 2022-04-22 11:00:00 +0200 (Tue, 12 Apr 2022) $
 	</xs:complexType>
 	<xs:complexType name="Certificate">
 		<xs:sequence>
-			<xs:element name="CertificateType" type="tns:CertificateType" minOccurs="1"/>
-			<xs:element name="CertificateNumber" type="tns:Text20" minOccurs="1"/>
+			<xs:element name="CertificateType" type="tns:CertificateType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indication of the type of Certificate  information:
+ - Type 'EUR.1' certificate
+A EUR.1 certificate is only used for goods of preferential origin. To get a discount or exemption on import duties when imported from a contracting country, ask your supplier to enclose a EUR.1 certificate with the shipment.
+
+ - Type 'EUR-MED'
+A EUR-MED certificate is a variant of the EUR.1 and is only valid if you trade with countries where the Pan-Euro-Mediterranean Agreement applies. This agreement makes it possible for raw materials and products of preferential origin from these countries to count towards the determination of origin (so-called cumulation). You use a EUR-MED instead of a EUR.1 and offers more options for re-export to another partner country within this country group.
+
+ - Type 'ATR'
+An ATR certificate is a customs document that you can use for trade between countries from the EU and Turkey. The EU forms a customs union with Turkey, so you can import goods from Turkey without import duties. Origin means that the product was produced in Turkey or was previously imported into Turkey from another country. The Turkish origin is recorded in the ATR certificate. Your Turkish supplier requests the certificate from Turkish customs.
+
+ - Type 'CVO'
+A Certificate of Origin (CVO) is proof of the origin of a product. A CVO contains the description and origin of your products, and the name and address details of the seller and buyer. In the Netherlands, the Chamber of Commerce confirms the origin on CVOs with a digital stamp and signature.
+
+Up to 2 certificates can apply to the same ShipmentLine, the following combinations are possible:
+- EUR.1 + CVO
+- ATR + CVO
+- EUR-MED + CVO</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateNumber" type="tns:Text20" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Certificate number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PurchaseOrderLines">
 		<xs:sequence>
-			<xs:element name="PurchaseOrderLine" type="tns:PurchaseOrderLine" maxOccurs="unbounded"/>
+			<xs:element name="PurchaseOrderLine" type="tns:PurchaseOrderLine" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A line of the purchase order (PO/RMA)). A line specifies the goods that must be received for a particular article.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PurchaseOrderLine">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:Text250"/>
-			<xs:element name="Quantity" type="tns:Num9"/>
-			<xs:element name="Reference" type="tns:OText10" minOccurs="0"/>
-			<xs:element name="StockType" type="tns:OText10" minOccurs="0"/>
-			<xs:element name="Instructions" type="tns:Instructions" minOccurs="0"/>
-			<xs:element name="Article" type="tns:ArticleOrCode"/>
+			<xs:element name="Id" type="tns:Text250">
+				<xs:annotation>
+					<xs:documentation>The identification that the ordering party uses for the order line (unique in the PurchaseOrder). </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article that must be received.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reference" type="tns:OText10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The reference the ordering party uses for the order line and that the ordering party can use to recognise the line.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StockType" type="tns:OText10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Designation of the type of stock that must be received. By stock type, it is possible to differentiate into different types of stock to be kept separately for an article (both in the operation and administratively).
+
+The standaard stock types are (other types are possible):
+- RGL - regular or A-choice stock
+- RGLRJC - regular reject or B-choice stock
+
+If no StockType is indicated the receipt is assumed to be regular stock (RGL).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Instructions" type="tns:Instructions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The instructions that apply to the orderline.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Article" type="tns:ArticleOrCode">
+				<xs:annotation>
+					<xs:documentation>The article/SKU for which goods must be received.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Owner" type="tns:Relation"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Shipment">
 		<xs:sequence>
-			<xs:element name="Reference" type="tns:OText25" minOccurs="0"/>
-			<xs:element name="Type" type="tns:ShipmentType"/>
-			<xs:element name="ArrivalDateTime" type="tns:DateTime" minOccurs="0"/>
-			<xs:element name="Carrier" type="tns:OText70" minOccurs="0"/>
-			<xs:element name="CarrierInfo" type="tns:OText70" minOccurs="0"/>
-			<xs:element name="CountryOfDeparture" type="tns:OText3" minOccurs="0"/>
-			<xs:element name="IncoTerm" type="tns:Incoterm" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="IncoTermPlace" type="tns:OText50" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="IncoTermCountry" type="tns:OText3" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="FreightReference" type="tns:OText22" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="MeansOfTransportBorder" type="tns:MeansOfTransport" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="TransportArrivalLicencePlate" type="tns:OText25" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="AdditionalFinInfo" type="tns:AdditionalFinInfo" minOccurs="0"/>
-			<xs:element name="Containers" type="tns:Containers" minOccurs="0"/>
-			<xs:element name="ShipmentPackages" type="tns:ShipmentPackages" minOccurs="0"/>
+			<xs:element name="Reference" type="tns:OText25" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reference used by the supplier for the shipment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Type" type="tns:ShipmentType">
+				<xs:annotation>
+					<xs:documentation>Designation of the order type.
+Only the types indicated by Modexpress are permitted.
+- STANDARD
+- PREORDER
+- REORDER</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArrivalDateTime" type="tns:DateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The delivery date/time of the shipment expected by the supplier at Modexpress.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Carrier" type="tns:OText70" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The identification of the shipper that will deliver the shipment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CarrierInfo" type="tns:OText70" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Information about the shipper that will deliver the shipment, for example contact data.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryOfDeparture" type="tns:OText3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The country of origin of the shipment (Country of departure).
+Mandatory for Customs enabled Customers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IncoTerm" type="tns:Incoterm" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A pre-defined commercial term published by the International Chamber of Commerce (ICC) relating to international commercial law. The Incoterms rules are intended primarily to clearly communicate the tasks, costs, and risks associated with the transportation and delivery of goods.
+
+EXW - Ex Works
+FCA - Free Carrier
+FAS - Free Alongside Ship (only allowed for Sea MeansOfTransportBorder)
+FOB - Free on Board  (only allowed for Sea MeansOfTransportBorder)
+CPT - Carriage Paid To
+CIP - Carriage and Insurance Paid To
+CFR - Cost and Freight  (only allowed for Sea MeansOfTransportBorder)
+CIF - Cost Insurance and Freight  (only allowed for Sea MeansOfTransportBorder)
+DAP - Delivered At Place
+DPU - Delivered at Place Unloaded
+DDP - Delivered Duty Paid
+
+2010 and 2020 Incoterms, older incoterms not supported anymore.
+Mandatory for Customs enabled Customers.
+
+Mandatory when CountryOfDeparture = (outside EU)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IncoTermPlace" type="tns:OText50" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The agreed place of delivery/destination.
+Mandatory for Customs enabled Customers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IncoTermCountry" type="tns:OText3" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>  
+Mandatory for Customs enabled Customers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FreightReference" type="tns:OText22" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An unique delivery number/reference for the customs declaration of the shipment.
+
+Mandatory for Customs enabled Customers
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeansOfTransportBorder" type="tns:MeansOfTransport" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Means of transport at border.
+1 – Sea
+2 – Train
+3 – Road
+4 – Air
+
+Mandatory for Customs enabled Customers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportArrivalLicencePlate" type="tns:OText25" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Transport identification by means of Licence Plate</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Containers" type="tns:Containers" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Containers information
+Only applicable for Customs enabled Customers
+Needed for Full Container Load (FCL)
+An inbound shipment cannot be spread over multiple containers (MX requirement), therefore only one container can be stated. This might change in the future</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShipmentPackages" type="tns:ShipmentPackages" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ShipmentPackages composition
+Mandatory for Customs enabled Customers</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="TransportDocuments" type="tns:TransportDocuments" minOccurs="0"/>
+			<xs:element name="AdditionalFinInfo" type="tns:AdditionalFinInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Additional financial info that applies to the shipment.
+This info is mainly needed in case of customs declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="ShipmentLines" type="tns:ShipmentLines" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-    <xs:complexType name="Containers">
+	<xs:complexType name="Containers">
 		<xs:sequence>
-			<xs:element name="Container" type="tns:Container" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Container" type="tns:Container" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Container information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Container">
 		<xs:sequence>
-            <xs:element name="SequenceNumber" type="tns:Num3"/>
-			<xs:element name="ContainerNumber" type="tns:Text17" minOccurs="1"/>
-			<xs:element name="SealNumber1" type="tns:Text17" minOccurs="1"/>
-			<xs:element name="SealNumber2" type="tns:Text17" minOccurs="0"/>
+			<xs:element name="SequenceNumber" type="tns:Num3">
+				<xs:annotation>
+					<xs:documentation>Sequence number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContainerNumber" type="tns:Text17" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Container number identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SealNumber1" type="tns:Text17" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Seal number identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SealNumber2" type="tns:Text17" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Additional seal number identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-    <xs:complexType name="ShipmentPackages">
+	<xs:complexType name="ShipmentPackages">
 		<xs:sequence>
-			<xs:element name="ShipmentPackage" type="tns:ShipmentPackage" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="ShipmentPackage" type="tns:ShipmentPackage" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>ShipmentPackage</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ShipmentPackage">
 		<xs:sequence>
-            <xs:element name="Type" type="tns:PackageType" minOccurs="1"/>
-			<xs:element name="Quantity" type="tns:Num9" minOccurs="1"/>
+			<xs:element name="Type" type="tns:PackageType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indication of the type of packages. 
+
+CT - Cardboard box
+OH - Euro pallet
+ED - Pallet box
+OC - Chep pallet
+PP - Pieces
+
+PP should only be used to denote Hanging Goods</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="tns:Num9" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Amount of packages</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-    <xs:complexType name="TransportDocuments">
+	<xs:complexType name="TransportDocuments">
 		<xs:sequence>
 			<xs:element name="TransportDocument" type="tns:TransportDocument" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TransportDocument">
 		<xs:sequence>
-            <xs:element name="Type" type="tns:DocumentType" minOccurs="1"/>
-			<xs:element name="Identification" type="tns:Text50" minOccurs="1"/>
+			<xs:element name="Type" type="tns:DocumentType">
+				<xs:annotation>
+					<xs:documentation>Indication of the type of documents.
+
+- PL: PackingList -> N721
+- BL: BillOfLading (Sea)->N705
+- AWB: AirWayBill (Air)->N740
+- CMR: Convention relative au Contrat de Transport International de Marchandises par Route (Road)->N730
+- CIM: Contrat de Transport International ferroviaire des Marchandises (Rail) -> N720
+- HWB: House(air)WayBill (in case of consolidation, Master (Air)Way Bill is applicable) -> N703
+
+BL, AWB,  CIM or HWB is mandatory for Sea, Air and Rail transport modes + PL for inbound shipments coming from abroad (outside NL)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Identification" type="tns:Text50" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Document identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AdditionalFinInfo">
 		<xs:sequence>
-			<xs:element name="FinInfo" type="tns:FinInfo" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="FinInfo" type="tns:FinInfo" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Financial information of a particular type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="FinInfo">
 		<xs:sequence>
-			<xs:element name="InfoType" type="tns:FinInfoType" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="Description" type="tns:OText50" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="Date" type="tns:Date" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="Amount" type="tns:Num9.2" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="CurrencyCode" type="tns:OText3" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="InvoiceStatementInfo" type="tns:InvoiceStatementInfo" minOccurs="0"/>
+			<xs:element name="InfoType" type="tns:FinInfoType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indication of the type of financial information:
+ - Type 'Invoice' is used for customs declaration
+ - Type ´Freightcost´ is used for customs declaration
+ - Type ´Insurancecost´ is used for customs declaration
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="tns:OText50" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A relevant description for the type of financial information.
+In case of type 'Invoice', this concerns the invoice number (for customs declaration, the invoice number is limited to format A35). </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date" type="tns:Date" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A relevant date for the type of financial information.
+In case of 'Invoice', this concerns the invoice date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amount" type="tns:Num9.2" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The amount that applies to the type of financial information (so the invoice amount, the freight cost, the insurance cost).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CurrencyCode" type="tns:OText3" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Code indicating the currency in which the amount is expressed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InvoiceStatementInfo" type="tns:InvoiceStatementInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>InvoiceStatementInfo only applicable in case of InfoType = Invoice</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="InvoiceStatementInfo">
 		<xs:sequence>
-            <xs:element name="Type" type="tns:InvoiceStatementType" minOccurs="1"/>
-			<xs:element name="LicenceNumber" type="tns:OText40" minOccurs="0"/>
+			<xs:element name="Type" type="tns:InvoiceStatementType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indication of the type of InvoiceStatement  information:
+ - Type 'REX', Registered Exporter, 
+With the status of REX, an exporter can put a so-called 'certificate of origin' on its invoices. This gives importers a preference when importing products into the European Union. A certificate of origin is valid for 12 months.
+Companies can see in a database of the European Union whether an exporter is REX. After registration as a REX, the authorities no longer issue a Form A certificate.
+
+
+ - Type 'TE', Allowed Exporter
+For companies that regularly export with a EUR.1 or EUR-MED document, who have a clear delivery program and have sufficient knowledge of import and export, there is the 'Toegelaten Exporteur' (TE) scheme. After an extensive application procedure, these exporters are granted an Authorized Exporter Self-Issuing Preferential Proofs of Origin license. From that moment on, they can use an invoice declaration instead of a EUR.1 or EUR-MED certificate. The license number is stated in this invoice declaration. The exporter can provide his sales invoice with this statement without the intervention of the Chamber of Commerce and present it to Dutch Customs in the country of destination. The function and responsibilities remain the same for all parties involved as for the use of EUR.1 or EUR-MED documents.
+
+ - Type 'PREF-ORG', Preferential OriginStatement for other than REX or TE Exporter. 
+In case reduction of import duties is applicable. 
+For 'PREF-ORG' LicenceNumber is optional
+
+Only one InvoiceStatement (if applicable) type is allowed per Shipment </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LicenceNumber" type="tns:OText40" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>InvoiceStatement Licence number
+
+Mandatory in case of REX or TE-EUR1, TE-MED. 
+For PREF-ORG, if the value of the inbound invoice is above 6000,- euro then this field is mandatory. 
+ - For Canada a Business Number must be used 
+ - For Japan a Corporate Number must be used 
+ - For Singapore a Unique Entity Number must be used 
+ - For United Kingdom an (UK)EORI Number must be used 
+ - For Vietnam it's not allowed to use a PREF-ORG when the value of the Invoice is above 6000,- euro.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ShipmentLines">
@@ -219,27 +682,88 @@ $Date: 2022-04-22 11:00:00 +0200 (Tue, 12 Apr 2022) $
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ShipmentLine">
+		<xs:annotation>
+			<xs:documentation>A line of the shipment. A line specifies the goods that will be delivered.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Id" type="tns:Text250"/>
-			<xs:element name="Quantity" type="tns:Num9"/>
-			<xs:element name="CountryOfOrigin" type="tns:OText3" minOccurs="0"/>
-			<xs:element name="Prepacked" type="tns:Prepacked" minOccurs="0"/>
-			<xs:element name="LotNumber" type="tns:OText20" minOccurs="0"/>
-			<xs:element name="AdditionalLineFinInfo" type="tns:AdditionalLineFinInfo" minOccurs="0"/>
+			<xs:element name="Id" type="tns:Text250">
+				<xs:annotation>
+					<xs:documentation>Reference to the PurchaseOrderLine (Id) for which this shipment line indicates the delivery.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article that will be delivered.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryOfOrigin" type="tns:OText3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The country of origin of the article to be delivered (country of production).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Prepacked" type="tns:Prepacked" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indication whether the delivered article, together with other articles, has been packed in secondary packaging (for example, size curve box) and must be removed from this packaging when it arrives.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LotNumber" type="tns:OText20" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The lot/batch number of the SKU to be received.
+It is possible to have different types of stock for a SKU (attribute StockType). In addition, there may be a distinction between different lots/batches for the stock regarding a type (both in the operation and administratively).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GrossWeight" type="tns:ONum12.3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Gross Weight of the ShipmentLine used on customs declarations</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalLineFinInfo" type="tns:AdditionalLineFinInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Additional financial info that applies to the shipmentline.
+This info is mainly needed in case of customs declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AdditionalLineFinInfo">
 		<xs:sequence>
-			<xs:element name="LineFinInfo" type="tns:LineFinInfo" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="LineFinInfo" type="tns:LineFinInfo" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Financial information of a particular type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="LineFinInfo">
 		<xs:sequence>
-			<xs:element name="InfoType" type="tns:LineFinInfoType" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="Description" type="tns:OText50" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="Date" type="tns:Date" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="Amount" type="tns:Num9.2" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="CurrencyCode" type="tns:OText3" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="InfoType" type="tns:LineFinInfoType">
+				<xs:annotation>
+					<xs:documentation>Indication of the type of financial information:
+ - Type 'Invoice' is used for customs declaration</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="tns:OText50" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A relevant description for the type of financial information.
+In case of type 'Invoice', this concerns the invoice number (for customs declaration, the invoice number is limited to format A35).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date" type="tns:Date" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A relevant date for the type of financial information.
+In case of 'Invoice', this concerns the invoice date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amount" type="tns:Num9.2" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The amount that applies to the type of financial information (so the invoice amount).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CurrencyCode" type="tns:OText3" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Code indicating the currency in which the amount is expressed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
