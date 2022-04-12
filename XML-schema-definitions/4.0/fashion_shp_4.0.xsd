@@ -60,7 +60,7 @@ $Date: 2022-04-22 11:00:00 +0200 (Tue, 12 Apr 2022) $
 			<xs:element name="ReturnShipmentService" type="tns:OText20" minOccurs="0"/>
 			<xs:element name="FirstDeliveryDate" type="tns:Date" minOccurs="0"/>
 			<xs:element name="LastDeliveryDate" type="tns:Date" minOccurs="0"/>
-			<xs:element name="SubType" type="tns:OrderSubType" minOccurs="0"/>
+			<xs:element name="SubType" type="tns:OText10" minOccurs="0"/>
 			<xs:element name="PartialDelivery" type="tns:PartialDelivery"/>
 			<xs:element name="Explanation" type="tns:OText255" minOccurs="0"/>
 			<xs:element name="Priority" type="tns:ONum2" minOccurs="0"/>

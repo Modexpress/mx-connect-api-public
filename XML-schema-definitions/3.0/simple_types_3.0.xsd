@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 35029 $
-$Date: 2018-11-30 16:29:54 +0100 (Fri, 30 Nov 2018) $
+<!--  $Revision: 220412 $ 
+$Date: 2022-04-22 12:00:00 +0200 (Tue, 12 Apr 2022) $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<!-- 
@@ -315,7 +315,7 @@ $Date: 2018-11-30 16:29:54 +0100 (Fri, 30 Nov 2018) $
 	<xs:simpleType name="TypSkuId">
 		<xs:restriction base="xs:normalizedString">
 			<xs:minLength value="1"/>
-			<xs:maxLength value="250"/>
+			<xs:maxLength value="24"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="Article">
@@ -422,15 +422,6 @@ $Date: 2018-11-30 16:29:54 +0100 (Fri, 30 Nov 2018) $
 			<xs:enumeration value="N"/>
 			<xs:enumeration value="L"/>
 			<xs:enumeration value="H"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="OrderSubType">
-		<xs:restriction base="xs:normalizedString">
-			<xs:maxLength value="10"/>
-			<xs:enumeration value="WEB-ORDER"/>
-			<xs:enumeration value="PRE-ORDER"/>
-			<xs:enumeration value="RE-ORDER"/>
-			<xs:enumeration value="ZALANDO"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="PartialDelivery">
