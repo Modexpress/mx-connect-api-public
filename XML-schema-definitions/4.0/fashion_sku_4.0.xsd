@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 29583 $
-$Date: 2018-03-05 16:10:22 +0100 (ma, 05 mrt 2018) $
+<!-- edited with XMLSpy v2020 (x64) (http://www.altova.com) by Bruno Chaves (Modexpress B.V.) -->
+<!--  $Revision: 220412 $ 
+$Date: 2022-04-22 13:00:00 +0200 (Tue, 12 Apr 2022) $
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" 
-targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" xmlns:altova="http://www.altova.com/xml-schema-extensions" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
 	<!-- 
 || Below the message-structure
  -->
 	<xs:element name="Message">
+		<xs:annotation>
+			<xs:documentation>The message to register new or changed articles.</xs:documentation>
+		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Header" type="tns:Header"/>
@@ -18,32 +21,101 @@ targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-pub
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="Header">
+		<xs:annotation>
+			<xs:documentation>The message header</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Version" type="tns:Text10"/>
-			<xs:element name="Identification" type="tns:Text20"/>
-			<xs:element name="Sender" type="tns:RelationInt"/>
+			<xs:element name="Version" type="tns:Text10">
+				<xs:annotation>
+					<xs:documentation>Identification of the message version used.
+Allowed values: 3.0, 4.0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Identification" type="tns:Text20">
+				<xs:annotation>
+					<xs:documentation>Identification of the message.
+The id must be unique among all the SKU messages submitted by the sender.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sender" type="tns:RelationInt">
+				<xs:annotation>
+					<xs:documentation>The party that submits the SKU message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Articles">
+		<xs:annotation>
+			<xs:documentation>The articles that must be registered or changed for the ordering party.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Article" type="tns:SKU" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="SKU">
 		<xs:sequence>
-			<xs:element name="Id" type="tns:TypSkuId"/>
-			<xs:element name="Description" type="tns:OText60" minOccurs="0"/>
-			<xs:element name="StorageType" type="tns:StorageType" minOccurs="0"/>
-			<xs:element name="Weight" type="tns:ONum12.3" minOccurs="0"/>
-			<xs:element name="Volume" type="tns:ONum11.2" minOccurs="0"/>
-			<xs:element name="Length" type="tns:ONum11.2" minOccurs="0"/>
-			<xs:element name="Width" type="tns:ONum11.2" minOccurs="0"/>
-			<xs:element name="Height" type="tns:ONum11.2" minOccurs="0"/>
-			<xs:element name="CountryOfOrigin" type="tns:OText3" minOccurs="0"/>
+			<xs:element name="Id" type="tns:TypSkuId">
+				<xs:annotation>
+					<xs:documentation>The identification that the owner uses for the SKU. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.
+If the identification contains letters, they must be in uppercase.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="tns:OText60" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description of the SKU.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StorageType" type="tns:StorageType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indication of the way the SKU is stored (hanging or flat).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Weight" type="tns:ONum12.3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The weight of the SKU expressed in kilos</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Volume" type="tns:ONum11.2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The volume of the SKU expressed in litres.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Length" type="tns:ONum11.2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The length of the SKU expressed in millimetres.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Width" type="tns:ONum11.2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The width of the SKU expressed in millimetres.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Height" type="tns:ONum11.2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The height of the SKU expressed in millimetres.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryOfOrigin" type="tns:OText3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The country of origin of the SKU.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Owner" type="tns:Relation"/>
-			<xs:element name="Identifications" type="tns:Identifications" minOccurs="0"/>
-			<xs:element name="Grouping" type="tns:Grouping" minOccurs="0"/>
-			<xs:element name="AdditionalInfo" type="tns:AdditionalInfo" minOccurs="0"/>
+			<xs:element name="Identifications" type="tns:Identifications" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The identification that is used for the article (physical identification). Several identifications are permitted/possible. The indicated Id of the article (logical Id) does not have to be additionally specified as the physical identification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Grouping" type="tns:Grouping" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Any groups/classifications that are used for the SKU. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalInfo" type="tns:AdditionalInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Any information elements that are important for the SKU.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Characteristics" type="tns:Characteristics" minOccurs="0"/>
 			<xs:element name="Composition" type="tns:Composition" minOccurs="0"/>
 			<xs:element name="Prices" type="tns:Prices" minOccurs="0"/>
@@ -51,89 +123,313 @@ targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-pub
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Identifications">
+		<xs:annotation>
+			<xs:documentation>The identification that is used for the article (physical identification). Several identifications are permitted/possible. The indicated Id of the article (logical Id) does not have to be additionally specified as the physical identification.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Code" type="tns:Text35" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Code" type="tns:Text35" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A code on the basis of which the article can be recognised in the operation. This is usually a code that is applied to the article as a barcode.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Grouping">
+		<xs:annotation>
+			<xs:documentation>Any groups/classifications that are used for the SKU. </xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Group" type="tns:Group" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Group" type="tns:Group" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A group/classification in which the SKU is/has been included.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Group">
+		<xs:annotation>
+			<xs:documentation>A group/classification in which the SKU is/has been included.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Type" type="tns:ArticleGroupType"/>
-			<xs:element name="Value" type="tns:Text8"/>
-			<xs:element name="Description" type="tns:OText240" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Type" type="tns:ArticleGroupType">
+				<xs:annotation>
+					<xs:documentation>The indication of a group/classification in which the SKU has been included, for example: 
+- AFDKD - department_code; SKU classification according to departments
+- LEVKD - supplier_code; SKU classification according to suppliers
+- PRTTYPE - product_type; SKU classification according to product type
+- THEME - product_style; SKU classification according to product theme
+Only types agreed in advance with Modexpress can be indicated. A group/classification is included if it can be used in the operation to realise a particular control or if it is relevant as information to be displayed in documents or in the operation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value" type="tns:Text8">
+				<xs:annotation>
+					<xs:documentation>The value that applies to the SKU for the group/classification of the indicated type.
+
+If these values are relevant for controlling the operation (WMS), they should be coordinated in advance with Modexpress.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="tns:OText240" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The description/name that corresponds with the value of the type.
+Particularly if the value of the type is a code, it can also be relevant to specify a name/description for this code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AdditionalInfo">
+		<xs:annotation>
+			<xs:documentation>Any information elements that are important for the SKU.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Info" type="tns:Info" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Info" type="tns:Info" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>An information element that applies to the SKU.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Info">
+		<xs:annotation>
+			<xs:documentation>An information element that applies to the SKU.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Type" type="tns:ArticleAdditionalInfoType"/>
-			<xs:element name="Value" type="tns:Text70"/>
+			<xs:element name="Type" type="tns:ArticleAdditionalInfoType">
+				<xs:annotation>
+					<xs:documentation>The indication of an information element that is relevant for the SKU, for example: 
+- MATERIAL - material name
+- FABRIC - Fabric composition
+- BRANDNM - Name of the brand
+- RETPRIJS - Retail price
+
+Only types agreed in advance with Modexpress can be indicated. An information element is included if it must be indicated in a document or if it is relevant in the operation (for example to display when executing an order related to the SKU).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value" type="tns:Text250">
+				<xs:annotation>
+					<xs:documentation>The value that applies to the SKU for the speccified type of information
+
+- MATERIAL - material name (A70)
+- FABRIC - Fabric composition (A250)
+- BRANDNM - Name of the brand (A70)
+- RETPRIJS - Retail price (A70)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Characteristics">
+		<xs:annotation>
+			<xs:documentation>Any fashion-specific attributes of the SKU. </xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Characteristic" type="tns:Characteristic" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Characteristic" type="tns:Characteristic" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A fashion-specific attribute of the SKU.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Characteristic">
+		<xs:annotation>
+			<xs:documentation>A fashion-specific attribute of the SKU.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Type" type="tns:CharacteristicType"/>
-			<xs:element name="Value" type="tns:Text70"/>
-			<xs:element name="Description" type="tns:OText240" minOccurs="0"/>
-			<xs:element name="SortingNumber" type="tns:ONum4" minOccurs="0"/>
+			<xs:element name="Type" type="tns:CharacteristicType">
+				<xs:annotation>
+					<xs:documentation>A characteristic that is relevant for the SKU.
+
+- STYLE
+- COLOUR
+- SIZE
+- SIZE2
+- SEASON
+- TARIC
+- CUSTSTYLE</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value" type="tns:Text70">
+				<xs:annotation>
+					<xs:documentation>The value that applies to the SKU for the specified type:
+- STYLE (A40); the style name/number of the SKU
+- COLOUR (A50); the colour code of the SKU
+- SIZE (A35); the size of the SKU (the size code)
+- SIZE2 (A35); a second size of the SKU (for example measure of length)
+- SEASON (A35); the season of the SKU
+- TARIC (A10); the TARIC of the SKU (part of it is the HS code), The TARIC is 10 positions or 8 positions supplemented with '00'.
+- CUSTSTYLE (A17); the style name/number of the SKU for customs declaration</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="tns:OText240" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description/name that corresponds with the value of the type.
+For example the colour name for the colour code.
+
+For printing documents the maximum length in use is:
+- Style; A60
+- Colour; A30
+- SIZE, SIZE2, SEASON, TARIC, CUSTSTYLE; not in use</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SortingNumber" type="tns:ONum4" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A number that specifies the sequence of the size codes (relevant for type SIZE/SIZE2). The number is used to specify the display order on the packing slip.
+
+In case of type SIZE/SIZE2 the sortingnumber of the size codes (in attribute value) is particularly relevant if the size codes cannot be logically sorted. For example in case of size codes like XS, X, M, XXL.
+If there are several size groups in use, the sortingnumber must be unique for the size codes within the size group. However the size group is not known in the Modexpress SKU registration, so for the packing slip the SKU style is used to determine the size codes that have to be used on the packing slip. The sortingnumber is used to determine the order of the size codes on the packing slip.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Composition">
+		<xs:annotation>
+			<xs:documentation>Any SKUs that are part of the SKU (bill of material).
+For a pre-pack SKU, for example, it can be indicated here which SKUs are part of the pre-pack SKU. This is on condition that these SKUs are individually known and were therefore registered earlier.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Part" type="tns:Part" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Part" type="tns:Part" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>An individual SKU that is part of the current SKU.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Part">
+		<xs:annotation>
+			<xs:documentation>An individual SKU that is part of the current SKU.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:choice>
-				<xs:element name="Id" type="tns:TypSkuId"/>
-				<xs:element name="Code" type="tns:Text35"/>
+				<xs:element name="Id" type="tns:TypSkuId">
+					<xs:annotation>
+						<xs:documentation>The reference to a SKU that is part of the current SKU; the reference is made using the Id of the SKU.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Code" type="tns:Text35">
+					<xs:annotation>
+						<xs:documentation>The reference to a SKU that is part of the current SKU; the reference is made using the identification (barcode) of the SKU.
+A condition for the use of this reference is that the SKU can be clearly determined on the basis of this identification (barcode).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:choice>
-			<xs:element name="PartQuantity" type="tns:Num9" minOccurs="0"/>
+			<xs:element name="PartQuantity" type="tns:Num9" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of items of the SKU in the current SKU.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Prices">
+		<xs:annotation>
+			<xs:documentation>The prices that apply for the SKU.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Price" type="tns:Price" maxOccurs="unbounded"/>
+			<xs:element name="Price" type="tns:Price" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A price that applies to the SKU.
+An indicated price for the SKU replaces an existing price for the same Type, CurrencyCode, Country, Region and VATCode and is valid immediately.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Price">
+		<xs:annotation>
+			<xs:documentation>A price that applies to the SKU.
+An indicated price for the SKU replaces an existing price for the same Type, CurrencyCode, Country, Region and VATCode and is valid immediately.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Type" type="tns:Text15"/>
-			<xs:element name="Amount" type="tns:Num9.2"/>
-			<xs:element name="CurrencyCode" type="tns:Text3"/>
-			<xs:element name="Country" type="tns:OText2" minOccurs="0"/>
-			<xs:element name="Region" type="tns:OText25" minOccurs="0"/>
-			<xs:element name="VATCode" type="tns:VATCode" minOccurs="0"/>
+			<xs:element name="Type" type="tns:Text15">
+				<xs:annotation>
+					<xs:documentation>A price that is relevant for the SKU.
+
+The 'Exportvalue' is used for the exportinvoice.
+The type 'Sale' is meant to be the price to pay.
+The type 'From' is meant te be the original sale price (from price).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amount" type="tns:Num9.2">
+				<xs:annotation>
+					<xs:documentation>The amount indicating the price (regarding 1 single unit of the SKU).
+(N9,2 = Up to 7 digits before the comma and 2 decimals)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CurrencyCode" type="tns:Text3">
+				<xs:annotation>
+					<xs:documentation>Code indicating the currency in which the price is expressed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="tns:OText2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code indicating the country for which the price is valid.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Region" type="tns:OText25" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code indicating the region for which the price is valid (for example: EU)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VATCode" type="tns:VATCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code that indicates whether the price is including (I) or excluding (E) VAT.
+For customs usage prices are exclusive of VAT.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PackagingUnits">
+		<xs:annotation>
+			<xs:documentation>The Packaging units used for the SKU.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="PackagingUnit" type="tns:PackagingUnit" maxOccurs="unbounded"/>
+			<xs:element name="PackagingUnit" type="tns:PackagingUnit" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A packaging unit used for the SKU.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PackagingUnit">
+		<xs:annotation>
+			<xs:documentation>A packaging unit used for the SKU.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Type" type="tns:Text15"/>
-			<xs:element name="Quantity" type="tns:Num6"/>
-			<xs:element name="Weight" type="tns:ONum12.3" minOccurs="0"/>
-			<xs:element name="Volume" type="tns:ONum11.2" minOccurs="0"/>
-			<xs:element name="Length" type="tns:ONum11.2" minOccurs="0"/>
-			<xs:element name="Width" type="tns:ONum11.2" minOccurs="0"/>
-			<xs:element name="Height" type="tns:ONum11.2" minOccurs="0"/>
+			<xs:element name="Type" type="tns:Text15">
+				<xs:annotation>
+					<xs:documentation>A packaging unit that is used for an article (SKU).
+
+- PIECE
+- BOX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="tns:Num6">
+				<xs:annotation>
+					<xs:documentation>The number of pieces (SKU's) in the unit 
+(in case of type PIECE the quantity is 1).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Weight" type="tns:ONum12.3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The weight of the unit expressed in kilos</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Volume" type="tns:ONum11.2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The volume of the unit expressed in litres</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Length" type="tns:ONum11.2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The length of the unit expressed in millimetres</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Width" type="tns:ONum11.2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The width of the unit expressed in millimetres</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Height" type="tns:ONum11.2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The height of the unit expressed in millimetres</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
