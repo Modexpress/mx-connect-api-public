@@ -663,6 +663,8 @@ paths:
                           properties:
                             Certificate:
                               type: array
+                              minItems: 1
+                              maxItems: 2
                               items:
                                 type: object
                                 properties:
@@ -917,6 +919,8 @@ paths:
                             Container:
                               description: Container information
                               type: array
+                              minItems: 1
+                              maxItems: 1
                               items:
                                 type: object
                                 properties:
@@ -1020,7 +1024,6 @@ paths:
                                 required:
                                   - Type
                                   - Identification
-                                  - Docdata
                         AdditionalFinInfo:
                           type: object
                           properties:
