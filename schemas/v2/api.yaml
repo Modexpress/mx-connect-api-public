@@ -1017,7 +1017,7 @@ paths:
                                     description: |
                                       Document identification
                                     type: string
-                                    maxLength: 50
+                                    maxLength: 35
                                   Docdata:
                                     type: string
                                     description: Base64 encoded PDF document

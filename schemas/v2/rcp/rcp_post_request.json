@@ -522,7 +522,7 @@
                       "Identification": {
                         "description": "Document identification\n",
                         "type": "string",
-                        "maxLength": 50
+                        "maxLength": 35
                       },
                       "Docdata": {
                         "type": "string",
