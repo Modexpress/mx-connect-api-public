@@ -2,8 +2,8 @@
 <!--  $Revision: 48470 $
 $Date: 2021-04-16 14:52:40 +0200 (Fri, 16 Apr 2021) $
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://content.cb.nl/xsd/saleskitfashion/fashion_shp_3.0.xsd" targetNamespace="http://content.cb.nl/xsd/saleskitfashion/fashion_shp_3.0.xsd" elementFormDefault="qualified">
-	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/simple_types_3.0.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/fashion_shp_3.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/fashion_shp_3.0.xsd" elementFormDefault="qualified">
+	<xs:include schemaLocation="simple_types_3.0.xsd"/>
 	<!-- 
 || Some general simple-type definitions
  -->
