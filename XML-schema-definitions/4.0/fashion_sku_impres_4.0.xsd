@@ -3,7 +3,7 @@
 $Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_impres_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_impres_4.0.xsd" elementFormDefault="qualified">
-	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/simple_types_4.0.xsd"/>
+	<xs:include schemaLocation="simple_types_4.0.xsd"/>
 	<!-- 
 || Below the message-structure
  -->
