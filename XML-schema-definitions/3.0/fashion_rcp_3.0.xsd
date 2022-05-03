@@ -3,7 +3,7 @@
 $Date: 2019-09-23 07:38:41 +0200 (Mon, 23 Sep 2019) $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://content.cb.nl/xsd/saleskitfashion/fashion_rcp_3.0.xsd" targetNamespace="http://content.cb.nl/xsd/saleskitfashion/fashion_rcp_3.0.xsd" elementFormDefault="qualified">
-	<xs:include schemaLocation="http://content.cb.nl/xsd/saleskitfashion/simple_types_3.0.xsd"/>
+	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/simple_types_3.0.xsd"/>
 	<!-- 
 || Some general simple-type definitions
  -->
