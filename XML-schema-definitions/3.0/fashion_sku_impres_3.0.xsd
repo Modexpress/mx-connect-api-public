@@ -3,7 +3,7 @@
 $Date: 2017-06-29 11:22:19 +0200 (do, 29 jun 2017) $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://content.cb.nl/xsd/saleskitfashion/fashion_sku_impres_3.0.xsd" targetNamespace="http://content.cb.nl/xsd/saleskitfashion/fashion_sku_impres_3.0.xsd" elementFormDefault="qualified">
-	<xs:include schemaLocation="http://content.cb.nl/xsd/saleskitfashion/simple_types_3.0.xsd"/>
+	<xs:include schemaLocation="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/simple_types_3.0.xsd"/>
 	<!-- 
 || Below the message-structure
  -->
