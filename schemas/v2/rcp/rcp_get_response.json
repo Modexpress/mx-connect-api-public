@@ -188,8 +188,7 @@
                       "Id",
                       "QuantityReceived",
                       "Article",
-                      "Owner",
-                      "QuantityStockTypes"
+                      "Owner"
                     ]
                   }
                 }

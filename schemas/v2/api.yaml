@@ -1576,7 +1576,6 @@ paths:
                                     - QuantityReceived
                                     - Article
                                     - Owner
-                                    - QuantityStockTypes
                         required:
                           - Type
                           - OrderLines
