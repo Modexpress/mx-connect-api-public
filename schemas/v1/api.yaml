@@ -24,14 +24,12 @@ paths:
                   description: Identification of the party that submits the SKU message.
                   type: string
                   maxLength: 40
-                  example:
-                    - '1111111'
+                  example: '1111111'
                 OrderingPartyRelationId:
                   description: Identification of the party on whose behalf the articles are registered.
                   type: string
                   maxLength: 40
-                  example:
-                    - '1111111'
+                  example: '1111111'
                 Articles:
                   type: object
                   required:
@@ -49,8 +47,7 @@ paths:
                               The identification that the owner uses for the SKU. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.\r\nIf the identification contains letters, they must be in uppercase. WMS interface limited to A24
                             type: string
                             maxLength: 24
-                            example:
-                              - STYLE-COLOUR-SIZE
+                            example: STYLE-COLOUR-SIZE
                           Description:
                             description: The description of the SKU.
                             type: string
@@ -2427,9 +2424,9 @@ paths:
                   description: A non-standard service level to be used for return transport (instead of the standard agreed transport). Relevant in case the delivery has to contain a return label.
                   example: RShpServiceExample
                 Parties:
+                  type: object
                   required:
                     - Party
-                  type: object
                   properties:
                     Party:
                       type: array

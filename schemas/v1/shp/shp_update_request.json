@@ -34,10 +34,10 @@
       "description": "A non-standard service level to be used for return transport (instead of the standard agreed transport). Relevant in case the delivery has to contain a return label."
     },
     "Parties": {
+      "type": "object",
       "required": [
         "Party"
       ],
-      "type": "object",
       "properties": {
         "Party": {
           "type": "array",
