@@ -74,6 +74,10 @@
                               "type": "integer",
                               "minimum": 1
                             },
+                            "TransactionLineId": {
+                              "description": "Unique identifier of the transaction.",
+                              "type": "integer"
+                            },
                             "DateTime": {
                               "type": "string",
                               "format": "date-time",
