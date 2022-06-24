@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 220412 $ 
-$Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $
- -->
+<!-- edited with XMLSpy v2020 (x64) (http://www.altova.com) by Bruno Chaves (Modexpress B.V.) -->
+<!--  $Revision: 220624 $  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_confirm_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_confirm_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
 	<!-- <xs:include schemaLocation="simple_types_4.0.xsd"/> -->
@@ -139,6 +138,18 @@ The MRN field is only included if applicable.</xs:documentation>
 					<xs:documentation>The number of items of the article that were not delivered.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="QuantityAllocatedShort" type="tns:Num9" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of items that could not be allocated during the available to promise (ATP) stock check.
+Populated with 0 in case of a cancelation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QuantityPickedShort" type="tns:Num9" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of items that could not be picked but were available at ATP stock check.
+Populated with 0 in case of a cancelation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="StockType" type="tns:OText10" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Designation of the type of stock that was delivered.
@@ -256,9 +267,29 @@ For details refer to the comment of attribute StockType in SHP interface.</xs:do
 For details refer to the comment of attribute StockType in SHP interface.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Article" type="tns:Article">
+			<xs:element name="Article" type="tns:ArticleSHPConfirm">
 				<xs:annotation>
 					<xs:documentation>Designation of the delivered article in the unit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArticleSHPConfirm">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:TypSkuId" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="LotNumber" type="tns:OText20" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Code" type="tns:OText35" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="EPCComposition" type="tns:EPCComposition" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EPCComposition">
+		<xs:annotation>
+			<xs:documentation>Electronic Product Code Composition (if applicable)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="tns:Text250" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Electronic Product Code</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
