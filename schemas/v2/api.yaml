@@ -2053,6 +2053,9 @@ paths:
                               - In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.
                             maxLength: 70
                             example: This line is printed on the package
+                          Docdata:
+                            type: string
+                            description: 'Base64 encoded document, the name of the file (including extension) must be supplied by Info'
                 OrderLines:
                   required:
                     - OrderLine
@@ -2236,6 +2239,9 @@ paths:
                                         - In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.
                                       maxLength: 70
                                       example: This line is printed on the package
+                                    Docdata:
+                                      type: string
+                                      description: 'Base64 encoded document, the name of the file (including extension) must be supplied by Info'
                           Prices:
                             required:
                               - Price
@@ -2519,7 +2525,7 @@ paths:
                                       type: integer
                                       minimum: 1
                                       maximum: 999999999
-                                      example: 2
+                                      example: 5
                                     QuantityDelivered:
                                       description: The number of items of the article that were delivered.
                                       type: integer
@@ -2531,7 +2537,23 @@ paths:
                                       type: integer
                                       minimum: 0
                                       maximum: 999999999
-                                      example: 2
+                                      example: 3
+                                    QuantityAllocatedShort:
+                                      description: |
+                                        The number of items that could not be allocated during the available to promise (ATP) stock check.
+                                        Populated with 0 in case of a cancelation. 
+                                      type: integer
+                                      minimum: 0
+                                      maximum: 999999999
+                                      example: 0
+                                    QuantityPickedShort:
+                                      description: |
+                                        The number of items that could not be picked but were available at ATP stock check.
+                                        Populated with 0 in case of a cancelation. 
+                                      type: integer
+                                      minimum: 0
+                                      maximum: 999999999
+                                      example: 0
                                     StockType:
                                       description: |
                                         Designation of the type of stock that was delivered. For details refer to the comment of attribute StockType in SHP interface.
@@ -2670,6 +2692,21 @@ paths:
                                                     description: "A code used to recognise/identify the delivered article in the unit. This is usually a code that is also affixed to the article as a barcode.\r\nIf several barcodes are known for the article one of these is used."
                                                     type: string
                                                     maxLength: 35
+                                                  EPCComposition:
+                                                    type: array
+                                                    items:
+                                                      type: object
+                                                      minProperties: 1
+                                                      properties:
+                                                        Code:
+                                                          description: |
+                                                            Electronic Product Code (if applicable)
+                                                          type: string
+                                                          minLength: 1
+                                                          maxLength: 250
+                                                      required:
+                                                        - Code
+                                                      additionalProperties: false
                                   required:
                                     - Id
                                     - Code
@@ -2981,7 +3018,7 @@ paths:
                                       type: integer
                                       minimum: 1
                                       maximum: 999999999
-                                      example: 2
+                                      example: 5
                                     QuantityDelivered:
                                       description: The number of items of the article that were delivered.
                                       type: integer
@@ -2993,7 +3030,23 @@ paths:
                                       type: integer
                                       minimum: 0
                                       maximum: 999999999
-                                      example: 2
+                                      example: 3
+                                    QuantityAllocatedShort:
+                                      description: |
+                                        The number of items that could not be allocated during the available to promise (ATP) stock check.
+                                        Populated with 0 in case of a cancelation. 
+                                      type: integer
+                                      minimum: 0
+                                      maximum: 999999999
+                                      example: 0
+                                    QuantityPickedShort:
+                                      description: |
+                                        The number of items that could not be picked but were available at ATP stock check.
+                                        Populated with 0 in case of a cancelation. 
+                                      type: integer
+                                      minimum: 0
+                                      maximum: 999999999
+                                      example: 0
                                     StockType:
                                       description: |
                                         Designation of the type of stock that was delivered. For details refer to the comment of attribute StockType in SHP interface.
@@ -3132,6 +3185,21 @@ paths:
                                                     description: "A code used to recognise/identify the delivered article in the unit. This is usually a code that is also affixed to the article as a barcode.\r\nIf several barcodes are known for the article one of these is used."
                                                     type: string
                                                     maxLength: 35
+                                                  EPCComposition:
+                                                    type: array
+                                                    items:
+                                                      type: object
+                                                      minProperties: 1
+                                                      properties:
+                                                        Code:
+                                                          description: |
+                                                            Electronic Product Code (if applicable)
+                                                          type: string
+                                                          minLength: 1
+                                                          maxLength: 250
+                                                      required:
+                                                        - Code
+                                                      additionalProperties: false
                                   required:
                                     - Id
                                     - Code

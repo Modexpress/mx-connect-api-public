@@ -80,6 +80,18 @@
                         "minimum": 0,
                         "maximum": 999999999
                       },
+                      "QuantityAllocatedShort": {
+                        "description": "The number of items that could not be allocated during the available to promise (ATP) stock check.\nPopulated with 0 in case of a cancelation. \n",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 999999999
+                      },
+                      "QuantityPickedShort": {
+                        "description": "The number of items that could not be picked but were available at ATP stock check.\nPopulated with 0 in case of a cancelation. \n",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 999999999
+                      },
                       "StockType": {
                         "description": "Designation of the type of stock that was delivered. For details refer to the comment of attribute StockType in SHP interface.\n- RGL\n- RGLRJC\nOther types assigned by Modexpress\n",
                         "type": "string",
@@ -221,6 +233,25 @@
                                       "description": "A code used to recognise/identify the delivered article in the unit. This is usually a code that is also affixed to the article as a barcode.\r\nIf several barcodes are known for the article one of these is used.",
                                       "type": "string",
                                       "maxLength": 35
+                                    },
+                                    "EPCComposition": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "minProperties": 1,
+                                        "properties": {
+                                          "Code": {
+                                            "description": "Electronic Product Code (if applicable)\n",
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 250
+                                          }
+                                        },
+                                        "required": [
+                                          "Code"
+                                        ],
+                                        "additionalProperties": false
+                                      }
                                     }
                                   }
                                 }

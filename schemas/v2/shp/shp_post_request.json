@@ -391,6 +391,10 @@
                 "type": "string",
                 "description": "The info to be used/printed:\n- In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.\n- In case of type HANDLING with code PICK the pick strategy must be given:\n    - STYLE, STYLECOLOUR or STYLECOLOURSIZE\n- In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file.\n- In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.\n",
                 "maxLength": 70
+              },
+              "Docdata": {
+                "type": "string",
+                "description": "Base64 encoded document, the name of the file (including extension) must be supplied by Info"
               }
             }
           }
@@ -553,6 +557,10 @@
                           "type": "string",
                           "description": "The info to be used/printed:\n- In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.\n- In case of type HANDLING with code PICK the pick strategy must be given:\n    - STYLE, STYLECOLOUR or STYLECOLOURSIZE\n- In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file.\n- In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.\n",
                           "maxLength": 70
+                        },
+                        "Docdata": {
+                          "type": "string",
+                          "description": "Base64 encoded document, the name of the file (including extension) must be supplied by Info"
                         }
                       }
                     }
