@@ -2545,7 +2545,7 @@ paths:
                                       type: integer
                                       minimum: 0
                                       maximum: 999999999
-                                      example: 0
+                                      example: 2
                                     QuantityPickedShort:
                                       description: |
                                         The number of items that could not be picked but were available at ATP stock check.
@@ -2553,7 +2553,7 @@ paths:
                                       type: integer
                                       minimum: 0
                                       maximum: 999999999
-                                      example: 0
+                                      example: 1
                                     StockType:
                                       description: |
                                         Designation of the type of stock that was delivered. For details refer to the comment of attribute StockType in SHP interface.
@@ -3038,7 +3038,7 @@ paths:
                                       type: integer
                                       minimum: 0
                                       maximum: 999999999
-                                      example: 0
+                                      example: 2
                                     QuantityPickedShort:
                                       description: |
                                         The number of items that could not be picked but were available at ATP stock check.
@@ -3046,7 +3046,7 @@ paths:
                                       type: integer
                                       minimum: 0
                                       maximum: 999999999
-                                      example: 0
+                                      example: 1
                                     StockType:
                                       description: |
                                         Designation of the type of stock that was delivered. For details refer to the comment of attribute StockType in SHP interface.
