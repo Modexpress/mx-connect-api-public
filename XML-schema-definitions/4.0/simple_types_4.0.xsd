@@ -484,10 +484,6 @@ $Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $
 	<xs:simpleType name="LanguageCode">
 		<xs:restriction base="xs:normalizedString">
 			<xs:maxLength value="3"/>
-			<xs:enumeration value="NLD"/>
-			<xs:enumeration value="ENG"/>
-			<xs:enumeration value="DEU"/>
-			<xs:enumeration value="FRA"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="Indication">
