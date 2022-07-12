@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 220412 $ 
-$Date: 2022-04-22 13:00:00 +0200 (Tue, 12 Apr 2022) $
+<!--  $Revision: 220712 $
+$Date: 2022-07-12 12:30:00 +0200 (Tue, 12 Jun 2022) $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" xmlns:altova="http://www.altova.com/xml-schema-extensions" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
@@ -321,7 +321,7 @@ A condition for the use of this reference is that the SKU can be clearly determi
 			<xs:documentation>The prices that apply for the SKU.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Price" type="tns:Price" maxOccurs="unbounded">
+			<xs:element name="Price" type="tns:Price" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>A price that applies to the SKU.
 An indicated price for the SKU replaces an existing price for the same Type, CurrencyCode, Country, Region and VATCode and is valid immediately.</xs:documentation>
