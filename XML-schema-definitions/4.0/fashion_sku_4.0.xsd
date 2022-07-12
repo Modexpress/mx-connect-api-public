@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--  $Revision: 220712 $
-$Date: 2022-07-12 13:00:00 +0200 (Tue, 12 Jul 2022) $
+$Date: 2022-07-12 14:00:00 +0200 (Tue, 12 Jul 2022) $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" xmlns:altova="http://www.altova.com/xml-schema-extensions" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
@@ -378,7 +378,7 @@ For customs usage prices are exclusive of VAT.</xs:documentation>
 			<xs:documentation>The Packaging units used for the SKU.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="PackagingUnit" type="tns:PackagingUnit" maxOccurs="unbounded">
+			<xs:element name="PackagingUnit" type="tns:PackagingUnit" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>A packaging unit used for the SKU.</xs:documentation>
 				</xs:annotation>
