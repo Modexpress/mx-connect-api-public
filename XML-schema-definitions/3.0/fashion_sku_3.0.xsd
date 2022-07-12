@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 29583 $
-$Date: 2018-03-05 16:10:22 +0100 (ma, 05 mrt 2018) $
+<!--  $Revision: 220712 $
+$Date: 2022-07-12 12:30:00 +0200 (Tue, 12 Jun 2022) $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/fashion_sku_3.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/fashion_sku_3.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_3.0.xsd"/>
@@ -106,7 +106,7 @@ $Date: 2018-03-05 16:10:22 +0100 (ma, 05 mrt 2018) $
 	</xs:complexType>
 	<xs:complexType name="Prices">
 		<xs:sequence>
-			<xs:element name="Price" type="tns:Price" maxOccurs="unbounded"/>
+			<xs:element name="Price" type="tns:Price" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Price">
