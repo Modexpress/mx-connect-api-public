@@ -37,11 +37,7 @@
             "Subtype": {
               "description": "A subdivision of the order type. For example `RETAIL` returns versus `WHOLESALE` returns. Only types coordinated with Modexpress are permitted.\n",
               "type": "string",
-              "maxLength": 20,
-              "enum": [
-                "RETAIL",
-                "WHOLESALE"
-              ]
+              "maxLength": 20
             },
             "Reference": {
               "description": "Reference for the order used by the ordering party.",

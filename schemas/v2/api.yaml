@@ -512,9 +512,6 @@ paths:
                             A subdivision of the order type. For example `RETAIL` returns versus `WHOLESALE` returns. Only types coordinated with Modexpress are permitted.
                           type: string
                           maxLength: 20
-                          enum:
-                            - RETAIL
-                            - WHOLESALE
                         Reference:
                           description: Reference for the order used by the ordering party.
                           type: string
@@ -728,6 +725,12 @@ paths:
                                     description: The reference the ordering party uses for the order line and that the ordering party can use to recognise the line.
                                     type: string
                                     maxLength: 10
+                                  OriginalOutboundId:
+                                    description: |
+                                      In case of re-import a direct link to the original outbound order is required, due to CA regulations. 
+                                      The direct link enables the proof of (re-)export, which is required in order to avoid import duties for exports.
+                                    type: string
+                                    maxLength: 40
                                   StockType:
                                     description: |
                                       Designation of the type of stock that must be received. By stock type, it is possible to differentiate into different types of stock to be kept separately for an article (both in the operation and administratively).
