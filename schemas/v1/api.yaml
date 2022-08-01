@@ -1277,7 +1277,7 @@ paths:
       tags:
         - SHP
       summary: Place an order to deliver goods to an address/recipient
-      description: 'Place an order to deliver goods to an address/recipient. This can involve both B2B and B2C orders. Request body **JSON schema** can be found [here](https://github.com/Modexpress/saleskit-api-sources/blob/main/schemas/shp/shp_post_request_3.0.json)'
+      description: 'Place an order to deliver goods to an address/recipient. This can involve both B2B and B2C orders. Request body **JSON schema** can be found [here](https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v1/shp/shp_post_request.json)'
       operationId: placeOrder
       externalDocs:
         url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v1/shp/shp_post_request.json'
@@ -2366,10 +2366,10 @@ paths:
       tags:
         - SHP
       summary: Update an order to deliver goods to an address/recipient
-      description: 'Update an order to deliver goods to an address/recipient. Request body **JSON schema** can be found [here](https://github.com/Modexpress/saleskit-api-sources/blob/main/schemas/shp/shp_update_request_3.0.json)'
+      description: 'Update an order to deliver goods to an address/recipient. Request body **JSON schema** can be found [here](https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v1/shp/shp_update_request.json)'
       operationId: updateOrder
       externalDocs:
-        url: 'https://github.com/Modexpress/saleskit-api-sources/blob/main/schemas/shp/shp_update_request_3.0.json'
+        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v1/shp/shp_update_request.json'
         description: Request body **JSON schema**
       requestBody:
         description: The order update request body
