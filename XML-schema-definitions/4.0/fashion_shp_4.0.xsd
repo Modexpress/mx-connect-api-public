@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 220412 $ 
-$Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $$
+<!--  $Revision: 220803-1 $
+$Date: 2022-08-03 12:00:00 +0200$
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_4.0.xsd" elementFormDefault="qualified">
+ <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
 	<!-- 
 || Some general simple-type definitions
@@ -329,10 +329,6 @@ For customs usage the amount is exclusive of VAT.</xs:documentation>
 			<xs:element name="Type" type="tns:PartyType">
 				<xs:annotation>
 					<xs:documentation>A type of party/address that applies to the order:
-- BuyerId; buyer, 
-      (known to Modexpress as a business relation based on 'Id' or 'ExternId' of the party)
-- ReceiverId; receiver/recipient/consignee, 
-      (known to Modexpress as a business relation based on 'Id' of the party)
 - ReceiverAddress; receiver/recipient/consignee address
 - SellerAddress; Seller/Shipper address
 - BuyerAddress; buyer address
@@ -357,7 +353,7 @@ For %Address types the ExterneId can be included as a reference in the order. Fo
 In case of a DropSiteAddress the ExternalId can be used for the pickuppoint-id/number.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Name1" type="tns:OText50" minOccurs="0">
+			<xs:element name="Name1" type="tns:Text50" minOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The name of the party.
 Order of display on documents: line 1
@@ -374,7 +370,7 @@ Order of display on documents: line 2
 Only applicable for the %Address party types.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AddressLine1" type="tns:OText50" minOccurs="0">
+			<xs:element name="AddressLine1" type="tns:Text50" minOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The street that applies to the party.
 Order of display on documents: line 4
@@ -426,7 +422,7 @@ Mandatory for parties with Country = NL.
 </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="City" type="tns:OText50" minOccurs="0">
+			<xs:element name="City" type="tns:Text50" minOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The town/city that applies to the party.
 Order of display on documents: line 6
@@ -442,7 +438,7 @@ Order of display on documents: line 7
 Only applicable for the %Address party types.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Country" type="tns:OText2" minOccurs="0">
+			<xs:element name="Country" type="tns:Text2" minOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The country that applies to the party. The designation should be made according to iso2 code.
 Order of display on documents: line 8 (country name will be displayed)

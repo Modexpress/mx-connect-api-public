@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 220412 $ 
-$Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $
+<!--  $Revision: 220803-1 $
+$Date: 2022-08-03 12:00:00 +0200$
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<!-- 
@@ -8,6 +8,12 @@ $Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $
  -->
 	<xs:simpleType name="Text">
 		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
+	<xs:simpleType name="Text2">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2"/>
+		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="Text3">
 		<xs:restriction base="xs:normalizedString">
