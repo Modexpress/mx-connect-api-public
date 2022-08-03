@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 220412 $ 
-$Date: 2022-04-22 11:00:00 +0200 (Tue, 12 Apr 2022) $
+<!--  $Revision: 220803-1 $
+$Date: 2022-08-03 12:00:00 +0200$
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
@@ -353,6 +353,11 @@ Up to 2 certificates can apply to the same ShipmentLine, the following combinati
 			<xs:element name="Reference" type="tns:OText10" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The reference the ordering party uses for the order line and that the ordering party can use to recognise the line.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginalOutboundId" type="tns:OText40" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>In case of re-import a direct link to the original outbound order is required, due to CA regulations. The direct link enables the proof of (re-)export, which is required in order to avoid import duties for exports.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="StockType" type="tns:OText10" minOccurs="0">

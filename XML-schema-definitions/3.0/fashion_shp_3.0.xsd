@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 48470 $
-$Date: 2021-04-16 14:52:40 +0200 (Fri, 16 Apr 2021) $
+<!--  $Revision: 220803-1 $
+$Date: 2022-08-03 12:00:00 +0200$
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/fashion_shp_3.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/fashion_shp_3.0.xsd" elementFormDefault="qualified">
+ <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/fashion_shp_3.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/fashion_shp_3.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_3.0.xsd"/>
 	<!-- 
 || Some general simple-type definitions
@@ -121,17 +121,17 @@ $Date: 2021-04-16 14:52:40 +0200 (Fri, 16 Apr 2021) $
 			<xs:element name="Type" type="tns:PartyType"/>
 			<xs:element name="Id" type="tns:ONum7" minOccurs="0"/>
 			<xs:element name="ExternalId" type="tns:OText35" minOccurs="0"/>
-			<xs:element name="Name1" type="tns:OText50" minOccurs="0"/>
+			<xs:element name="Name1" type="tns:Text50" minOccurs="1"/>
 			<xs:element name="Name2" type="tns:OText50" minOccurs="0"/>
-			<xs:element name="AddressLine1" type="tns:OText50" minOccurs="0"/>
+			<xs:element name="AddressLine1" type="tns:Text50" minOccurs="1"/>
 			<xs:element name="AddressLine2" type="tns:OText50" minOccurs="0"/>
 			<xs:element name="HouseNumber" type="tns:ONum6" minOccurs="0"/>
 			<xs:element name="HouseNumberExtension" type="tns:OText10" minOccurs="0"/>
 			<xs:element name="DeliveryInstruction" type="tns:OText30" minOccurs="0"/>
 			<xs:element name="PostalCode" type="tns:OText20" minOccurs="0"/>
-			<xs:element name="City" type="tns:OText50" minOccurs="0"/>
+			<xs:element name="City" type="tns:Text50" minOccurs="1"/>
 			<xs:element name="Region" type="tns:OText35" minOccurs="0"/>
-			<xs:element name="Country" type="tns:OText2" minOccurs="0"/>
+			<xs:element name="Country" type="tns:Text2" minOccurs="1"/>
 			<xs:element name="EmailAddress" type="tns:OText254" minOccurs="0"/>
 			<xs:element name="PhoneNumber" type="tns:OText40" minOccurs="0"/>
 			<xs:element name="MobileNumber" type="tns:OText40" minOccurs="0"/>
