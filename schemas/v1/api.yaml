@@ -3065,18 +3065,28 @@ paths:
             type: string
           description: Filter by STOCKTYPE value
         - in: query
+          name: TransactionLineType
+          schema:
+            type: string
+          description: |
+            Filter by TransactionLineType value, defined by Modexpress
+
+            Example with a single type: /stm?TransactionLineType=MUTATION
+
+            Example with multiple types: /stm?TransactionLineType=MUTATION,PRERECPT,PRERETRN
+        - in: query
           name: FromDate
           schema:
             type: string
           description: |
-            Filter by From Date value. 
+            Filter by From Date value.\n
             Example 2021-10-01T00:00:00 or 2021-10-01 00:00:00.
         - in: query
           name: ToDate
           schema:
             type: string
           description: |
-            Filter by To Date value. 
+            Filter by To Date value.\n
             Example 2021-10-01T00:00:00 or 2021-10-01 00:00:00.
       responses:
         '200':
