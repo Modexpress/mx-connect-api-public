@@ -2398,32 +2398,39 @@ paths:
                 type: object
                 properties:
                   Message:
-                    required:
-                      - MessageCode
-                      - MessageText
-                      - MessageType
                     type: object
                     properties:
-                      MessageType:
+                      status:
+                        type: boolean
+                        example: true
+                      result:
+                        type: object
+                        properties:
+                          Id:
+                            type: string
+                      error:
+                        type: object
+                        properties:
+                          Code:
+                            type: string
+                          en:
+                            type: string
+                          nl:
+                            type: string
+                          de:
+                            type: string
+                          fr:
+                            type: string
+                      message:
                         type: string
-                        description: Notification type
-                        example: I
-                        enum:
-                          - E
-                          - I
-                      MessageCode:
-                        type: string
-                        description: Notification code
-                        example: WMS-00001
-                      MessageText:
-                        type: string
-                        description: Notification text
-                        example: Order updated
+                        nullable: true
                     xml:
                       name: Message
               example:
                 status: true
-                Id: YourOrderId
+                result:
+                  Id: YourOrderId
+                message: null
         '404':
           description: Order not found in the Modexpress system
           content:
@@ -2432,13 +2439,12 @@ paths:
                 status: false
                 result: null
                 error:
-                  type: object
                   properties:
                     code: order_id_fail
-                    en: Order Id already exists
+                    en: Order ID invalid
                     nl: ''
                     de: ''
-                    fr: null
+                    fr: ''
     get:
       tags:
         - SHP
@@ -2717,12 +2723,19 @@ paths:
                         required:
                           - Id
         '404':
-          description: order not found
+          description: Order not found in the Modexpress system
           content:
             application/json:
               example:
                 status: false
-                Id: YourOrderId
+                result: null
+                error:
+                  properties:
+                    code: order_id_fail
+                    en: Order ID invalid
+                    nl: ''
+                    de: ''
+                    fr: ''
     put:
       tags:
         - SHP
@@ -3210,12 +3223,19 @@ paths:
                         required:
                           - Id
         '404':
-          description: order not found
+          description: Order not found in the Modexpress system
           content:
             application/json:
               example:
                 status: false
-                Id: YourOrderId
+                result: null
+                error:
+                  properties:
+                    code: order_id_fail
+                    en: Order ID invalid
+                    nl: ''
+                    de: ''
+                    fr: ''
         '422':
           description: Invalid JSON structure and/or field values
           content:

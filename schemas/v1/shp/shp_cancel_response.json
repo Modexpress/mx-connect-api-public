@@ -2,28 +2,44 @@
   "type": "object",
   "properties": {
     "Message": {
-      "required": [
-        "MessageCode",
-        "MessageText",
-        "MessageType"
-      ],
       "type": "object",
       "properties": {
-        "MessageType": {
-          "type": "string",
-          "description": "Notification type",
-          "enum": [
-            "E",
-            "I"
+        "status": {
+          "type": "boolean"
+        },
+        "result": {
+          "type": "object",
+          "properties": {
+            "Id": {
+              "type": "string"
+            }
+          }
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "Code": {
+              "type": "string"
+            },
+            "en": {
+              "type": "string"
+            },
+            "nl": {
+              "type": "string"
+            },
+            "de": {
+              "type": "string"
+            },
+            "fr": {
+              "type": "string"
+            }
+          }
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
           ]
-        },
-        "MessageCode": {
-          "type": "string",
-          "description": "Notification code"
-        },
-        "MessageText": {
-          "type": "string",
-          "description": "Notification text"
         }
       }
     }
