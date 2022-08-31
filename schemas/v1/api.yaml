@@ -2601,229 +2601,35 @@ paths:
                   description: Response body **JSON schema**
                 type: object
                 properties:
-                  status:
-                    type: boolean
-                    example: true
-                    enum:
-                      - true
-                      - false
-                  result:
+                  Message:
                     type: object
                     properties:
-                      Order:
+                      status:
+                        type: boolean
+                        example: true
+                      result:
                         type: object
                         properties:
                           Id:
-                            description: The identification that the ordering party uses for the order.
                             type: string
-                            maxLength: 40
-                          OrderReference:
-                            description: Reference for the order used by the ordering party.
+                      error:
+                        type: object
+                        properties:
+                          Code:
                             type: string
-                            maxLength: 25
-                          DocumentNumber:
-                            description: |
-                              The number of the document (packing slip) that was created for the shipment and that is also specified/printed on the document.
+                          en:
                             type: string
-                            maxLength: 35
-                          ProcessingStatus:
-                            description: |
-                              Indication of the status of the order:
-                              - N: New (order is received but it's not yet being handled)
-                              - I: In progress (order being fulfilled)
-                              - R: The order has been released for picking
-                              - K: The order has been picked
-                              - P: Packed (order has been packed but has not progressed to its final status)
-                              - S: Shipped (order has been transferred to the carrier and has been closed)
-                              - C: Cancelled (order has been cancelled)
-                              The status field is only included if this is configured. **Note**: differs from SHP-Exec since it's a real-time status
+                          nl:
                             type: string
-                            minLength: 1
-                            maxLength: 1
-                            example: S
-                            enum:
-                              - 'N'
-                              - I
-                              - R
-                              - K
-                              - P
-                              - S
-                              - C
-                          Orderlines:
-                            type: object
-                            properties:
-                              Orderline:
-                                type: array
-                                items:
-                                  type: object
-                                  properties:
-                                    Id:
-                                      description: The identification that the ordering party uses for the order line.
-                                      type: string
-                                      maxLength: 50
-                                      example: 123456
-                                    QuantityOrdered:
-                                      description: The number of items of the article that must be delivered according to the submitted order.
-                                      type: integer
-                                      minimum: 1
-                                      maximum: 999999999
-                                      example: 5
-                                    QuantityDelivered:
-                                      description: The number of items of the article that were delivered.
-                                      type: integer
-                                      minimum: 0
-                                      maximum: 999999999
-                                      example: 2
-                                    QuantityNotDelivered:
-                                      description: The number of items of the article that were not delivered.
-                                      type: integer
-                                      minimum: 0
-                                      maximum: 999999999
-                                      example: 3
-                                    StockType:
-                                      description: |
-                                        Designation of the type of stock that was delivered. For details refer to the comment of attribute StockType in SHP interface.
-                                        - RGL
-                                        - RGLRJC
-                                        Other types assigned by Modexpress
-                                      type: string
-                                      maxLength: 10
-                                      example: RGL
-                                    DateTimeOfCompletion:
-                                      description: Date + time on which the line was reported ready.
-                                      type: string
-                                      format: date-time
-                                      example: '2021-01-30T00:00:00\.000Z'
-                                    Article:
-                                      type: object
-                                      properties:
-                                        Id:
-                                          description: The identification that the owner uses for the delivered SKU - **WMS A24**
-                                          type: string
-                                          maxLength: 250
-                                          example: 1122334455
-                                        Code:
-                                          description: |
-                                            A code used to recognise/identify the delivered article.
-                                            This is usually a code that is also affixed to the article as a barcode.
-                                            If several barcodes are known for the article one of these is used.
-                                          type: string
-                                          maxLength: 35
-                                          example: ABC-123
-                                      additionalProperties: false
-                                  required:
-                                    - Id
-                                    - QuantityOrdered
-                                    - QuantityDelivered
-                                    - QuantityNotDelivered
-                                  additionalProperties: false
-                            additionalProperties: false
-                          ShippingUnits:
-                            type: object
-                            properties:
-                              ShippingUnit:
-                                type: array
-                                items:
-                                  type: object
-                                  properties:
-                                    Id:
-                                      description: The identification for the unit defined by Modexpress.
-                                      type: string
-                                      maxLength: 35
-                                      example: 12345678
-                                    Code:
-                                      description: The barcode that is affixed/applied to the unit.
-                                      type: string
-                                      maxLength: 35
-                                      example: 123456
-                                    Weight:
-                                      description: |
-                                        The weight of the unit expressed in grams. There are two possibilities:
-                                        - The weight is the actual weighed weight (including the packing materials). This weight can only be indicated if it has been agreed that items must be weighed in the operation.
-                                        - The weight is the calculated weight of the contents (based on the weight of individual articles in the unit). This weight can only be indicated if a weight is known for the individual articles.
-                                      type: integer
-                                      minimum: 1
-                                      maximum: 999999999
-                                    Length:
-                                      description: The length of the unit expressed in millimeters.
-                                      type: number
-                                      minimum: 1
-                                      maximum: 9999999999
-                                      example: 520
-                                    Width:
-                                      description: The width of the unit expressed in millimeters.
-                                      type: integer
-                                      minimum: 1
-                                      maximum: 9999999999
-                                      example: 480
-                                    Height:
-                                      description: The height of the unit expressed in millimeters.
-                                      type: number
-                                      minimum: 1
-                                      maximum: 9999999999
-                                      example: 640
-                                    Carrier:
-                                      description: The carrier that is responsible for transporting the package.
-                                      type: string
-                                      maxLength: 40
-                                      example: Carrier
-                                    ShipmentCode:
-                                      description: Designation of the actual transport for the order.
-                                      type: string
-                                      maxLength: 6
-                                    TrackingId:
-                                      description: Track and trace identification of the unit (assigned by the carrier).
-                                      type: string
-                                      maxLength: 35
-                                    DateTimeOfCompletion:
-                                      description: Date + time on which the unit was reported ready.
-                                      type: string
-                                      format: date-time
-                                      example: '2021-01-30T00:00:00\.000Z'
-                                    ReturnTrackingId:
-                                      description: Track and trace identification for a return unit (assigned by the carrier).
-                                      type: string
-                                      maxLength: 35
-                                      example: xyz-123
-                                    Compositions:
-                                      type: object
-                                      properties:
-                                        Composition:
-                                          type: array
-                                          items:
-                                            type: object
-                                            properties:
-                                              QuantityDelivered:
-                                                type: integer
-                                                minimum: 1
-                                                maximum: 9999999999
-                                                example: 2
-                                              Stocktype:
-                                                description: |
-                                                  Designation of the type of stock that is delivered. For details refer to the comment of attribute StockType in SHP interface.
-                                                type: string
-                                                maxLength: 10
-                                              Article:
-                                                type: object
-                                                properties:
-                                                  Id:
-                                                    description: The identification that the owner uses for the delivered SKU.
-                                                    type: string
-                                                    maxLength: 250
-                                                  LotNumber:
-                                                    description: The lot/batch number of the delivered SKU.
-                                                    type: string
-                                                    maxLength: 20
-                                                  Code:
-                                                    description: "A code used to recognise/identify the delivered article in the unit. This is usually a code that is also affixed to the article as a barcode.\r\nIf several barcodes are known for the article one of these is used."
-                                                    type: string
-                                                    maxLength: 35
-                                  required:
-                                    - Id
-                                    - Code
-                                    - DateTimeOfCompletion
-                        required:
-                          - Id
+                          de:
+                            type: string
+                          fr:
+                            type: string
+                      message:
+                        type: string
+                        nullable: true
+                    xml:
+                      name: Message
         '404':
           description: Order not found in the Modexpress system
           content:
@@ -2852,10 +2658,14 @@ paths:
             application/json:
               example:
                 status: false
+                result: null
                 error:
-                  code: InvalidAddress
-                  nl: De straatnaam ontbreekt in het adres van de ontvanger
-                  en: The receiver address is missing a value for street name
+                  properties:
+                    code: complete_fields
+                    en: 'Please complete all fields: Parties Party ReceiverAddress Country'
+                    nl: 'Vul alstublieft alle velden in: Parties Party ReceiverAddress Country'
+                    de: ''
+                    fr: ''
   /stl:
     get:
       tags:
