@@ -2630,6 +2630,11 @@ paths:
                         nullable: true
                     xml:
                       name: Message
+              example:
+                status: true
+                result:
+                  Id: YourOrderId
+                message: null
         '404':
           description: Order not found in the Modexpress system
           content:
