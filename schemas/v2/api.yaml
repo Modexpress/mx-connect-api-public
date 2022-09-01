@@ -2802,7 +2802,7 @@ paths:
                     Party:
                       type: array
                       minItems: 1
-                      maxItems: 4
+                      maxItems: 2
                       items:
                         required:
                           - Type
@@ -2815,21 +2815,11 @@ paths:
                             type: string
                             description: |
                               A type of party/address that applies to the order:
-                              - BuyerId; buyer, (known to Modexpress as a business relation based on **Id** or **ExternId** of the party, only for the placeOrder operation)
-                              - ReceiverId; receiver/recipient/consignee, (known to Modexpress as a business relation based on 'Id' of the party, only for the placeOrder operation)
                               - ReceiverAddress; receiver/recipient/consignee address,
-                              - SellerAddress; Seller/Shipper address (only for the placeOrder operation)
-                              - BuyerAddress; buyer address (only for the placeOrder operation)
-                              - InvoiceAddress; invoice address (only for the placeOrder operation)
                               - DropSiteAddress; drop site address / pick up point address
                             enum:
                               - ReceiverAddress
-                              - SellerAddress
-                              - BuyerAddress
-                              - InvoiceAddress
                               - DropSiteAddress
-                              - BuyerId
-                              - ReceiverId
                             maxLength: 20
                             example: ReceiverAddress
                           Id:

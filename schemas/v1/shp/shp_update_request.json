@@ -42,7 +42,7 @@
         "Party": {
           "type": "array",
           "minItems": 1,
-          "maxItems": 4,
+          "maxItems": 2,
           "items": {
             "required": [
               "Type",
@@ -54,15 +54,10 @@
             "properties": {
               "Type": {
                 "type": "string",
-                "description": "A type of party/address that applies to the order:\n- BuyerId; buyer, (known to Modexpress as a business relation based on **Id** or **ExternId** of the party, only for the placeOrder operation)\n- ReceiverId; receiver/recipient/consignee, (known to Modexpress as a business relation based on 'Id' of the party, only for the placeOrder operation)\n- ReceiverAddress; receiver/recipient/consignee address,\n- SellerAddress; Seller/Shipper address (only for the placeOrder operation)\n- BuyerAddress; buyer address (only for the placeOrder operation)\n- InvoiceAddress; invoice address (only for the placeOrder operation)\n- DropSiteAddress; drop site address / pick up point address\n",
+                "description": "A type of party/address that applies to the order:\n- ReceiverAddress; receiver/recipient/consignee address,\n- DropSiteAddress; drop site address / pick up point address\n",
                 "enum": [
                   "ReceiverAddress",
-                  "SellerAddress",
-                  "BuyerAddress",
-                  "InvoiceAddress",
-                  "DropSiteAddress",
-                  "BuyerId",
-                  "ReceiverId"
+                  "DropSiteAddress"
                 ],
                 "maxLength": 20
               },
