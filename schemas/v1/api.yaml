@@ -2996,6 +2996,7 @@ paths:
                                           TransactionLineId:
                                             description: Unique identifier of the transaction.
                                             type: integer
+                                            example: 1001
                                           DateTime:
                                             type: string
                                             format: date-time
@@ -3018,7 +3019,7 @@ paths:
                                               - RECEIPT
                                               - RETURN
                                               - SHIPMENT
-                                            example: Mutation
+                                            example: MUTATION
                                           StockType:
                                             description: |
                                               Designation of the type of stock. Using the stock type, it is possible to differentiate according to different types of stock that must be maintained separately for an article (both in the operation and administratively).
@@ -3062,7 +3063,7 @@ paths:
                                               - SY - Synchronisation correction (internal reason)
                                             type: string
                                             nullable: true
-                                            example: null
+                                            example: SY
                                           Quantity:
                                             description: The number of items of the transaction line
                                             type: integer
@@ -3143,6 +3144,161 @@ paths:
                   nl: ''
                   de: ''
                   fr: ''
+    post:
+      tags:
+        - STM
+      summary: STM webhook sent from Modexpress to customer endpoint
+      operationId: StmWebhook
+      description: Webhook notification to indicate the execution of stock mutations.
+      externalDocs:
+        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v1/stm/stm_post_request.json'
+        description: Request body **JSON schema**
+      requestBody:
+        description: The STM Webhook data request body
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                TransactionLines:
+                  type: object
+                  properties:
+                    TransactionLine:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          SequenceNumber:
+                            description: The sequence number of the line.
+                            type: integer
+                            minimum: 1
+                            example: 1
+                          TransactionLineId:
+                            description: Unique identifier of the transaction.
+                            type: integer
+                            example: 1002
+                          DateTime:
+                            type: string
+                            format: date-time
+                            description: Date + time of execution of the stock movement.
+                            example: '2021-09-21T10:40:02+02:00'
+                          TransactionLineType:
+                            type: string
+                            description: |
+                              Designation of the type of transaction:
+                              - PRERECPT; Pre-receipt of stock (not send by default)
+                              - PRERETRN; Pre-return receipt of stock (not send by default)
+                              - RECEIPT; Receipt of stock (not send by default, assumption RCP-exec is used)
+                              - RETURN; Return receipt of stock (not send by default, assumption RCP-exec is used)
+                              - SHIPMENT; Shipment of stock (not send by default, assumption SHP-exec is used)
+                              - MUTATION; Other stock movement or stock correction
+                            enum:
+                              - MUTATION
+                              - PRERECPT
+                              - PRERETRN
+                              - RECEIPT
+                              - RETURN
+                              - SHIPMENT
+                            example: MUTATION
+                          StockType:
+                            description: |
+                              Designation of the type of stock. Using the stock type, it is possible to differentiate according to different types of stock that must be maintained separately for an article (both in the operation and administratively).
+                              The standard stock types are (other types are possible):
+                              - RGL - regular stock (A-choice stock)
+                              - KWL - regular stock, blocked for quality control (not available for SHP)
+                              - BLK -  regular stock, blocked for other reason (not available for shipping)
+                              - RGLRJC - regular reject stock (B-choice stock)
+                              - KWLRJC - regular reject stock, blocked for quality control (not available for shipping)
+                              - BLKRJC - regular reject stock, blocked for other reason (not available for shipping)
+                              - INN - regular stock (A-choice stock), received in inbound area
+                              - INNRJC - regular reject stock (B-choice stock), received in inbound area
+                              - INR - regular stock (A-choice stock), received in return inbound area
+                              - INRRJC - regular reject stock (B-choice stock), received in return inbound area
+                              If the received stock in the RCP-exec interface is used to add the stock in your ERP, the stock movements regarding the INN(RJC) and INR(RJC) stocktypes will not be sent. 
+                              However, it is still possible there will be stock corrections regarding the INN(RJC) and INR(RJC) stocktypes. Depending on the handling of the stock in your ERP, these corrections should probably be made to the RGL(RJC) stock.
+                              Other types assigned by Modexpress
+                            type: string
+                            maxLength: 10
+                            example: RGL
+                          TransactionSign:
+                            type: string
+                            description: |
+                              Indication whether it involves an increase (+) or decrease (-/-) in the stock.
+                            enum:
+                              - PLUS
+                              - MINUS
+                            example: MINUS
+                          Reason:
+                            description: |
+                              The reason for the transaction (only for type MUTATION and in case of a stock correction):
+                              - 2 -  Count discrepancy
+                              - 17 - Order pick count discrepancy
+                              - 18 - Order pick damaged
+                              - 26 - Cycle count discrepancy
+                              - 27 - Cycle count damaged
+                              - 28 - Reclassify stock
+                              - 29 - Destroy stock
+                              - 30 - Packaging material usage
+                              - 90 - Found stock
+                              - SY - Synchronisation correction (internal reason)
+                            type: string
+                            nullable: true
+                            example: 26
+                          Quantity:
+                            description: The number of items of the transaction line
+                            type: integer
+                            example: 2
+                          Article:
+                            type: object
+                            properties:
+                              Id:
+                                description: The identification that the owner uses for the article.
+                                type: string
+                                example: 230095003999OS
+                                maxLength: 250
+                              LotNumber:
+                                description: The lot/batch number of the article.
+                                type: string
+                                maxLength: 20
+                              Code:
+                                description: |
+                                  A code used to recognise/identify the article. This is usually a code that is also affixed to the article as a barcode.
+                                  If several barcodes are known for the article one of these is used.
+                                type: string
+                                maxLength: 35
+                            required:
+                              - Id
+                          Owner:
+                            type: object
+                            properties:
+                              RelationId:
+                                type: string
+                                description: Identification of the party that is the owner of the article.
+                                example: 1111111
+                                maxLength: 40
+                              RelationType:
+                                type: string
+                                description: |
+                                  Indication whether the Relation_Id is an internal or external id.
+                                  - internal id: the id assigned and used by Modexpress
+                                  - external id: the id assigned and used by the ordering party
+                                enum:
+                                  - INT
+                                  - EXT
+                                example: INT
+                            required:
+                              - RelationId
+                              - RelationType
+                        required:
+                          - SequenceNumber
+                          - DateTime
+                          - TransactionLineType
+                          - StockType
+                          - TransactionSign
+                          - Quantity
+                          - Article
+                  required:
+                    - TransactionLine
 components:
   securitySchemes:
     bearerAuth:
