@@ -376,7 +376,7 @@
               },
               "Code": {
                 "type": "string",
-                "description": "Indication of the instruction by means of a code:\n- In case of VAS an example code is 10 (= remove price label F,GOH)\n- In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')\n- In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**\n- In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**\n- In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**\nIf no specific code and no description is relevant than the instruction type must also be declared as instruction code.\n",
+                "description": "Indication of the instruction by means of a code:\n- In case of VAS an example code is 10 (= remove price label F,GOH)\n- In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')\n- In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**\n- In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**, **EXTDOC**\n- In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**\nIf no specific code and no description is relevant than the instruction type must also be declared as instruction code.\n",
                 "minLength": 1,
                 "maxLength": 10
               },
@@ -387,8 +387,16 @@
               },
               "Info": {
                 "type": "string",
-                "description": "The info to be used/printed:\n- In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.\n- In case of type HANDLING with code PICK the pick strategy must be given:\n    - STYLE, STYLECOLOUR or STYLECOLOURSIZE\n- In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file.\n- In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.\n",
+                "description": "The info to be used/printed:\n- In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.\n- In case of type HANDLING with code PICK the pick strategy must be given:\n    - STYLE, STYLECOLOUR or STYLECOLOURSIZE\n- In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file. Not used for EXTDOC.\n- In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.\n",
                 "maxLength": 70
+              },
+              "Docdata": {
+                "type": "string",
+                "description": "Base64 encoded document, the name of the file (including extension) must be supplied by Info"
+              },
+              "Url": {
+                "type": "string",
+                "description": "To be used in combination with type FILE and code EXTDOC, the value mentioned here should contain the URL that can be used to download the PDF document to be printed at Modexpress."
               }
             }
           }
@@ -538,7 +546,7 @@
                         },
                         "Code": {
                           "type": "string",
-                          "description": "Indication of the instruction by means of a code:\n- In case of VAS an example code is 10 (= remove price label F,GOH)\n- In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')\n- In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**\n- In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**\n- In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**\nIf no specific code and no description is relevant than the instruction type must also be declared as instruction code.\n",
+                          "description": "Indication of the instruction by means of a code:\n- In case of VAS an example code is 10 (= remove price label F,GOH)\n- In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')\n- In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**\n- In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**, **EXTDOC**\n- In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**\nIf no specific code and no description is relevant than the instruction type must also be declared as instruction code.\n",
                           "minLength": 1,
                           "maxLength": 10
                         },
@@ -549,8 +557,16 @@
                         },
                         "Info": {
                           "type": "string",
-                          "description": "The info to be used/printed:\n- In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.\n- In case of type HANDLING with code PICK the pick strategy must be given:\n    - STYLE, STYLECOLOUR or STYLECOLOURSIZE\n- In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file.\n- In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.\n",
+                          "description": "The info to be used/printed:\n- In case of type HANDLING with code SOURCE, the name of the webshop must be mentioned (source of the order) to indicate source specific handling for the order.\n- In case of type HANDLING with code PICK the pick strategy must be given:\n    - STYLE, STYLECOLOUR or STYLECOLOURSIZE\n- In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file. Not used for EXTDOC.\n- In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.\n",
                           "maxLength": 70
+                        },
+                        "Docdata": {
+                          "type": "string",
+                          "description": "Base64 encoded document, the name of the file (including extension) must be supplied by Info"
+                        },
+                        "Url": {
+                          "type": "string",
+                          "description": "To be used in combination with type FILE and code EXTDOC, the value mentioned here should contain the URL that can be used to download the PDF document to be printed at Modexpress."
                         }
                       }
                     }
