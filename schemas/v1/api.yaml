@@ -2170,6 +2170,10 @@ paths:
                             description: Reference for the order used by the ordering party.
                             type: string
                             maxLength: 25
+                          ClientReference:
+                            description: Reference used by the buyer/recipient for the order.
+                            type: string
+                            maxLength: 35
                           DocumentNumber:
                             description: |
                               The number of the document (packing slip) that was created for the shipment and that is also specified/printed on the document.
