@@ -238,7 +238,7 @@
                       "Quantity": {
                         "description": "The number of items of the article that must be received.",
                         "type": "integer",
-                        "minimum": 1,
+                        "minimum": 0,
                         "maximum": 999999999
                       },
                       "Reference": {
@@ -631,8 +631,8 @@
                       },
                       "Quantity": {
                         "description": "The number of items of the article that will be delivered.",
-                        "type": "number",
-                        "minimum": 1,
+                        "type": "integer",
+                        "minimum": 0,
                         "maximum": 999999999
                       },
                       "CountryOfOrigin": {
