@@ -630,7 +630,6 @@ paths:
                                     example: NL
                                 required:
                                   - Type
-                                  - ExternalId
                         Instructions:
                           type: object
                           properties:
