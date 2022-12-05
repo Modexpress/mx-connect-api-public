@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 220803-1 $
-$Date: 2022-08-03 12:00:00 +0200$
+<!--  $Revision: 221205-1 $
+$Date: 2022-12-05 14:30:00 +0200$
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
@@ -322,7 +322,7 @@ Up to 2 certificates can apply to the same ShipmentLine, the following combinati
 - EUR-MED + CVO</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CertificateNumber" type="tns:Text20" minOccurs="1">
+			<xs:element name="CertificateNumber" type="tns:Text35" minOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Certificate number</xs:documentation>
 				</xs:annotation>
