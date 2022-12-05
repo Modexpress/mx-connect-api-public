@@ -210,7 +210,7 @@
                       "CertificateNumber": {
                         "description": "Certificate number/identification.",
                         "type": "string",
-                        "maxLength": 20
+                        "maxLength": 35
                       },
                       "Docdata": {
                         "description": "Base64 encoded PDF document.",
