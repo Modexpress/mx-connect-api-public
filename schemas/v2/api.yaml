@@ -1909,7 +1909,7 @@ paths:
                             type: string
                             description: |
                               The street that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types. Mandatory for the %Address party types.
-                            minLength: 1
+                            minLength: 2
                             maxLength: 50
                             example: Heibloemweg
                           AddressLine2:
@@ -1945,7 +1945,7 @@ paths:
                             type: string
                             description: |
                               The town/city that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.
-                            minLength: 1
+                            minLength: 2
                             maxLength: 50
                             example: Helmond
                           Region:
@@ -2868,7 +2868,7 @@ paths:
                             type: string
                             description: |
                               The street that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types. Mandatory for the %Address party types.
-                            minLength: 1
+                            minLength: 2
                             maxLength: 50
                             example: Heibloemweg
                           AddressLine2:
@@ -2904,7 +2904,7 @@ paths:
                             type: string
                             description: |
                               The town/city that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.
-                            minLength: 1
+                            minLength: 2
                             maxLength: 50
                             example: Helmond
                           Region:

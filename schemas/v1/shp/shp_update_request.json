@@ -87,7 +87,7 @@
               "AddressLine1": {
                 "type": "string",
                 "description": "The street that applies to the party. Order of display on documents: line 4. Only applicable for the %Address party types. Mandatory for the %Address party types.\n",
-                "minLength": 1,
+                "minLength": 2,
                 "maxLength": 50
               },
               "AddressLine2": {
@@ -117,7 +117,7 @@
               "City": {
                 "type": "string",
                 "description": "The town/city that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.\n",
-                "minLength": 1,
+                "minLength": 2,
                 "maxLength": 50
               },
               "Region": {
