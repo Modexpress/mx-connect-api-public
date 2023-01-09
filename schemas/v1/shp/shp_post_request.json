@@ -291,7 +291,8 @@
               "PostalCode": {
                 "type": "string",
                 "description": "The postal code / ZIP code that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.\n",
-                "maxLength": 20
+                "maxLength": 20,
+                "format": "^[a-z0-9A-Z][a-zA-Z0-9\\\\- ]{0,10}[a-z0-9A-Z]$"
               },
               "City": {
                 "type": "string",
