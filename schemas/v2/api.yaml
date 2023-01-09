@@ -1940,7 +1940,6 @@ paths:
                             description: |
                               The postal code / ZIP code that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.
                             maxLength: 20
-                            pattern: '^[a-zA-Z0-9][a-zA-Z0-9\- ]{0,20}[a-zA-Z0-9]$'
                             example: 5704 BS
                           City:
                             type: string
@@ -2900,7 +2899,6 @@ paths:
                             description: |
                               The postal code / ZIP code that applies to the party. Order of display on documents: line 6. Only applicable for the %Address party types.
                             maxLength: 20
-                            pattern: '^[a-zA-Z0-9][a-zA-Z0-9\- ]{0,20}[a-zA-Z0-9]$'
                             example: 5704 BS
                           City:
                             type: string
