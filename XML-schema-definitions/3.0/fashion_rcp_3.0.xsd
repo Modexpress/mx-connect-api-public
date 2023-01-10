@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 40606 $ 
-$Date: 2019-09-23 07:38:41 +0200 (Mon, 23 Sep 2019) $
+<!--  $Revision: 230110-1 $
+$Date: 2023-01-10 17:00:00 +0200$
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/fashion_rcp_3.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/3.0/fashion_rcp_3.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_3.0.xsd"/>
@@ -48,7 +48,7 @@ $Date: 2019-09-23 07:38:41 +0200 (Mon, 23 Sep 2019) $
 	</xs:complexType>
 	<xs:complexType name="Orders">
 		<xs:sequence>
-			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded"/>
+			<xs:element name="Order" type="tns:Order" maxOccurs="100"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Order">
