@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 221205-1 $
-$Date: 2022-12-05 14:30:00 +0200$
+<!--  $Revision: 230110-1 $
+$Date: 2023-01-10 17:00:00 +0200$
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
@@ -78,7 +78,7 @@ The id must be unique among all the receipt messages submitted by the sender.</x
 	</xs:complexType>
 	<xs:complexType name="Orders">
 		<xs:sequence>
-			<xs:element name="Order" type="tns:Order" maxOccurs="unbounded">
+			<xs:element name="Order" type="tns:Order" maxOccurs="100">
 				<xs:annotation>
 					<xs:documentation>An order to receive goods (stock).</xs:documentation>
 				</xs:annotation>
