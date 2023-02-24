@@ -233,7 +233,7 @@
                         "SortingNumber": {
                           "description": "A number that specifies the sequence of the size codes (relevant for type SIZE/SIZE2). The number is used to specify the display order on the packing slip.\\r\\n\\r\\nIn case of type SIZE/SIZE2 the sortingnumber of the size codes (in attribute value) is particularly relevant if the size codes cannot be logically sorted. For example in case of size codes like XS, X, M, XXL.\\r\\nIf there are several size groups in use, the sortingnumber must be unique for the size codes within the size group. However the size group is not known in the Modexpress SKU registration, so for the packing slip the SKU style is used to determine the size codes that have to be used on the packing slip. The sortingnumber is used to determine the order of the size codes on the packing slip.\n",
                           "type": "integer",
-                          "minimum": 1,
+                          "minimum": 0,
                           "maximum": 9999
                         }
                       },
