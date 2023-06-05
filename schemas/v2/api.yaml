@@ -3064,6 +3064,14 @@ paths:
           schema:
             type: string
           description: Filter by STOCKTYPE value
+        - in: query
+          name: NullStock
+          schema:
+            type: string
+          description: |
+            Use this parameter with value:
+            - 'N' to only show stock greater than zero.
+            - 'Y' to show stock equal to zero.
       responses:
         '200':
           description: successful operation
@@ -3264,9 +3272,7 @@ paths:
             type: string
           description: |
             Filter by TransactionLineType value, defined by Modexpress
-
             Example with a single type: /stm?TransactionLineType=MUTATION
-
             Example with multiple types: /stm?TransactionLineType=MUTATION,PRERECPT,PRERETRN
         - in: query
           name: FromDate
