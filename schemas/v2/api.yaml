@@ -3271,8 +3271,8 @@ paths:
           schema:
             type: string
           description: |
-            Filter by TransactionLineType value, defined by Modexpress
-            Example with a single type: /stm?TransactionLineType=MUTATION
+            Filter by TransactionLineType value, defined by Modexpress \n
+            Example with a single type: /stm?TransactionLineType=MUTATION \n
             Example with multiple types: /stm?TransactionLineType=MUTATION,PRERECPT,PRERETRN
         - in: query
           name: FromDate
@@ -3673,6 +3673,9 @@ paths:
                           - Article
                   required:
                     - TransactionLine
+      responses:
+        '200':
+          description: successful operation
   /opr:
     post:
       tags:
