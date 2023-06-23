@@ -585,11 +585,18 @@ paths:
                                     description: The Id that is used as the identification of the party/address.
                                     type: string
                                     maxLength: 35
-                                  EORI:
+                                  VatNumber:
                                     description: |
-                                      Supplier EORI number is mandatory for suppliers from EU, for non-EU suppliers with an invoice statement then is EORI also mandatory, however this will not be validated in the RCP message.  
+                                      Value added tax identification number.
+                                      Mandatory for all EU and GB based Business parties. 
                                     type: string
-                                    maxLength: 25
+                                    maxLength: 17
+                                  EoriNumber:
+                                    description: |
+                                      Economic Operators Registration and Identification number.
+                                      Supplier EORI number is mandatory for all EU and GB based Business parties, for non-EU suppliers with an invoice statement then is EORI also mandatory, however this will not be validated in the RCP message.  
+                                    type: string
+                                    maxLength: 17
                                   Name1:
                                     description: The name of the party.
                                     type: string
@@ -1862,6 +1869,9 @@ paths:
                               - BuyerAddress; buyer address (only for the placeOrder operation)
                               - InvoiceAddress; invoice address (only for the placeOrder operation)
                               - DropSiteAddress; drop site address / pick up point address
+                              - ImporterOfRecord; This is the party that will pay the import duties in the country of destination. 
+                                In the case of DHL, can also be the party to whom the duties are charged).
+                                Note: In case MXCustomer has an entity in the destination country, it will usually act as IoR for tax purposes.
                             enum:
                               - ReceiverAddress
                               - SellerAddress
@@ -1870,6 +1880,7 @@ paths:
                               - DropSiteAddress
                               - BuyerId
                               - ReceiverId
+                              - ImporterOfRecord
                             maxLength: 20
                             example: ReceiverAddress
                           Id:
@@ -1890,6 +1901,20 @@ paths:
                               For these parties, the applicable address must also be specified in the order. In case of a DropSiteAddress the ExternalId can be used for the pickuppoint-id/number.
                             maxLength: 35
                             example: External ID
+                          VatNumber:
+                            type: string
+                            description: |
+                              Value added tax identification number.
+                              Mandatory for all EU and GB based Business parties. 
+                            maxLength: 17
+                            example: NL999999999B99
+                          EoriNumber:
+                            type: string
+                            description: |
+                              Economic Operators Registration and Identification number.
+                              Mandatory for all EU and GB based Business parties. 
+                            maxLength: 17
+                            example: NL999999999
                           Name1:
                             type: string
                             description: |
@@ -3271,8 +3296,10 @@ paths:
           schema:
             type: string
           description: |
-            Filter by TransactionLineType value, defined by Modexpress \n
-            Example with a single type: /stm?TransactionLineType=MUTATION \n
+            Filter by TransactionLineType value, defined by Modexpress
+
+            Example with a single type: /stm?TransactionLineType=MUTATION 
+
             Example with multiple types: /stm?TransactionLineType=MUTATION,PRERECPT,PRERETRN
         - in: query
           name: FromDate

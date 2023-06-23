@@ -102,10 +102,15 @@
                         "type": "string",
                         "maxLength": 35
                       },
-                      "EORI": {
-                        "description": "Supplier EORI number is mandatory for suppliers from EU, for non-EU suppliers with an invoice statement then is EORI also mandatory, however this will not be validated in the RCP message.  \n",
+                      "VatNumber": {
+                        "description": "Value added tax identification number.\nMandatory for all EU and GB based Business parties. \n",
                         "type": "string",
-                        "maxLength": 25
+                        "maxLength": 17
+                      },
+                      "EoriNumber": {
+                        "description": "Economic Operators Registration and Identification number.\nSupplier EORI number is mandatory for all EU and GB based Business parties, for non-EU suppliers with an invoice statement then is EORI also mandatory, however this will not be validated in the RCP message.  \n",
+                        "type": "string",
+                        "maxLength": 17
                       },
                       "Name1": {
                         "description": "The name of the party.",

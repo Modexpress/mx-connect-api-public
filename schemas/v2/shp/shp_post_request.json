@@ -230,7 +230,7 @@
             "properties": {
               "Type": {
                 "type": "string",
-                "description": "A type of party/address that applies to the order:\n- BuyerId; buyer, (known to Modexpress as a business relation based on **Id** or **ExternId** of the party, only for the placeOrder operation)\n- ReceiverId; receiver/recipient/consignee, (known to Modexpress as a business relation based on 'Id' of the party, only for the placeOrder operation)\n- ReceiverAddress; receiver/recipient/consignee address,\n- SellerAddress; Seller/Shipper address (only for the placeOrder operation)\n- BuyerAddress; buyer address (only for the placeOrder operation)\n- InvoiceAddress; invoice address (only for the placeOrder operation)\n- DropSiteAddress; drop site address / pick up point address\n",
+                "description": "A type of party/address that applies to the order:\n- BuyerId; buyer, (known to Modexpress as a business relation based on **Id** or **ExternId** of the party, only for the placeOrder operation)\n- ReceiverId; receiver/recipient/consignee, (known to Modexpress as a business relation based on 'Id' of the party, only for the placeOrder operation)\n- ReceiverAddress; receiver/recipient/consignee address,\n- SellerAddress; Seller/Shipper address (only for the placeOrder operation)\n- BuyerAddress; buyer address (only for the placeOrder operation)\n- InvoiceAddress; invoice address (only for the placeOrder operation)\n- DropSiteAddress; drop site address / pick up point address\n- ImporterOfRecord; This is the party that will pay the import duties in the country of destination. \n  In the case of DHL, can also be the party to whom the duties are charged).\n  Note: In case MXCustomer has an entity in the destination country, it will usually act as IoR for tax purposes.\n",
                 "enum": [
                   "ReceiverAddress",
                   "SellerAddress",
@@ -238,7 +238,8 @@
                   "InvoiceAddress",
                   "DropSiteAddress",
                   "BuyerId",
-                  "ReceiverId"
+                  "ReceiverId",
+                  "ImporterOfRecord"
                 ],
                 "maxLength": 20
               },
@@ -252,6 +253,16 @@
                 "type": "string",
                 "description": "A party involved with the order that is identified with an Id used by the ordering party/sender.\nFor type BuyerId it is possible to indicate parties with an ExternalId if they are registered as a Modexpress business relation with an address (receiver address).\nThese types of parties must have been registered in advance with Modexpress, and no address can be included in the order. For %Address types the ExternalId can be included as a reference in the order.\nFor these parties, the applicable address must also be specified in the order. In case of a DropSiteAddress the ExternalId can be used for the pickuppoint-id/number.\n",
                 "maxLength": 35
+              },
+              "VatNumber": {
+                "type": "string",
+                "description": "Value added tax identification number.\nMandatory for all EU and GB based Business parties. \n",
+                "maxLength": 17
+              },
+              "EoriNumber": {
+                "type": "string",
+                "description": "Economic Operators Registration and Identification number.\nMandatory for all EU and GB based Business parties. \n",
+                "maxLength": 17
               },
               "Name1": {
                 "type": "string",
