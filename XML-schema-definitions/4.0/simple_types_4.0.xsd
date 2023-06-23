@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 220803-1 $
-$Date: 2022-08-03 12:00:00 +0200$
+<!--  $Revision: 230623-1 $
+$Date: 2023-06-23 12:00:00 +0200$
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<!-- 
@@ -485,6 +485,7 @@ $Date: 2022-08-03 12:00:00 +0200$
 			<xs:enumeration value="BuyerAddress"/>
 			<xs:enumeration value="InvoiceAddress"/>
 			<xs:enumeration value="DropSiteAddress"/>
+			<xs:enumeration value="ImporterOfRecord"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="LanguageCode">

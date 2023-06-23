@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 230110-1 $
-$Date: 2023-01-10 17:00:00 +0200$
+<!--  $Revision: 230623-1 $
+$Date: 2023-06-23 17:00:00 +0200$
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
@@ -216,10 +216,14 @@ Mandatory for Customs enabled Customers.
 					<xs:documentation>The Id that is used as the identification of the party/address.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="EORI" type="tns:Text25" minOccurs="0">
+			<xs:element name="VatNumber" type="tns:Text17" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Supplier EORI number mandatory for suppliers from EU, 
-for non-EU suppliers with an invoice statement then is EORI also mandatory, this will make processing the inbound shipment .. when the EORI number is missing this can cause delays processing the inbound. </xs:documentation>
+					<xs:documentation> Value added tax identification number. Mandatory for all EU and GB based Business parties.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EoriNumber" type="tns:Text17" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Economic Operators Registration and Identification number. Supplier EORI number is mandatory for all EU and GB based Business parties, for non-EU suppliers with an invoice statement then is EORI also mandatory, however this will not be validated in the RCP message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Name1" type="tns:OText80" minOccurs="0">
