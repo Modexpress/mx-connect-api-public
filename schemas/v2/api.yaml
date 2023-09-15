@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Modexpress MX Connect REST API v2
   description: Modexpress MX Connect REST API to manage the order lifecycle
-  version: 2.0.1
+  version: 2.0.3
 paths:
   /sku:
     post:
@@ -133,6 +133,64 @@ paths:
                                   maxLength: 35
                               required:
                                 - Code
+                              additionalProperties: false
+                          ExternalReferences:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                ExternalDivisionCode:
+                                  description: |
+                                    An external division code identifier. 
+                                    When populated this value is returned on interface messages from Modexpress at Article level.
+                                  type: string
+                                  minLength: 1
+                                  maxLength: 50
+                                ExternalArticleId:
+                                  description: |
+                                    An external article code identifier. 
+                                    When populated this value is returned on interface messages from Modexpress at Article level.
+                                  type: string
+                                  minLength: 1
+                                  maxLength: 70
+                                ExternalSizeCode:
+                                  description: |
+                                    An external size code identifier. 
+                                    When populated this value is returned on interface messages from Modexpress at Article level.
+                                  type: string
+                                  minLength: 1
+                                  maxLength: 50
+                                ExternalColourCode:
+                                  description: |
+                                    An external colour code identifier. 
+                                    When populated this value is returned on interface messages from Modexpress at Article level.
+                                  type: string
+                                  minLength: 1
+                                  maxLength: 50
+                                ExternalUnitOfMeasure:
+                                  description: |
+                                    An external unit of measure for the particular SKU. 
+                                    When populated this value is returned on interface messages from Modexpress at Article level.
+                                  type: string
+                                  minLength: 1
+                                  maxLength: 10
+                                ExternalProfitCenter:
+                                  description: |
+                                    Defines a profit center that the SKU belongs to. 
+                                    When populated this value is returned on interface messages from Modexpress at Article level.
+                                  type: string
+                                  minLength: 1
+                                  maxLength: 50
+                                PiecesPerPrepack:
+                                  description: |
+                                    Defines the amount of pieces within a prepacked SKU. 
+                                    When populated this value is returned on interface messages from Modexpress at Article level.
+                                  type: integer
+                                PrepacksPerMasterCarton:
+                                  description: |
+                                    Defines the amount of prepacks within a Master Carton. 
+                                    When populated this value is returned on interface messages from Modexpress at Article level.
+                                  type: integer
                               additionalProperties: false
                           Grouping:
                             type: object
