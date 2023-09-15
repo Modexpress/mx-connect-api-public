@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 220712 $
-$Date: 2022-07-12 14:00:00 +0200 (Tue, 12 Jul 2022) $
+<!-- edited with XMLSpy v2023 (x64) (http://www.altova.com) by Bruno Chaves (Modexpress B.V.) -->
+<!--  $Revision: 230915 $
+$Date: 2023-09-15 15:00:00 +0200 (Fri, 15 Sept 2023) $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" xmlns:altova="http://www.altova.com/xml-schema-extensions" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_sku_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
@@ -129,6 +130,54 @@ If the identification contains letters, they must be in uppercase.</xs:documenta
 			<xs:element name="Code" type="tns:Text35" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>A code on the basis of which the article can be recognised in the operation. This is usually a code that is applied to the article as a barcode.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExternalReferences">
+		<xs:annotation>
+			<xs:documentation>Any References that are relevant for the SKU and are required on the various interface (confirmation) messages sent by Modexpress.
+These values are not visible on our frontend systems (such as customer portal) and are not available in WMS.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ExternalDivisionCode" type="tns:Text50" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An external division code identifier. When populated this value is returned on interface messages from Modexpress at Article level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExternalArticleId" type="tns:Text70" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An external article code identifier. When populated this value is returned on interface messages from Modexpress at Article level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExternalSizeCode" type="tns:Text50" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An external size code identifier. When populated this value is returned on interface messages from Modexpress at Article level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExternalColourCode" type="tns:Text50" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An external colour code identifier. When populated this value is returned on interface messages from Modexpress at Article level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExternalUnitOfMeasure" type="tns:Text10" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An external unit of measure for the particular SKU. When populated this value is returned on interface messages from Modexpress at Article level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExternalProfitCenter" type="tns:Text50" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Defines a profit center that the SKU belongs to. When populated this value is returned on interface messages from Modexpress at Article level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PiecesPerPrepack" type="tns:ONum9" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Defines the amount of pieces within a prepacked SKU. When populated this value is returned on interface messages from Modexpress at Article level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrepacksPerMasterCarton" type="tns:ONum9" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Defines the amount of prepacks within a Master Carton. When populated this value is returned on interface messages from Modexpress at Article level.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
