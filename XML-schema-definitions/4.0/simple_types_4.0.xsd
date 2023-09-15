@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 230623-1 $
-$Date: 2023-06-23 12:00:00 +0200$
+<!--  $Revision: 230915-2 $
+$Date: 2023-09-15 15:45:00 +0200$
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<!-- 
@@ -410,6 +410,14 @@ $Date: 2023-06-23 12:00:00 +0200$
 			<xs:element name="Id" type="TypSkuId"/>
 			<xs:element name="LotNumber" type="OText20" minOccurs="0"/>
 			<xs:element name="Code" type="OText35" minOccurs="0"/>
+			<xs:element name="ExternalDivisionCode" type="OText50" minOccurs="0"/>
+			<xs:element name="ExternalArticleId" type="OText70" minOccurs="0"/>
+			<xs:element name="ExternalSizeCode" type="OText50" minOccurs="0"/>
+			<xs:element name="ExternalColourCode" type="OText50" minOccurs="0"/>
+			<xs:element name="ExternalUnitOfMeasure" type="OText10" minOccurs="0"/>
+			<xs:element name="ExternalProfitCenter" type="OText50" minOccurs="0"/>
+			<xs:element name="PiecesPerPrepack" type="ONum9" minOccurs="0"/>
+			<xs:element name="PrepacksPerMasterCarton" type="ONum9" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ArticleOrCode">
