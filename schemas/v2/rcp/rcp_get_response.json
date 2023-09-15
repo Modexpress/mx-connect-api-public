@@ -136,6 +136,44 @@
                             "description": "A code used to recognise/identify the received article.\nThis is usually a code that is also affixed to the\narticle as a barcode.\n",
                             "type": "string",
                             "maxLength": 35
+                          },
+                          "ExternalDivisionCode": {
+                            "description": "An external division code identifier.\nOnly returned if provided with the SKU interface.\n",
+                            "type": "string",
+                            "maxLength": 50
+                          },
+                          "ExternalArticleId": {
+                            "description": "An external article code identifier.\nOnly returned if provided with the SKU interface.\n",
+                            "type": "string",
+                            "maxLength": 70
+                          },
+                          "ExternalSizeCode": {
+                            "description": "An external size code identifier.\nOnly returned if provided with the SKU interface.\n",
+                            "type": "string",
+                            "maxLength": 50
+                          },
+                          "ExternalColourCode": {
+                            "description": "An external colour code identifier.\nOnly returned if provided with the SKU interface.\n",
+                            "type": "string",
+                            "maxLength": 50
+                          },
+                          "ExternalUnitOfMeasure": {
+                            "description": "An external unit of measure for the particular SKU. \nOnly returned if provided with the SKU interface.\n",
+                            "type": "string",
+                            "maxLength": 10
+                          },
+                          "ExternalProfitCenter": {
+                            "description": "The profit center that the SKU belongs to.\nOnly returned if provided with the SKU interface.\n",
+                            "type": "string",
+                            "maxLength": 50
+                          },
+                          "PiecesPerPrepack": {
+                            "description": "The amount of pieces within a prepacked SKU.\nOnly returned if provided with the SKU interface.\n",
+                            "type": "integer"
+                          },
+                          "PrepacksPerMasterCarton": {
+                            "description": "The amount of prepacks within a Master Carton.\nOnly returned if provided with the SKU interface.\n",
+                            "type": "integer"
                           }
                         }
                       },

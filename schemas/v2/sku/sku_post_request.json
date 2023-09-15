@@ -123,57 +123,54 @@
                 }
               },
               "ExternalReferences": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "ExternalDivisionCode": {
-                      "description": "An external division code identifier. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 50
-                    },
-                    "ExternalArticleId": {
-                      "description": "An external article code identifier. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 70
-                    },
-                    "ExternalSizeCode": {
-                      "description": "An external size code identifier. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 50
-                    },
-                    "ExternalColourCode": {
-                      "description": "An external colour code identifier. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 50
-                    },
-                    "ExternalUnitOfMeasure": {
-                      "description": "An external unit of measure for the particular SKU. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 10
-                    },
-                    "ExternalProfitCenter": {
-                      "description": "Defines a profit center that the SKU belongs to. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 50
-                    },
-                    "PiecesPerPrepack": {
-                      "description": "Defines the amount of pieces within a prepacked SKU. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
-                      "type": "integer"
-                    },
-                    "PrepacksPerMasterCarton": {
-                      "description": "Defines the amount of prepacks within a Master Carton. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
-                      "type": "integer"
-                    }
+                "type": "object",
+                "properties": {
+                  "ExternalDivisionCode": {
+                    "description": "An external division code identifier. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 50
                   },
-                  "additionalProperties": false
-                }
+                  "ExternalArticleId": {
+                    "description": "An external article code identifier. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 70
+                  },
+                  "ExternalSizeCode": {
+                    "description": "An external size code identifier. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 50
+                  },
+                  "ExternalColourCode": {
+                    "description": "An external colour code identifier. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 50
+                  },
+                  "ExternalUnitOfMeasure": {
+                    "description": "An external unit of measure for the particular SKU. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 10
+                  },
+                  "ExternalProfitCenter": {
+                    "description": "Defines a profit center that the SKU belongs to. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 50
+                  },
+                  "PiecesPerPrepack": {
+                    "description": "Defines the amount of pieces within a prepacked SKU. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
+                    "type": "integer"
+                  },
+                  "PrepacksPerMasterCarton": {
+                    "description": "Defines the amount of prepacks within a Master Carton. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
+                    "type": "integer"
+                  }
+                },
+                "additionalProperties": false
               },
               "Grouping": {
                 "type": "object",
