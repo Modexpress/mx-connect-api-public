@@ -106,6 +106,12 @@ If the identification contains letters, they must be in uppercase.</xs:documenta
 					<xs:documentation>The identification that is used for the article (physical identification). Several identifications are permitted/possible. The indicated Id of the article (logical Id) does not have to be additionally specified as the physical identification.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="ExternalReferences" type="tns:ExternalReferences" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Any References that are relevant for the SKU and are required on the various interface (confirmation) messages sent by Modexpress.
+These values are not visible on our frontend systems (such as customer portal) and are not available in WMS. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Grouping" type="tns:Grouping" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Any groups/classifications that are used for the SKU. </xs:documentation>
