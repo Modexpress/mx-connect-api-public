@@ -1533,52 +1533,62 @@ paths:
                                             article as a barcode.
                                           type: string
                                           maxLength: 35
-                                        ExternalDivisionCode:
-                                          description: |
-                                            An external division code identifier.
-                                            Only returned if provided with the SKU interface.
-                                          type: string
-                                          maxLength: 50
-                                        ExternalArticleId:
-                                          description: |
-                                            An external article code identifier.
-                                            Only returned if provided with the SKU interface.
-                                          type: string
-                                          maxLength: 70
-                                        ExternalSizeCode:
-                                          description: |
-                                            An external size code identifier.
-                                            Only returned if provided with the SKU interface.
-                                          type: string
-                                          maxLength: 50
-                                        ExternalColourCode:
-                                          description: |
-                                            An external colour code identifier.
-                                            Only returned if provided with the SKU interface.
-                                          type: string
-                                          maxLength: 50
-                                        ExternalUnitOfMeasure:
-                                          description: |
-                                            An external unit of measure for the particular SKU. 
-                                            Only returned if provided with the SKU interface.
-                                          type: string
-                                          maxLength: 10
-                                        ExternalProfitCenter:
-                                          description: |
-                                            The profit center that the SKU belongs to.
-                                            Only returned if provided with the SKU interface.
-                                          type: string
-                                          maxLength: 50
-                                        PiecesPerPrepack:
-                                          description: |
-                                            The amount of pieces within a prepacked SKU.
-                                            Only returned if provided with the SKU interface.
-                                          type: integer
-                                        PrepacksPerMasterCarton:
-                                          description: |
-                                            The amount of prepacks within a Master Carton.
-                                            Only returned if provided with the SKU interface.
-                                          type: integer
+                                        ExternalReferences:
+                                          type: object
+                                          properties:
+                                            ExternalDivisionCode:
+                                              description: |
+                                                An external division code identifier. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 50
+                                            ExternalArticleId:
+                                              description: |
+                                                An external article code identifier. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 70
+                                            ExternalSizeCode:
+                                              description: |
+                                                An external size code identifier. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 50
+                                            ExternalColourCode:
+                                              description: |
+                                                An external colour code identifier. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 50
+                                            ExternalUnitOfMeasure:
+                                              description: |
+                                                An external unit of measure for the particular SKU. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 10
+                                            ExternalProfitCenter:
+                                              description: |
+                                                Defines a profit center that the SKU belongs to. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 50
+                                            PiecesPerPrepack:
+                                              description: |
+                                                Defines the amount of pieces within a prepacked SKU. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: integer
+                                            PrepacksPerMasterCarton:
+                                              description: |
+                                                Defines the amount of prepacks within a Master Carton. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: integer
+                                          additionalProperties: false
                                     Owner:
                                       type: object
                                       properties:
@@ -2729,53 +2739,62 @@ paths:
                                           type: string
                                           maxLength: 35
                                           example: ABC-123
-                                        ExternalDivisionCode:
-                                          description: |
-                                            An external division code identifier.
-                                            Only returned if provided with the SKU interface.
-                                          type: string
-                                          maxLength: 50
-                                        ExternalArticleId:
-                                          description: |
-                                            An external article code identifier.
-                                            Only returned if provided with the SKU interface.
-                                          type: string
-                                          maxLength: 70
-                                        ExternalSizeCode:
-                                          description: |
-                                            An external size code identifier.
-                                            Only returned if provided with the SKU interface.
-                                          type: string
-                                          maxLength: 50
-                                        ExternalColourCode:
-                                          description: |
-                                            An external colour code identifier.
-                                            Only returned if provided with the SKU interface.
-                                          type: string
-                                          maxLength: 50
-                                        ExternalUnitOfMeasure:
-                                          description: |
-                                            An external unit of measure for the particular SKU. 
-                                            Only returned if provided with the SKU interface.
-                                          type: string
-                                          maxLength: 10
-                                        ExternalProfitCenter:
-                                          description: |
-                                            The profit center that the SKU belongs to.
-                                            Only returned if provided with the SKU interface.
-                                          type: string
-                                          maxLength: 50
-                                        PiecesPerPrepack:
-                                          description: |
-                                            The amount of pieces within a prepacked SKU.
-                                            Only returned if provided with the SKU interface.
-                                          type: integer
-                                        PrepacksPerMasterCarton:
-                                          description: |
-                                            The amount of prepacks within a Master Carton.
-                                            Only returned if provided with the SKU interface.
-                                          type: integer
-                                      additionalProperties: false
+                                        ExternalReferences:
+                                          type: object
+                                          properties:
+                                            ExternalDivisionCode:
+                                              description: |
+                                                An external division code identifier. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 50
+                                            ExternalArticleId:
+                                              description: |
+                                                An external article code identifier. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 70
+                                            ExternalSizeCode:
+                                              description: |
+                                                An external size code identifier. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 50
+                                            ExternalColourCode:
+                                              description: |
+                                                An external colour code identifier. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 50
+                                            ExternalUnitOfMeasure:
+                                              description: |
+                                                An external unit of measure for the particular SKU. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 10
+                                            ExternalProfitCenter:
+                                              description: |
+                                                Defines a profit center that the SKU belongs to. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 50
+                                            PiecesPerPrepack:
+                                              description: |
+                                                Defines the amount of pieces within a prepacked SKU. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: integer
+                                            PrepacksPerMasterCarton:
+                                              description: |
+                                                Defines the amount of prepacks within a Master Carton. 
+                                                When populated this value is returned on interface messages from Modexpress at Article level.
+                                              type: integer
+                                          additionalProperties: false
                                   required:
                                     - Id
                                     - QuantityOrdered
@@ -3358,52 +3377,62 @@ paths:
                                         If several barcodes are known for the article one of these is used.
                                       type: string
                                       maxLength: 35
-                                    ExternalDivisionCode:
-                                      description: |
-                                        An external division code identifier.
-                                        Only returned if provided with the SKU interface.
-                                      type: string
-                                      maxLength: 50
-                                    ExternalArticleId:
-                                      description: |
-                                        An external article code identifier.
-                                        Only returned if provided with the SKU interface.
-                                      type: string
-                                      maxLength: 70
-                                    ExternalSizeCode:
-                                      description: |
-                                        An external size code identifier.
-                                        Only returned if provided with the SKU interface.
-                                      type: string
-                                      maxLength: 50
-                                    ExternalColourCode:
-                                      description: |
-                                        An external colour code identifier.
-                                        Only returned if provided with the SKU interface.
-                                      type: string
-                                      maxLength: 50
-                                    ExternalUnitOfMeasure:
-                                      description: |
-                                        An external unit of measure for the particular SKU. 
-                                        Only returned if provided with the SKU interface.
-                                      type: string
-                                      maxLength: 10
-                                    ExternalProfitCenter:
-                                      description: |
-                                        The profit center that the SKU belongs to.
-                                        Only returned if provided with the SKU interface.
-                                      type: string
-                                      maxLength: 50
-                                    PiecesPerPrepack:
-                                      description: |
-                                        The amount of pieces within a prepacked SKU.
-                                        Only returned if provided with the SKU interface.
-                                      type: integer
-                                    PrepacksPerMasterCarton:
-                                      description: |
-                                        The amount of prepacks within a Master Carton.
-                                        Only returned if provided with the SKU interface.
-                                      type: integer
+                                    ExternalReferences:
+                                      type: object
+                                      properties:
+                                        ExternalDivisionCode:
+                                          description: |
+                                            An external division code identifier. 
+                                            When populated this value is returned on interface messages from Modexpress at Article level.
+                                          type: string
+                                          minLength: 1
+                                          maxLength: 50
+                                        ExternalArticleId:
+                                          description: |
+                                            An external article code identifier. 
+                                            When populated this value is returned on interface messages from Modexpress at Article level.
+                                          type: string
+                                          minLength: 1
+                                          maxLength: 70
+                                        ExternalSizeCode:
+                                          description: |
+                                            An external size code identifier. 
+                                            When populated this value is returned on interface messages from Modexpress at Article level.
+                                          type: string
+                                          minLength: 1
+                                          maxLength: 50
+                                        ExternalColourCode:
+                                          description: |
+                                            An external colour code identifier. 
+                                            When populated this value is returned on interface messages from Modexpress at Article level.
+                                          type: string
+                                          minLength: 1
+                                          maxLength: 50
+                                        ExternalUnitOfMeasure:
+                                          description: |
+                                            An external unit of measure for the particular SKU. 
+                                            When populated this value is returned on interface messages from Modexpress at Article level.
+                                          type: string
+                                          minLength: 1
+                                          maxLength: 10
+                                        ExternalProfitCenter:
+                                          description: |
+                                            Defines a profit center that the SKU belongs to. 
+                                            When populated this value is returned on interface messages from Modexpress at Article level.
+                                          type: string
+                                          minLength: 1
+                                          maxLength: 50
+                                        PiecesPerPrepack:
+                                          description: |
+                                            Defines the amount of pieces within a prepacked SKU. 
+                                            When populated this value is returned on interface messages from Modexpress at Article level.
+                                          type: integer
+                                        PrepacksPerMasterCarton:
+                                          description: |
+                                            Defines the amount of prepacks within a Master Carton. 
+                                            When populated this value is returned on interface messages from Modexpress at Article level.
+                                          type: integer
+                                      additionalProperties: false
                                   required:
                                     - Id
                                 Owner:
@@ -3682,52 +3711,62 @@ paths:
                                                   If several barcodes are known for the article one of these is used.
                                                 type: string
                                                 maxLength: 35
-                                              ExternalDivisionCode:
-                                                description: |
-                                                  An external division code identifier.
-                                                  Only returned if provided with the SKU interface.
-                                                type: string
-                                                maxLength: 50
-                                              ExternalArticleId:
-                                                description: |
-                                                  An external article code identifier.
-                                                  Only returned if provided with the SKU interface.
-                                                type: string
-                                                maxLength: 70
-                                              ExternalSizeCode:
-                                                description: |
-                                                  An external size code identifier.
-                                                  Only returned if provided with the SKU interface.
-                                                type: string
-                                                maxLength: 50
-                                              ExternalColourCode:
-                                                description: |
-                                                  An external colour code identifier.
-                                                  Only returned if provided with the SKU interface.
-                                                type: string
-                                                maxLength: 50
-                                              ExternalUnitOfMeasure:
-                                                description: |
-                                                  An external unit of measure for the particular SKU. 
-                                                  Only returned if provided with the SKU interface.
-                                                type: string
-                                                maxLength: 10
-                                              ExternalProfitCenter:
-                                                description: |
-                                                  The profit center that the SKU belongs to.
-                                                  Only returned if provided with the SKU interface.
-                                                type: string
-                                                maxLength: 50
-                                              PiecesPerPrepack:
-                                                description: |
-                                                  The amount of pieces within a prepacked SKU.
-                                                  Only returned if provided with the SKU interface.
-                                                type: integer
-                                              PrepacksPerMasterCarton:
-                                                description: |
-                                                  The amount of prepacks within a Master Carton.
-                                                  Only returned if provided with the SKU interface.
-                                                type: integer
+                                              ExternalReferences:
+                                                type: object
+                                                properties:
+                                                  ExternalDivisionCode:
+                                                    description: |
+                                                      An external division code identifier. 
+                                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                                    type: string
+                                                    minLength: 1
+                                                    maxLength: 50
+                                                  ExternalArticleId:
+                                                    description: |
+                                                      An external article code identifier. 
+                                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                                    type: string
+                                                    minLength: 1
+                                                    maxLength: 70
+                                                  ExternalSizeCode:
+                                                    description: |
+                                                      An external size code identifier. 
+                                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                                    type: string
+                                                    minLength: 1
+                                                    maxLength: 50
+                                                  ExternalColourCode:
+                                                    description: |
+                                                      An external colour code identifier. 
+                                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                                    type: string
+                                                    minLength: 1
+                                                    maxLength: 50
+                                                  ExternalUnitOfMeasure:
+                                                    description: |
+                                                      An external unit of measure for the particular SKU. 
+                                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                                    type: string
+                                                    minLength: 1
+                                                    maxLength: 10
+                                                  ExternalProfitCenter:
+                                                    description: |
+                                                      Defines a profit center that the SKU belongs to. 
+                                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                                    type: string
+                                                    minLength: 1
+                                                    maxLength: 50
+                                                  PiecesPerPrepack:
+                                                    description: |
+                                                      Defines the amount of pieces within a prepacked SKU. 
+                                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                                    type: integer
+                                                  PrepacksPerMasterCarton:
+                                                    description: |
+                                                      Defines the amount of prepacks within a Master Carton. 
+                                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                                    type: integer
+                                                additionalProperties: false
                                             required:
                                               - Id
                                           Owner:
@@ -3907,52 +3946,62 @@ paths:
                                   If several barcodes are known for the article one of these is used.
                                 type: string
                                 maxLength: 35
-                              ExternalDivisionCode:
-                                description: |
-                                  An external division code identifier.
-                                  Only returned if provided with the SKU interface.
-                                type: string
-                                maxLength: 50
-                              ExternalArticleId:
-                                description: |
-                                  An external article code identifier.
-                                  Only returned if provided with the SKU interface.
-                                type: string
-                                maxLength: 70
-                              ExternalSizeCode:
-                                description: |
-                                  An external size code identifier.
-                                  Only returned if provided with the SKU interface.
-                                type: string
-                                maxLength: 50
-                              ExternalColourCode:
-                                description: |
-                                  An external colour code identifier.
-                                  Only returned if provided with the SKU interface.
-                                type: string
-                                maxLength: 50
-                              ExternalUnitOfMeasure:
-                                description: |
-                                  An external unit of measure for the particular SKU. 
-                                  Only returned if provided with the SKU interface.
-                                type: string
-                                maxLength: 10
-                              ExternalProfitCenter:
-                                description: |
-                                  The profit center that the SKU belongs to.
-                                  Only returned if provided with the SKU interface.
-                                type: string
-                                maxLength: 50
-                              PiecesPerPrepack:
-                                description: |
-                                  The amount of pieces within a prepacked SKU.
-                                  Only returned if provided with the SKU interface.
-                                type: integer
-                              PrepacksPerMasterCarton:
-                                description: |
-                                  The amount of prepacks within a Master Carton.
-                                  Only returned if provided with the SKU interface.
-                                type: integer
+                              ExternalReferences:
+                                type: object
+                                properties:
+                                  ExternalDivisionCode:
+                                    description: |
+                                      An external division code identifier. 
+                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 50
+                                  ExternalArticleId:
+                                    description: |
+                                      An external article code identifier. 
+                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 70
+                                  ExternalSizeCode:
+                                    description: |
+                                      An external size code identifier. 
+                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 50
+                                  ExternalColourCode:
+                                    description: |
+                                      An external colour code identifier. 
+                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 50
+                                  ExternalUnitOfMeasure:
+                                    description: |
+                                      An external unit of measure for the particular SKU. 
+                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 10
+                                  ExternalProfitCenter:
+                                    description: |
+                                      Defines a profit center that the SKU belongs to. 
+                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 50
+                                  PiecesPerPrepack:
+                                    description: |
+                                      Defines the amount of pieces within a prepacked SKU. 
+                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                    type: integer
+                                  PrepacksPerMasterCarton:
+                                    description: |
+                                      Defines the amount of prepacks within a Master Carton. 
+                                      When populated this value is returned on interface messages from Modexpress at Article level.
+                                    type: integer
+                                additionalProperties: false
                             required:
                               - Id
                           Owner:
