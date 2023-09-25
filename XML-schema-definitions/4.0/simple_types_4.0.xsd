@@ -406,19 +406,25 @@ $Date: 2023-09-15 15:45:00 +0200$
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="Article">
-		<xs:sequence>
-			<xs:element name="Id" type="TypSkuId"/>
-			<xs:element name="LotNumber" type="OText20" minOccurs="0"/>
-			<xs:element name="Code" type="OText35" minOccurs="0"/>
-			<xs:element name="ExternalDivisionCode" type="OText50" minOccurs="0"/>
-			<xs:element name="ExternalArticleId" type="OText70" minOccurs="0"/>
-			<xs:element name="ExternalSizeCode" type="OText50" minOccurs="0"/>
-			<xs:element name="ExternalColourCode" type="OText50" minOccurs="0"/>
-			<xs:element name="ExternalUnitOfMeasure" type="OText10" minOccurs="0"/>
-			<xs:element name="ExternalProfitCenter" type="OText50" minOccurs="0"/>
-			<xs:element name="PiecesPerPrepack" type="ONum9" minOccurs="0"/>
-			<xs:element name="PrepacksPerMasterCarton" type="ONum9" minOccurs="0"/>
-		</xs:sequence>
+			<xs:sequence>
+				<xs:element name="Id" type="TypSkuId"/>
+				<xs:element name="LotNumber" type="OText20" minOccurs="0"/>
+				<xs:element name="Code" type="OText35" minOccurs="0"/>
+				<xs:element name="ExternalReferences" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ExternalDivisionCode" type="OText50" minOccurs="0"/>
+							<xs:element name="ExternalArticleId" type="OText70" minOccurs="0"/>
+							<xs:element name="ExternalSizeCode" type="OText50" minOccurs="0"/>
+							<xs:element name="ExternalColourCode" type="OText50" minOccurs="0"/>
+							<xs:element name="ExternalUnitOfMeasure" type="OText10" minOccurs="0"/>
+							<xs:element name="ExternalProfitCenter" type="OText50" minOccurs="0"/>
+							<xs:element name="PiecesPerPrepack" type="ONum9" minOccurs="0"/>
+							<xs:element name="PrepacksPerMasterCarton" type="ONum9" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ArticleOrCode">
 		<xs:sequence>
