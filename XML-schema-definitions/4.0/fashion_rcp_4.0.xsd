@@ -483,6 +483,14 @@ Mandatory for Customs enabled Customers.</xs:documentation>
 					<xs:documentation>Transport identification by means of Licence Plate</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="BorderTransportNationality" type="tns:OText3" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+The nationality of the means of transport upon arrival at the EU border. This could be the nationality under which a ship sails, the country where an aircraft is registered or a truck is registered.
+Normally stated on the transport documentation.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Containers" type="tns:Containers" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Containers information
