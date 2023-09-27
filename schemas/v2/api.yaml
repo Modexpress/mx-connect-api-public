@@ -970,6 +970,14 @@ paths:
                             Transport identification by means of Licence Plate.
                           type: string
                           maxLength: 25
+                        BorderTransportNationality:
+                          description: |
+                            The nationality of the means of transport upon arrival at the EU border. 
+                            This could be the nationality under which a ship sails, the country where an aircraft is registered or a truck is registered.
+                            Normally stated on the transport documentation.
+                          type: string
+                          minLength: 2
+                          maxLength: 2
                         Containers:
                           description: |
                             Containers information

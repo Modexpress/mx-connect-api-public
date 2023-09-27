@@ -425,6 +425,12 @@
               "type": "string",
               "maxLength": 25
             },
+            "BorderTransportNationality": {
+              "description": "The nationality of the means of transport upon arrival at the EU border. \nThis could be the nationality under which a ship sails, the country where an aircraft is registered or a truck is registered.\nNormally stated on the transport documentation.\n",
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2
+            },
             "Containers": {
               "description": "Containers information\nOnly applicable for Customs enabled Customers\nNeeded for Full Container Load (FCL)\nAn inbound shipment cannot be spread over multiple containers (MX requirement), therefore only one container can be stated. This might change in the future\n",
               "type": "object",
