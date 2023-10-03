@@ -178,11 +178,11 @@
                                     },
                                     "PiecesPerPrepack": {
                                       "description": "Defines the amount of pieces within a prepacked SKU. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
-                                      "type": "integer"
+                                      "type": "string"
                                     },
                                     "PrepacksPerMasterCarton": {
                                       "description": "Defines the amount of prepacks within a Master Carton. \nWhen populated this value is returned on interface messages from Modexpress at Article level.\n",
-                                      "type": "integer"
+                                      "type": "string"
                                     }
                                   },
                                   "additionalProperties": false

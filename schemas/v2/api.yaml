@@ -1590,12 +1590,12 @@ paths:
                                               description: |
                                                 Defines the amount of pieces within a prepacked SKU. 
                                                 When populated this value is returned on interface messages from Modexpress at Article level.
-                                              type: integer
+                                              type: string
                                             PrepacksPerMasterCarton:
                                               description: |
                                                 Defines the amount of prepacks within a Master Carton. 
                                                 When populated this value is returned on interface messages from Modexpress at Article level.
-                                              type: integer
+                                              type: string
                                           additionalProperties: false
                                     Owner:
                                       type: object
@@ -2796,12 +2796,12 @@ paths:
                                               description: |
                                                 Defines the amount of pieces within a prepacked SKU. 
                                                 When populated this value is returned on interface messages from Modexpress at Article level.
-                                              type: integer
+                                              type: string
                                             PrepacksPerMasterCarton:
                                               description: |
                                                 Defines the amount of prepacks within a Master Carton. 
                                                 When populated this value is returned on interface messages from Modexpress at Article level.
-                                              type: integer
+                                              type: string
                                           additionalProperties: false
                                   required:
                                     - Id
@@ -3434,12 +3434,12 @@ paths:
                                           description: |
                                             Defines the amount of pieces within a prepacked SKU. 
                                             When populated this value is returned on interface messages from Modexpress at Article level.
-                                          type: integer
+                                          type: string
                                         PrepacksPerMasterCarton:
                                           description: |
                                             Defines the amount of prepacks within a Master Carton. 
                                             When populated this value is returned on interface messages from Modexpress at Article level.
-                                          type: integer
+                                          type: string
                                       additionalProperties: false
                                   required:
                                     - Id
@@ -3768,12 +3768,12 @@ paths:
                                                     description: |
                                                       Defines the amount of pieces within a prepacked SKU. 
                                                       When populated this value is returned on interface messages from Modexpress at Article level.
-                                                    type: integer
+                                                    type: string
                                                   PrepacksPerMasterCarton:
                                                     description: |
                                                       Defines the amount of prepacks within a Master Carton. 
                                                       When populated this value is returned on interface messages from Modexpress at Article level.
-                                                    type: integer
+                                                    type: string
                                                 additionalProperties: false
                                             required:
                                               - Id
@@ -4003,12 +4003,12 @@ paths:
                                     description: |
                                       Defines the amount of pieces within a prepacked SKU. 
                                       When populated this value is returned on interface messages from Modexpress at Article level.
-                                    type: integer
+                                    type: string
                                   PrepacksPerMasterCarton:
                                     description: |
                                       Defines the amount of prepacks within a Master Carton. 
                                       When populated this value is returned on interface messages from Modexpress at Article level.
-                                    type: integer
+                                    type: string
                                 additionalProperties: false
                             required:
                               - Id
