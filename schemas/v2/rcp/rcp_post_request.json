@@ -466,8 +466,7 @@
                       }
                     },
                     "required": [
-                      "ContainerNumber",
-                      "SealNumber1"
+                      "ContainerNumber"
                     ]
                   }
                 }

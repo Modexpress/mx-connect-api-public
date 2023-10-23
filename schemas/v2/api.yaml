@@ -1015,7 +1015,6 @@ paths:
                                     maxLength: 17
                                 required:
                                   - ContainerNumber
-                                  - SealNumber1
                         ShipmentPackages:
                           type: object
                           description: ShipmentPackages composition. Mandatory for Customs enabled customers.
