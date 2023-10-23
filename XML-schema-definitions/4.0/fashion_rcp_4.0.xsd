@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2020 (x64) (http://www.altova.com) by Bruno Chaves (Modexpress B.V.) -->
 <!--  $Revision: 230623-1 $
 $Date: 2023-06-23 17:00:00 +0200$
  -->
@@ -536,7 +537,7 @@ This info is mainly needed in case of customs declaration.</xs:documentation>
 					<xs:documentation>Container number identification</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="SealNumber1" type="tns:Text17" minOccurs="1">
+			<xs:element name="SealNumber1" type="tns:Text17" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Seal number identification</xs:documentation>
 				</xs:annotation>
