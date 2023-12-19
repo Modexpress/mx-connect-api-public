@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 230623-1 $
-$Date: 2023-06-23 17:00:00 +0200$
+<!--  $Revision: 231219 $
+$Date: 2023-12-19 13:00:00 +0200$
  -->
- <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_4.0.xsd" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_shp_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
 	<!-- 
 || Some general simple-type definitions
@@ -233,6 +233,13 @@ DDP - Delivered Duty Paid</xs:documentation>
 			<xs:element name="ReturnPeriod" type="tns:ONum3" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The validity period (number of days) that has to be used for the automatic generated return order. If no return period is indicated, the default applies.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BondedCustomsHandling" type="tns:BondedCustomsHandlingType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This can be used to override the standard logic for customs handling. 
+FC_GOODS_ONLY - This can be used on export shipments and it ensures that if bonded goods are present they first have to be cleared into the EU before being exported. (for instance in case of an export to Turkey).
+EU_BW_TO_BW - This can be used for intercompany sales of bonded goods within the EU.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="AdditionalFinInfo" type="tns:AdditionalFinInfo" minOccurs="0">
