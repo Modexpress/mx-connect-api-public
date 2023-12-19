@@ -139,6 +139,15 @@
       "minimum": 1,
       "maximum": 999
     },
+    "BondedCustomsHandling": {
+      "type": "string",
+      "description": "This can be used to override the standard logic for customs handling at Modexpress.\nFC_GOODS_ONLY - This can be used on export shipments and it ensures that if bonded goods are present they first have to be cleared into the EU before being exported. (for instance in case of an export to Turkey)\nEU_BW_TO_BW - This can be used for intercompany sales of bonded goods within the EU. \n",
+      "enum": [
+        "FC_GOODS_ONLY",
+        "EU_BW_TO_BW"
+      ],
+      "maxLength": 50
+    },
     "AdditionalFinInfo": {
       "required": [
         "FinInfo"
