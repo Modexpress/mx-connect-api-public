@@ -345,6 +345,12 @@ $Date: 2023-12-19 13:00:00 +0200$
 			<xs:enumeration value="ED"/>
 			<xs:enumeration value="OC"/>
 			<xs:enumeration value="PP"/>
+			<xs:enumeration value="PA"/>
+			<xs:enumeration value="BX"/>
+			<xs:enumeration value="PX"/>
+			<xs:enumeration value="BI"/>
+			<xs:enumeration value="SW"/>
+			<xs:enumeration value="PK"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="DocumentType">
