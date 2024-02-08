@@ -482,7 +482,7 @@
                     "type": "object",
                     "properties": {
                       "Type": {
-                        "description": "Indication of the type of packages. \n\nCT - Cardboard box\nOH - Euro pallet\nED - Pallet box\nOC - Chep pallet\nPP - Pieces\n\nPP should only be used to denote Hanging Goods.\nOther types may be added at a later stage. \n",
+                        "description": "Indication of the type of packages. \n\nCT - Cardboard box\nOH - Euro pallet\nED - Pallet box\nOC - Chep pallet\nPP - Pieces\nPA - Package\nBX - Box\nPX - Loading Board\nBI - Bin\nSW - Shrink Packaging\nPK - Packaging\n\nPP should only be used to denote Hanging Goods.\nOther types may be added at a later stage. \n",
                         "type": "string",
                         "maxLength": 10,
                         "enum": [
@@ -490,7 +490,13 @@
                           "OH",
                           "ED",
                           "OC",
-                          "PP"
+                          "PP",
+                          "PA",
+                          "BX",
+                          "PX",
+                          "BI",
+                          "SW",
+                          "PK"
                         ]
                       },
                       "Quantity": {
