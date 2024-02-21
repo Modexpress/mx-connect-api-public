@@ -1472,14 +1472,14 @@ paths:
                               Indication of the status of the order: differs from RCP-Exec since it's a real-time status
 
                               - N - New, not yet started
-                              - P - In progress, receipt has started
+                              - I - In progress, receipt has started
                               - C - Closed, receipt has been closed
                             type: string
                             minLength: 1
                             maxLength: 1
                             enum:
                               - 'N'
-                              - P
+                              - I
                               - C
                           MRN:
                             description: Inbound Movement Reference Number(MRN) if applicable to the receipt.

@@ -68,13 +68,13 @@
               "format": "date-time"
             },
             "ProcessingStatus": {
-              "description": "Indication of the status of the order: differs from RCP-Exec since it's a real-time status\n\n- N - New, not yet started\n- P - In progress, receipt has started\n- C - Closed, receipt has been closed\n",
+              "description": "Indication of the status of the order: differs from RCP-Exec since it's a real-time status\n\n- N - New, not yet started\n- I - In progress, receipt has started\n- C - Closed, receipt has been closed\n",
               "type": "string",
               "minLength": 1,
               "maxLength": 1,
               "enum": [
                 "N",
-                "P",
+                "I",
                 "C"
               ]
             },
