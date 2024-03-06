@@ -978,6 +978,11 @@ paths:
                           type: string
                           minLength: 2
                           maxLength: 2
+                        BorderTransportModeId:
+                          description: |
+                            Transport identification such as IATA flight number, Vessel name, ... 
+                          type: string
+                          maxLength: 25
                         Containers:
                           description: |
                             Containers information

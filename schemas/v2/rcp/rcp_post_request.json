@@ -431,6 +431,11 @@
               "minLength": 2,
               "maxLength": 2
             },
+            "BorderTransportModeId": {
+              "description": "Transport identification such as IATA flight number, Vessel name, ... \n",
+              "type": "string",
+              "maxLength": 25
+            },
             "Containers": {
               "description": "Containers information\nOnly applicable for Customs enabled Customers\nNeeded for Full Container Load (FCL)\nAn inbound shipment cannot be spread over multiple containers (MX requirement), therefore only one container can be stated. This might change in the future\n",
               "type": "object",
