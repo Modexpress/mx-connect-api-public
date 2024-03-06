@@ -982,7 +982,7 @@ paths:
                           description: |
                             Transport identification such as IATA flight number, Vessel name, ... 
                           type: string
-                          maxLength: 25
+                          maxLength: 35
                         Containers:
                           description: |
                             Containers information
