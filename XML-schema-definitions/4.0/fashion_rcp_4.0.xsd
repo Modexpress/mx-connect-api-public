@@ -492,7 +492,7 @@ Normally stated on the transport documentation.
 </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BorderTransportModeId" type="tns:OText25" minOccurs="0" maxOccurs="1">
+			<xs:element name="BorderTransportModeId" type="tns:OText35" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>
 Transport identification, IATA flight number, Vessel name, etc…
