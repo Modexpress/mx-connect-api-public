@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2020 (x64) (http://www.altova.com) by Bruno Chaves (Modexpress B.V.) -->
-<!--  $Revision: 230623-1 $
-$Date: 2023-06-23 17:00:00 +0200$
+<!--  $Revision: 240306-1 $
+$Date: 2024-03-06 16:00:00 +0200$
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
@@ -489,6 +489,13 @@ Mandatory for Customs enabled Customers.</xs:documentation>
 					<xs:documentation>
 The nationality of the means of transport upon arrival at the EU border. This could be the nationality under which a ship sails, the country where an aircraft is registered or a truck is registered.
 Normally stated on the transport documentation.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BorderTransportModeId" type="tns:OText25" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+Transport identification, IATA flight number, Vessel name, etc…
 </xs:documentation>
 				</xs:annotation>
 			</xs:element>
