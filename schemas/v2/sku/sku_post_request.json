@@ -75,6 +75,17 @@
                 "minLength": 2,
                 "maxLength": 2
               },
+              "PartType": {
+                "description": "Indication of the type of article.\n\nREGULAR - Regular part/sku without composition. (default for articles without composition)\nPREPACK - Article with composition, which can contain regular SKU, SET and also other prepacks. (default for articles with composition)\nSET - Article with composition but where the contents are not a stock keeping units. Single SKU article/selling unit composed of multiple components (example: shirt & pants) with their own HTS heading and their components are NOT selling units that should ever hold stock.\nCOMPONENT - component article, is an article that never holds stock but its part of a SET, the component item is not used in WMS but is used in the communication to Customs administration. These components will not become a SKU on Modexpress WMS. \n\nNOTE: Set is not to be confused with a PrePack that is a SKU composed of multiple SKUs that exist on their own and can hold stock.\nDefault behaviour when this field is not populated is that REGULAR is used for articles without composition, and PREPACK for articles with composition.\n",
+                "type": "string",
+                "maxLength": 20,
+                "enum": [
+                  "REGULAR",
+                  "PREPACK",
+                  "SET",
+                  "COMPONENT"
+                ]
+              },
               "Owner": {
                 "type": "object",
                 "minProperties": 2,
@@ -324,6 +335,14 @@
                           "type": "integer",
                           "minimum": 1,
                           "maximum": 999
+                        },
+                        "InvoicePercentage": {
+                          "description": "Required in case of Set components (PartType=SET)\nPercentage used to calculate the Invoice value of the composition part. \nThe Percentage sum of all SET article composition parts must equal 100 (%).\n",
+                          "type": "number"
+                        },
+                        "WeightPercentage": {
+                          "description": "Required in case of Set components (PartType=SET)\nPercentage used to calculate the Weight value of the composition part. \nThe Percentage sum of all SET article composition parts must equal 100 (%).\n",
+                          "type": "number"
                         }
                       },
                       "additionalProperties": false
