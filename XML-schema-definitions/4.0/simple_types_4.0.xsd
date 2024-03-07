@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 231219 $
-$Date: 2023-12-19 13:00:00 +0200$
+<!--  $Revision: 240307 $
+$Date: 2024-03-07 10:00:00 +0200 $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<!-- 
@@ -612,6 +612,15 @@ $Date: 2023-12-19 13:00:00 +0200$
 			<xs:maxLength value="50"/>
 			<xs:enumeration value="FC_GOODS_ONLY"/>
 			<xs:enumeration value="EU_BW_TO_BW"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PartType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="20"/>
+			<xs:enumeration value="REGULAR"/>
+			<xs:enumeration value="PREPACK"/>
+			<xs:enumeration value="SET"/>
+			<xs:enumeration value="COMPONENT"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
