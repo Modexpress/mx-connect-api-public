@@ -421,13 +421,14 @@
                       "type": "object",
                       "properties": {
                         "Type": {
-                          "description": "A packaging unit that is used for an article (SKU).",
+                          "description": "A packaging unit that is used for an article (SKU).\nBOX - Amount of SKUs in a full case.\nMULTIPACK - If SKU is composed of multiple pieces, for instance a pack with 3 pairs of socks.\n",
                           "type": "string",
                           "minLength": 1,
                           "maxLength": 15,
                           "enum": [
                             "PIECE",
-                            "BOX"
+                            "BOX",
+                            "MULTIPACK"
                           ]
                         },
                         "Quantity": {

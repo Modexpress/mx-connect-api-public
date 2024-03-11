@@ -451,13 +451,17 @@ paths:
                                   type: object
                                   properties:
                                     Type:
-                                      description: A packaging unit that is used for an article (SKU).
+                                      description: |
+                                        A packaging unit that is used for an article (SKU).
+                                        BOX - Amount of SKUs in a full case.
+                                        MULTIPACK - If SKU is composed of multiple pieces, for instance a pack with 3 pairs of socks.
                                       type: string
                                       minLength: 1
                                       maxLength: 15
                                       enum:
                                         - PIECE
                                         - BOX
+                                        - MULTIPACK
                                     Quantity:
                                       description: |
                                         The number of pieces (SKU's) in the unit 
