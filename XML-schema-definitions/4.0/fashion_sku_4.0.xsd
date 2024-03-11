@@ -478,7 +478,9 @@ For customs usage prices are exclusive of VAT.</xs:documentation>
 					<xs:documentation>A packaging unit that is used for an article (SKU).
 
 - PIECE
-- BOX</xs:documentation>
+- BOX - Full case
+- MULTIPACK - If SKU is composed of multiple pieces, for instance a pack with 3 pairs of socks.
+</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Quantity" type="tns:Num6">
