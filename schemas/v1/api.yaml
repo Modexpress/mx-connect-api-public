@@ -1700,11 +1700,13 @@ paths:
                               - **HANDLING**: instruction that is used in the execution of activities
                               - **FILE**: indication that a separate file is supplied with the order, containing documents to be printed for the shipment
                               - **TEXT**: xxxxxx
+                              - **COVERPRT**: instruction used to steer package cover print.
                             enum:
                               - VAS
                               - HANDLING
                               - FILE
                               - TEXT
+                              - COVERPRT
                             example: VAS
                           SequenceNumber:
                             type: integer
@@ -1722,6 +1724,7 @@ paths:
                               - In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**
                               - In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**, **EXTDOC**
                               - In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**
+                              - In case of COVERPRT the specific codes in use are **TYNOTE**, **TEMPLATE**
                               If no specific code and no description is relevant than the instruction type must also be declared as instruction code.
                             minLength: 1
                             maxLength: 10
@@ -1743,7 +1746,10 @@ paths:
                               - In case of type HANDLING with code PICK the pick strategy must be given:
                                   - STYLE, STYLECOLOUR or STYLECOLOURSIZE
                               - In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file. Not used for EXTDOC.
-                              - In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.
+                              - In case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.
+                              - In case of type COVERPRT and code
+                                  - TYNOTE, allows up to 70 characters of text for personalization. Multiple instructions of this type can be provided, and the SequenceNumber determines the order of text printed line by line.
+                                  - TEMPLATE, requires a predefined template code (codes provided by Modexpress).
                             maxLength: 70
                             example: This line is printed on the package
                           Docdata:
@@ -1889,11 +1895,13 @@ paths:
                                         - **HANDLING**: instruction that is used in the execution of activities
                                         - **FILE**: indication that a separate file is supplied with the order, containing documents to be printed for the shipment
                                         - **TEXT**: xxxxxx
+                                        - **COVERPRT**: instruction used to steer package cover print.
                                       enum:
                                         - VAS
                                         - HANDLING
                                         - FILE
                                         - TEXT
+                                        - COVERPRT
                                       example: VAS
                                     SequenceNumber:
                                       type: integer
@@ -1911,6 +1919,7 @@ paths:
                                         - In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**
                                         - In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**, **EXTDOC**
                                         - In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**
+                                        - In case of COVERPRT the specific codes in use are **TYNOTE**, **TEMPLATE**
                                         If no specific code and no description is relevant than the instruction type must also be declared as instruction code.
                                       minLength: 1
                                       maxLength: 10
@@ -1932,7 +1941,10 @@ paths:
                                         - In case of type HANDLING with code PICK the pick strategy must be given:
                                             - STYLE, STYLECOLOUR or STYLECOLOURSIZE
                                         - In case of type FILE with code PRICELABEL, INVOICE or THXNOTE the name of the supplied file must be mentioned, including the extension of the file. Not used for EXTDOC.
-                                        - In Case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.
+                                        - In case of type TEXT with code VATNUMBER, EORINUMBER, RECVVAT, RECEORI,  COCNUMBER, CEONAME or CUSTOMERID (consumer DHL post number) the text (number or name) to be printed must be mentioned.
+                                        - In case of type COVERPRT and code
+                                            - TYNOTE, allows up to 70 characters of text for personalization. Multiple instructions of this type can be provided, and the SequenceNumber determines the order of text printed line by line.
+                                            - TEMPLATE, requires a predefined template code (codes provided by Modexpress).
                                       maxLength: 70
                                       example: This line is printed on the package
                                     Docdata:
