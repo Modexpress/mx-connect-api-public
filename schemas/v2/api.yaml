@@ -267,10 +267,6 @@ paths:
                                         - MATERIAL: material name
                                         - FABRIC: Fabric composition
                                         - BRANDNM: Name of the brand
-                                        - IMG1: Article Image 1
-                                        - IMG2: Article Image 2
-                                        - IMG3: Article Image 3
-
                                         Only types agreed in advance with Modexpress can be indicated. An information element is included if it must be indicated in a document or if it is relevant in the operation (for example to display when executing an order related to the SKU). The types agreed with Modexpress.
                                       type: string
                                       minLength: 1
@@ -282,6 +278,23 @@ paths:
                                   required:
                                     - Type
                                     - Value
+                                  additionalProperties: false
+                            additionalProperties: false
+                          Images:
+                            type: object
+                            properties:
+                              Image:
+                                type: array
+                                items:
+                                  Url: object
+                                  properties:
+                                    Type:
+                                      description: |
+                                        For article thunbnails and article images.
+                                        Please consult with Modexpress for its usage.
+                                      type: string
+                                  required:
+                                    - Url
                                   additionalProperties: false
                             additionalProperties: false
                           Characteristics:

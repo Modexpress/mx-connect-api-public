@@ -235,7 +235,7 @@
                       "type": "object",
                       "properties": {
                         "Type": {
-                          "description": "The indication of an information element that is relevant for the SKU, for example:\n- MATERIAL: material name\n- FABRIC: Fabric composition\n- BRANDNM: Name of the brand\n- IMG1: Article Image 1\n- IMG2: Article Image 2\n- IMG3: Article Image 3\n\nOnly types agreed in advance with Modexpress can be indicated. An information element is included if it must be indicated in a document or if it is relevant in the operation (for example to display when executing an order related to the SKU). The types agreed with Modexpress.\n",
+                          "description": "The indication of an information element that is relevant for the SKU, for example:\n- MATERIAL: material name\n- FABRIC: Fabric composition\n- BRANDNM: Name of the brand\nOnly types agreed in advance with Modexpress can be indicated. An information element is included if it must be indicated in a document or if it is relevant in the operation (for example to display when executing an order related to the SKU). The types agreed with Modexpress.\n",
                           "type": "string",
                           "minLength": 1,
                           "maxLength": 8
@@ -250,6 +250,25 @@
                         "Type",
                         "Value"
                       ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "Images": {
+                "type": "object",
+                "properties": {
+                  "Image": {
+                    "type": "array",
+                    "items": {
+                      "Url": "object",
+                      "properties": {
+                        "Type": {
+                          "description": "For article thunbnails and article images.\nPlease consult with Modexpress for its usage.\n",
+                          "type": "string"
+                        }
+                      },
                       "additionalProperties": false
                     }
                   }
