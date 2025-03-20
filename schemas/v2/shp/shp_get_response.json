@@ -242,6 +242,10 @@
                         "type": "string",
                         "maxLength": 35
                       },
+                      "TrackingUrl": {
+                        "description": "Track and trace URL of the unit (assigned by the carrier).",
+                        "type": "string"
+                      },
                       "DateTimeOfCompletion": {
                         "description": "Date + time on which the unit was reported ready.",
                         "type": "string",

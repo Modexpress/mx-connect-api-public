@@ -2943,6 +2943,10 @@ paths:
                                       description: Track and trace identification of the unit (assigned by the carrier).
                                       type: string
                                       maxLength: 35
+                                    TrackingUrl:
+                                      description: Track and trace URL of the unit (assigned by the carrier).
+                                      type: string
+                                      example: 'https://www.ups.com/track?trackNums=1Z1234567890123456&track.x=Traceren&loc=en_GB&requester=ST/trackdetails'
                                     DateTimeOfCompletion:
                                       description: Date + time on which the unit was reported ready.
                                       type: string
