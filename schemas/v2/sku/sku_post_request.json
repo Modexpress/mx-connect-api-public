@@ -243,7 +243,8 @@
                         "Value": {
                           "description": "The value that applies to the SKU for the specified type of information.",
                           "type": "string",
-                          "minLength": 1
+                          "minLength": 1,
+                          "maxLength": 250
                         }
                       },
                       "required": [
@@ -262,13 +263,16 @@
                   "Image": {
                     "type": "array",
                     "items": {
-                      "Url": "object",
+                      "type": "object",
                       "properties": {
-                        "Type": {
+                        "Url": {
                           "description": "For article thunbnails and article images.\nPlease consult with Modexpress for its usage.\n",
                           "type": "string"
                         }
                       },
+                      "required": [
+                        "Url"
+                      ],
                       "additionalProperties": false
                     }
                   }

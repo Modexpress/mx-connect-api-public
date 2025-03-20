@@ -275,6 +275,7 @@ paths:
                                       description: The value that applies to the SKU for the specified type of information.
                                       type: string
                                       minLength: 1
+                                      maxLength: 250
                                   required:
                                     - Type
                                     - Value
@@ -286,9 +287,9 @@ paths:
                               Image:
                                 type: array
                                 items:
-                                  Url: object
+                                  type: object
                                   properties:
-                                    Type:
+                                    Url:
                                       description: |
                                         For article thunbnails and article images.
                                         Please consult with Modexpress for its usage.
