@@ -267,6 +267,9 @@ paths:
                                         - MATERIAL: material name
                                         - FABRIC: Fabric composition
                                         - BRANDNM: Name of the brand
+                                        - IMG1: Article Image 1
+                                        - IMG2: Article Image 2
+                                        - IMG3: Article Image 3
 
                                         Only types agreed in advance with Modexpress can be indicated. An information element is included if it must be indicated in a document or if it is relevant in the operation (for example to display when executing an order related to the SKU). The types agreed with Modexpress.
                                       type: string
@@ -276,7 +279,6 @@ paths:
                                       description: The value that applies to the SKU for the specified type of information.
                                       type: string
                                       minLength: 1
-                                      maxLength: 250
                                   required:
                                     - Type
                                     - Value
