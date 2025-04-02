@@ -2781,6 +2781,15 @@ paths:
                                       minimum: 1
                                       maximum: 999999999
                                       example: 5
+                                    QuantityPicked:
+                                      description: |
+                                        The number of items of the article that were picked.
+                                        This value is only outputted if the order is in status 'picked' or 'packed'.
+                                        Populated with 0 in case of a cancelation.
+                                      type: integer
+                                      minimum: 0
+                                      maximum: 999999999
+                                      example: 2
                                     QuantityDelivered:
                                       description: The number of items of the article that were delivered.
                                       type: integer

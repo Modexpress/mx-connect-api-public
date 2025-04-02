@@ -73,6 +73,12 @@
                         "minimum": 1,
                         "maximum": 999999999
                       },
+                      "QuantityPicked": {
+                        "description": "The number of items of the article that were picked.\nThis value is only outputted if the order is in status 'picked' or 'packed'.\nPopulated with 0 in case of a cancelation.\n",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 999999999
+                      },
                       "QuantityDelivered": {
                         "description": "The number of items of the article that were delivered.",
                         "type": "integer",
