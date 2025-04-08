@@ -1,47 +1,22 @@
 {
   "type": "object",
   "properties": {
-    "Message": {
+    "status": {
+      "type": "boolean"
+    },
+    "result": {
       "type": "object",
       "properties": {
-        "status": {
-          "type": "boolean"
-        },
-        "result": {
-          "type": "object",
-          "properties": {
-            "Id": {
-              "type": "string"
-            }
-          }
-        },
-        "error": {
-          "type": "object",
-          "properties": {
-            "Code": {
-              "type": "string"
-            },
-            "en": {
-              "type": "string"
-            },
-            "nl": {
-              "type": "string"
-            },
-            "de": {
-              "type": "string"
-            },
-            "fr": {
-              "type": "string"
-            }
-          }
-        },
-        "message": {
-          "type": [
-            "string",
-            "null"
-          ]
+        "Id": {
+          "type": "string"
         }
       }
+    },
+    "message": {
+      "type": [
+        "string",
+        "null"
+      ]
     }
   },
   "$schema": "http://json-schema.org/draft-04/schema#"

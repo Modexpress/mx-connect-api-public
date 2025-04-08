@@ -212,6 +212,10 @@
               "VATPercentage": {
                 "type": "number",
                 "description": "The VAT percentage that applies to the amount."
+              },
+              "DocData": {
+                "type": "string",
+                "description": "Base64 PDF encoded document."
               }
             }
           }

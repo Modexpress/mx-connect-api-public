@@ -2041,6 +2041,9 @@ paths:
                             type: number
                             description: The VAT percentage that applies to the amount.
                             example: 21.25
+                          DocData:
+                            type: string
+                            description: Base64 PDF encoded document.
                 Parties:
                   required:
                     - Party
@@ -2625,7 +2628,7 @@ paths:
     delete:
       tags:
         - SHP
-      summary: Cancel an order to deliver goods to an address/recipient
+      summary: Cancel an order to deliver goods to an address/recipiegitnt
       description: Cancel an order to deliver goods to an address/recipient.
       operationId: cancelOrder
       responses:
@@ -3036,6 +3039,104 @@ paths:
                                     - DateTimeOfCompletion
                         required:
                           - Id
+        '404':
+          description: Order not found in the Modexpress system
+          content:
+            application/json:
+              example:
+                status: false
+                result: null
+                error:
+                  properties:
+                    code: order_id_fail
+                    en: Order ID invalid
+                    nl: ''
+                    de: ''
+                    fr: ''
+    put:
+      tags:
+        - SHP
+      summary: Add documentation to an order
+      description: |
+        Add documents such as sale invoices to an order. 
+        These documents are intended for customs administration and will not be printed during the order packing process.
+        If needed these can be added to the shipment.
+      operationId: UpdateOrder
+      externalDocs:
+        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/shp/shp_update_request.json'
+        description: Request body **JSON schema**
+      requestBody:
+        description: The order update request body
+        content:
+          application/json:
+            schema:
+              required:
+                - Id
+                - AdditionalFinInfo
+              type: object
+              properties:
+                Id:
+                  type: string
+                  description: The identification that the ordering party uses for the order. On the basis of this identification Modexpress checks whether the order exists for the ordering party. If so the order will be updated.
+                  example: ExampleOrderId
+                AdditionalFinInfo:
+                  type: object
+                  required:
+                    - FinInfo
+                  properties:
+                    FinInfo:
+                      type: array
+                      minItems: 1
+                      items:
+                        description: Financial information of a particular type
+                        required:
+                          - InfoType
+                          - Description
+                          - DocData
+                        type: object
+                        properties:
+                          InfoType:
+                            type: string
+                            description: 'Indication of the type of financial information: - Type ''Invoice'' is used for customs declaration, - Type ''CodSurcharge'' is used to indicate a Cash On Delivery surcharge (Amount and CurrencyCode must be indicated), - Type xxxxx (Amount, CurrencyCode, VATCode and VATPercentage must be indicated)'
+                            enum:
+                              - Invoice
+                            maxLength: 15
+                            example: Invoice
+                          Description:
+                            type: string
+                            description: 'A relevant description for the type of financial information. In case of **Invoice**, this concerns the invoice number.'
+                            maxLength: 50
+                            example: 'invoicenr:123456'
+                          Date:
+                            type: string
+                            description: 'A relevant date for the type of financial information. In case of ''Invoice'', this concerns the invoice date.'
+                            format: date
+                            example: '2021-01-01'
+                          DocData:
+                            type: string
+                            description: Base64 PDF encoded document.
+              xml:
+                name: UpdateOrder
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  result:
+                    type: object
+                    properties:
+                      Id:
+                        type: string
+                        example: MX-001-143
+                  message:
+                    type: string
+                    nullable: true
         '404':
           description: Order not found in the Modexpress system
           content:
