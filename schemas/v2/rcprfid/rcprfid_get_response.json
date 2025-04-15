@@ -75,7 +75,7 @@
                               "description": "The Electronic Product Code of the received SKU.\n",
                               "type": "string",
                               "minLength": 1,
-                              "maxLength": 50
+                              "maxLength": 250
                             }
                           },
                           "required": [

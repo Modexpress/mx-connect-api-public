@@ -1791,7 +1791,7 @@ paths:
         example: 12345678
     get:
       tags:
-        - RCP
+        - RCP RFID
       summary: Retrieve Receipt Order RFID information
       description: Retrieve Receipt Order RFID information
       operationId: retrieveReceiptOrder
@@ -1894,7 +1894,7 @@ paths:
                                               The Electronic Product Code of the received SKU.
                                             type: string
                                             minLength: 1
-                                            maxLength: 50
+                                            maxLength: 250
                                         required:
                                           - Code
                                   required:
@@ -1903,6 +1903,19 @@ paths:
                   message:
                     type: object
                     nullable: true
+        '404':
+          description: Unknown Order Id
+          content:
+            application/json:
+              example:
+                status: false
+                result: null
+                error:
+                  code: order_id_unknown
+                  en: Receipt Order Id is unknown
+                  nl: ''
+                  de: ''
+                  fr: ''
   /shp:
     post:
       tags:
