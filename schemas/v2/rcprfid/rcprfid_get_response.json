@@ -1,0 +1,107 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "boolean"
+    },
+    "result": {
+      "type": "object",
+      "required": [
+        "Order"
+      ],
+      "properties": {
+        "Order": {
+          "type": "object",
+          "properties": {
+            "Id": {
+              "description": "The identification that the ordering party uses for the order. In some cases, an id is specified that Modexpress has\nassigned itself, namely when it involves:\n- a registered order for which the ordering party has not specified an id that Modexpress can use as a unique id\n- a blind receipt\n- an automatically created return order (based on an executed shipment)\n",
+              "type": "string",
+              "maxLength": 25
+            },
+            "Type": {
+              "description": "Designation of the order type.\n\nThe XDOCKLOT orders are reported as PURCHASE.\n",
+              "type": "string",
+              "maxLength": 20,
+              "enum": [
+                "PURCHASE",
+                "RETURN"
+              ]
+            },
+            "Subtype": {
+              "description": "A subdivision of the order type.\n\nIn case of an automatically created return order the subtype\nwill be 'AUTOMATISCH'.\n",
+              "type": "string",
+              "maxLength": 20
+            },
+            "Reference": {
+              "description": "Reference for the order used by the ordering party.\nIn the case of an automatically created return order, this\nrefers to the shipment (SHP) for which the return order was created.\nThe reference is to the Order.Id (SHP 3-1-01). However, this is only\npossible when the format of the Order.Id is a maximum of A20.\n",
+              "type": "string",
+              "maxLength": 20
+            },
+            "CompletionDateTime": {
+              "description": "Date - where relevant, with the time - when the order was reported\nready/executed.\n",
+              "type": "string",
+              "format": "date-time"
+            },
+            "ProcessingStatus": {
+              "description": "Indication of the status of the order: differs from RCP-Exec since it's a real-time status\n\n- N - New, not yet started\n- I - In progress, receipt has started\n- C - Closed, receipt has been closed\n",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1,
+              "enum": [
+                "N",
+                "I",
+                "C"
+              ]
+            },
+            "Articles": {
+              "type": "object",
+              "properties": {
+                "Article": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Id": {
+                        "description": "The identification that the owner uses for the received\nSKU. This is usually a logical Id. Many owners use the\ncombination of STYLE+COLOUR+SIZE as a logical Id.\n",
+                        "type": "string",
+                        "maxLength": 250
+                      },
+                      "EPCComposition": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "Code": {
+                              "description": "The Electronic Product Code of the received SKU.\n",
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 50
+                            }
+                          },
+                          "required": [
+                            "Code"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "Id",
+                      "EPCComposition"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "message": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}
