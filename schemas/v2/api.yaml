@@ -1910,7 +1910,7 @@ paths:
                   message:
                     type: object
                     nullable: true
-        '404':
+        '400':
           description: Unknown Order Id
           content:
             application/json:
