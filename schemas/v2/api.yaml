@@ -3237,6 +3237,8 @@ paths:
                         required:
                           - InfoType
                           - Description
+                          - Amount
+                          - CurrencyCode
                           - DocData
                         type: object
                         properties:
