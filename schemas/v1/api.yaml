@@ -44,8 +44,12 @@ paths:
                         properties:
                           Id:
                             description: |
-                              The identification that the owner uses for the SKU. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.\r\nIf the identification contains letters, they must be in uppercase. WMS interface limited to A24
+                              The identification that the owner uses for the SKU. This is usually a logical Id. 
+                              Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.
+                              If the identification contains letters, they must be in uppercase. WMS interface limited to A24
+                              Leading and trailing spaces are not allowed.
                             type: string
+                            pattern: '^(?![\s\u00A0\u200B\u200C\u200D\u2060\uFEFF]).*(?<![\s\u00A0\u200B\u200C\u200D\u2060\uFEFF])$'
                             maxLength: 24
                             example: STYLE-COLOUR-SIZE
                           Description:

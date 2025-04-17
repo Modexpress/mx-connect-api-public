@@ -29,8 +29,9 @@
             "type": "object",
             "properties": {
               "Id": {
-                "description": "The identification that the owner uses for the SKU. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.\\r\\nIf the identification contains letters, they must be in uppercase. WMS interface limited to A24\n",
+                "description": "The identification that the owner uses for the SKU. This is usually a logical Id. \nMany owners use the combination of STYLE+COLOUR+SIZE as a logical Id.\nIf the identification contains letters, they must be in uppercase. WMS interface limited to A24\nLeading and trailing spaces are not allowed.\n",
                 "type": "string",
+                "pattern": "^(?![\\s\\u00A0\\u200B\\u200C\\u200D\\u2060\\uFEFF]).*(?<![\\s\\u00A0\\u200B\\u200C\\u200D\\u2060\\uFEFF])$",
                 "maxLength": 24
               },
               "Description": {
