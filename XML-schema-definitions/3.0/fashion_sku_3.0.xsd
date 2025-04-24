@@ -51,7 +51,7 @@ $Date: 2022-07-12 14:00:00 +0200 (Tue, 12 Jul 2022) $
 	</xs:complexType>
 	<xs:complexType name="Identifications">
 		<xs:sequence>
-			<xs:element name="Code" type="tns:Text35" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Code" type="tns:BText35" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Grouping">

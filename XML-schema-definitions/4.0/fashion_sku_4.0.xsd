@@ -145,7 +145,7 @@ These values are not visible on our frontend systems (such as customer portal) a
 			<xs:documentation>The identification that is used for the article (physical identification). Several identifications are permitted/possible. The indicated Id of the article (logical Id) does not have to be additionally specified as the physical identification.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Code" type="tns:Text35" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="Code" type="tns:BText35" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>A code on the basis of which the article can be recognised in the operation. This is usually a code that is applied to the article as a barcode.</xs:documentation>
 				</xs:annotation>
