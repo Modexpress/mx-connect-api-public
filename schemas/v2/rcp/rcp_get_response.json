@@ -250,6 +250,29 @@
                                   "type": "integer",
                                   "minimum": 1,
                                   "maximum": 9999999
+                                },
+                                "EPCComposition": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "Code": {
+                                        "description": "The Electronic Product Code of the received SKU.\n",
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 250
+                                      },
+                                      "VerificationDateTime": {
+                                        "description": "The date/time when the EPC was verified.\nThis is the date/time when the RFID tag was read\n",
+                                        "type": "string",
+                                        "format": "date-time"
+                                      }
+                                    },
+                                    "required": [
+                                      "Code",
+                                      "VerificationDateTime"
+                                    ]
+                                  }
                                 }
                               }
                             }
