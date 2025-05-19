@@ -114,7 +114,8 @@
                       "description": "A code on the basis of which the article can be recognised in the operation. This is usually a code that is applied to the article as a barcode.",
                       "type": "string",
                       "minLength": 1,
-                      "maxLength": 35
+                      "maxLength": 35,
+                      "pattern": "^[^\\s]+(\\s+[^\\s]+)*$"
                     }
                   },
                   "required": [
