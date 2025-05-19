@@ -1821,151 +1821,6 @@ paths:
                   message:
                     type: object
                     nullable: true
-  '/rcprfid/{Id}':
-    parameters:
-      - in: path
-        name: Id
-        description: The order id
-        schema:
-          type: string
-          maxLength: 25
-          example: 123456789
-        required: true
-        example: 12345678
-    get:
-      tags:
-        - RCP RFID
-      summary: Retrieve Receipt Order RFID information
-      description: Retrieve Receipt Order RFID information
-      operationId: retrieveReceiptOrder
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                  result:
-                    type: object
-                    required:
-                      - Order
-                    properties:
-                      Order:
-                        type: object
-                        properties:
-                          Id:
-                            description: |
-                              The identification that the ordering party uses for the order. In some cases, an id is specified that Modexpress has
-                              assigned itself, namely when it involves:
-                              - a registered order for which the ordering party has not specified an id that Modexpress can use as a unique id
-                              - a blind receipt
-                              - an automatically created return order (based on an executed shipment)
-                            type: string
-                            maxLength: 25
-                          Type:
-                            description: |
-                              Designation of the order type.
-
-                              The XDOCKLOT orders are reported as PURCHASE.
-                            type: string
-                            maxLength: 20
-                            enum:
-                              - PURCHASE
-                              - RETURN
-                          Subtype:
-                            description: |
-                              A subdivision of the order type.
-
-                              In case of an automatically created return order the subtype
-                              will be 'AUTOMATISCH'.
-                            type: string
-                            maxLength: 20
-                          Reference:
-                            description: |
-                              Reference for the order used by the ordering party.
-                              In the case of an automatically created return order, this
-                              refers to the shipment (SHP) for which the return order was created.
-                              The reference is to the Order.Id (SHP 3-1-01). However, this is only
-                              possible when the format of the Order.Id is a maximum of A20.
-                            type: string
-                            maxLength: 20
-                          CompletionDateTime:
-                            description: |
-                              Date - where relevant, with the time - when the order was reported
-                              ready/executed.
-                            type: string
-                            format: date-time
-                          ProcessingStatus:
-                            description: |
-                              Indication of the status of the order: differs from RCP-Exec since it's a real-time status
-
-                              - N - New, not yet started
-                              - I - In progress, receipt has started
-                              - C - Closed, receipt has been closed
-                            type: string
-                            minLength: 1
-                            maxLength: 1
-                            enum:
-                              - 'N'
-                              - I
-                              - C
-                          Articles:
-                            type: object
-                            properties:
-                              Article:
-                                type: array
-                                items:
-                                  type: object
-                                  properties:
-                                    Id:
-                                      description: |
-                                        The identification that the owner uses for the received
-                                        SKU. This is usually a logical Id. Many owners use the
-                                        combination of STYLE+COLOUR+SIZE as a logical Id.
-                                      type: string
-                                      maxLength: 250
-                                    EPCComposition:
-                                      type: array
-                                      items:
-                                        type: object
-                                        properties:
-                                          Code:
-                                            description: |
-                                              The Electronic Product Code of the received SKU.
-                                            type: string
-                                            minLength: 1
-                                            maxLength: 250
-                                          VerificationDateTime:
-                                            description: |
-                                              The date/time when the EPC was verified.
-                                              This is the date/time when the RFID tag was read
-                                            type: string
-                                            format: date-time
-                                        required:
-                                          - Code
-                                          - VerificationDateTime
-                                  required:
-                                    - Id
-                                    - EPCComposition
-                  message:
-                    type: object
-                    nullable: true
-        '400':
-          description: Unknown Order Id
-          content:
-            application/json:
-              example:
-                status: false
-                result: null
-                error:
-                  code: order_id_unknown
-                  en: Receipt Order Id is unknown
-                  nl: ''
-                  de: ''
-                  fr: ''
   /shp:
     post:
       tags:
@@ -2424,7 +2279,7 @@ paths:
                               - **VAS**: control of VAS
                               - **HANDLING**: instruction that is used in the execution of activities
                               - **FILE**: indication that a separate file is supplied with the order, containing documents to be printed for the shipment
-                              - **TEXT**: xxxxxx
+                              - **TEXT**: print instructions for the packing slip of the e-commerce platform
                               - **COVERPRT**: instruction used to steer package cover print.
                             enum:
                               - VAS
@@ -2446,9 +2301,9 @@ paths:
                               Indication of the instruction by means of a code:
                               - In case of VAS an example code is 10 (= remove price label F,GOH)
                               - In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')
-                              - In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**
+                              - In case of HANDLING the specific codes in use are SOURCE, PICK, CONTENTLBL and PACKINGSLP
                               - In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**, **EXTDOC**
-                              - In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**
+                              - In case of TEXT the specific codes in use are VATNUMBER, EORINUMBER, RECVVAT, RECEORI, COCNUMBER, CEONAME, CUSTOMERID (in case of export to countries outside the EU, VATNUMBER must be specified), EXTCUSTREF, SALESOFF, ORDERDESC, GLNNUMBER, BANKNAME, BICNUMBER, IBANNUMBER, PACKAGING.
                               - In case of COVERPRT the specific codes in use are **TYNOTE**, **TEMPLATE**
                               If no specific code and no description is relevant than the instruction type must also be declared as instruction code.
                             minLength: 1
@@ -2619,7 +2474,7 @@ paths:
                                         - **VAS**: control of VAS
                                         - **HANDLING**: instruction that is used in the execution of activities
                                         - **FILE**: indication that a separate file is supplied with the order, containing documents to be printed for the shipment
-                                        - **TEXT**: xxxxxx
+                                        - **TEXT**: print instructions for the packing slip of the e-commerce platform
                                         - **COVERPRT**: instruction used to steer package cover print.
                                       enum:
                                         - VAS
@@ -2641,9 +2496,9 @@ paths:
                                         Indication of the instruction by means of a code:
                                         - In case of VAS an example code is 10 (= remove price label F,GOH)
                                         - In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')
-                                        - In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**
+                                        - In case of HANDLING the specific codes in use are SOURCE, PICK, CONTENTLBL and PACKINGSLP
                                         - In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**, **EXTDOC**
-                                        - In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**
+                                        - In case of TEXT the specific codes in use are VATNUMBER, EORINUMBER, RECVVAT, RECEORI, COCNUMBER, CEONAME, CUSTOMERID (in case of export to countries outside the EU, VATNUMBER must be specified), EXTCUSTREF, SALESOFF, ORDERDESC, GLNNUMBER, BANKNAME, BICNUMBER, IBANNUMBER, PACKAGING.
                                         - In case of COVERPRT the specific codes in use are **TYNOTE**, **TEMPLATE**
                                         If no specific code and no description is relevant than the instruction type must also be declared as instruction code.
                                       minLength: 1
