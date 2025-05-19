@@ -136,30 +136,7 @@
                             "description": "A code used to recognise/identify the received article.\nThis is usually a code that is also affixed to the\narticle as a barcode.\n",
                             "type": "string",
                             "maxLength": 35
-                          }
-                        }
-                      },
-                      "EPCComposition": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "Code": {
-                              "description": "The Electronic Product Code of the received SKU.\n",
-                              "type": "string",
-                              "minLength": 1,
-                              "maxLength": 250
-                            },
-                            "VerificationDateTime": {
-                              "description": "The date/time when the EPC was verified.\nThis is the date/time when the RFID tag was read\n",
-                              "type": "string",
-                              "format": "date-time"
-                            }
                           },
-                          "required": [
-                            "Code",
-                            "VerificationDateTime"
-                          ],
                           "ExternalReferences": {
                             "type": "object",
                             "properties": {
