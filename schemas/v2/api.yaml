@@ -2672,7 +2672,7 @@ paths:
     delete:
       tags:
         - SHP
-      summary: Cancel an order to deliver goods to an address/recipiegitnt
+      summary: Cancel an order to deliver goods to an address/recipient
       description: Cancel an order to deliver goods to an address/recipient.
       operationId: cancelOrder
       responses:
