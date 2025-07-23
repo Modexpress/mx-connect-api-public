@@ -3996,212 +3996,77 @@ paths:
     post:
       tags:
         - OPR
-      summary: OPR POST request Outward Processing Form data
-      operationId: outwardProccessingFormData
-      description: The request to register a Outward Processing Form data
+      summary: OPR Component POST request
+      operationId: outwardProcessingFormData
+      description: The request to register an Outward Processing component
       externalDocs:
         url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/opr/opr_post_request.json'
         description: Request body **JSON schema**
       requestBody:
-        description: The Outward Processing Form data request body
+        description: The Outward Processing Bill of Material data request body
+        required: true
         content:
           application/json:
             schema:
               type: object
-              properties:
-                INF:
-                  description: |
-                    Information sheet (INF) details
-                  type: object
-                  properties:
-                    INFId:
-                      description: |
-                        INF Identification Nr of the Outward Processing (OPR) component movement.
-                        This is an unique number
-                      type: string
-                      minLength: 1
-                      maxLength: 60
-                      example: INF-IDENTIFICATION
-                    LicenseNumber:
-                      description: |
-                        License number if applicable for the general Outward Processing allowance as provided by Customs Authorities. 
-                      type: string
-                      minLength: 1
-                      maxLength: 34
-                      example: BEOPOBE000703-2021-XPV12345
-                    IssueDate:
-                      description: |
-                        Publication Date the Information sheet (INF) as published on the European Customs Trader portal. 
-                      type: string
-                      format: date
-                    ExpirationDate:
-                      description: |
-                        Expiration Date of the Information sheet (INF) as published on the European Customs Trader portal. 
-                      type: string
-                      format: date
-                    Component:
-                      type: object
-                      description: |
-                        Component(s) that are named in the INF document
-                      properties:
-                        ComponentId:
-                          description: |
-                            Unique component Identification of the product that has been exported in order to be Outward Processed 
-                          type: string
-                          minLength: 1
-                          maxLength: 250
-                          example: COMP-100000-123
-                        Taric:
-                          description: |
-                            Taric code of the component exported for outward processing
-                          type: string
-                          minLength: 8
-                          maxLength: 10
-                          example: 5007201110
-                        Description:
-                          description: Component description
-                          type: string
-                          minLength: 1
-                          maxLength: 250
-                          example: The description of the component
-                        INFQuantity:
-                          description: The total quantity as requested in the INF per component.
-                          type: number
-                          format: double
-                          example: 12547.5
-                        UoM:
-                          description: |
-                            Unit of Measure of the component. 
-                            - PC - Pieces
-                            - MTR - Meters
-                            - M2 - Square meters
-                            The UoM should be equal to the UoM as mentioned on the OPR allowance.
-                          type: string
-                          maxLength: 20
-                          enum:
-                            - PC
-                            - MTR
-                            - M2
-                        INFValue:
-                          description: The total value for which the INF is request per component.
-                          type: number
-                          format: double
-                          example: 12547.5
-                        CurrencyCode:
-                          description: |
-                            Code indicating the currency in which the statisticalValue at export is expressed
-                            ISO 4217
-                          type: string
-                          minLength: 3
-                          maxLength: 3
-                          example: EUR
-                        YieldPercentage:
-                          description: |
-                            Yield as agreed either in Outward processing allowance and/or mentioned on INF2 document.
-                            Example: 10% = 10.00
-                          type: number
-                          example: 12.5
-                        ProcessedProduct:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              ArticleId:
-                                description: |
-                                  The article-id of the resulting processed product. This should be prior notified by SKU.
-                                  If the ArticleId is not known at Modexpress the INF message will be rejected. 
-                                type: string
-                                minLength: 1
-                                maxLength: 24
-                                example: ARTICLE-1000-XL
-                              Taric:
-                                description: |
-                                  The Taric of the resulting processed product.
-                                  Must match with SKU data. 
-                                type: string
-                                minLength: 10
-                                maxLength: 10
-                                example: 6201200019
-                              QuantityConsumedComponent:
-                                description: |
-                                  The quantity of components used in a single processed product expressed in the UoM of the component. 
-                                type: number
-                                format: double
-                                example: 12547.5
-                            required:
-                              - ArticleId
-                              - Taric
-                              - QuantityConsumedComponent
-                        Exports:
-                          type: array
-                          description: |
-                            Component export details (EU > non-EU facility)
-                          items:
-                            type: object
-                            properties:
-                              ExportMRN:
-                                description: |
-                                  The identification of the export document
-                                type: string
-                                minLength: 18
-                                maxLength: 18
-                                example: 22ITQL002000000123
-                              ExportDate:
-                                description: |
-                                  The ExportDate of the original export of the component 
-                                type: string
-                                format: date
-                              QuantityExported:
-                                description: |
-                                  The QuantityExported of the original component, in the UoM as mentioned of the component. 
-                                type: number
-                                format: double
-                                example: 12547.5
-                              StatisticalValueExport:
-                                description: |
-                                  Statistical value at export of component as reported in ExportMRN 
-                                type: number
-                                format: double
-                                example: 12547.5
-                              ExchangeRate:
-                                description: |
-                                  Exchange rate at exit <> EUR
-                                  If Currency <> EUR then Exchange rate (against EUR) at date of export must be registered.
-                                  This because there can be months between the original export and the return of the final product. 
-                                  The calculations are always made based on currency=EUR.
-
-                                  Example: Currency used is DKK, then the exchange rate EUR/DKK should be used.  
-                                  EUR/DKK = 7.44 at the time of export, so that is the value that should be populated in this field.
-
-                                  DKK 7,44 = EUR 1 
-                                  Exchange rate as defined by Customs Authorities: https://ec.europa.eu/info/funding-tenders/procedures-guidelines-tenders/information-contractors-and-beneficiaries/exchange-rate-inforeuro_nl 
-                                type: number
-                                format: double
-                                example: 12547.5
-                            required:
-                              - EX-E-MRN
-                              - ExportDate
-                              - QuantityExported
-                              - StatisticalValueExport
-                              - ExchangeRate
-                      required:
-                        - ComponentId
-                        - Taric
-                        - Description
-                        - INFQuantity
-                        - UoM
-                        - INFValue
-                        - CurrencyCode
-                        - YieldPercentage
-                        - ProcessedProduct
-                        - Exports
-                  required:
-                    - INFId
-                    - IssueDate
-                    - ExpirationDate
-                    - Component
               required:
-                - INF
+                - Articles
+              properties:
+                Articles:
+                  type: object
+                  required:
+                    - Article
+                  properties:
+                    Article:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - ParentId
+                          - Materials
+                        properties:
+                          ParentId:
+                            description: |
+                              The identification that the owner uses for the SKU. This is usually a logical Id.
+                              Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.
+                              If the identification contains letters, they must be in uppercase. WMS interface limited to A24
+                              Leading and trailing spaces are not allowed.
+                            type: string
+                            pattern: '^[^\s]+(\s+[^\s]+)*$'
+                            maxLength: 24
+                            example: STYLE-COLOUR-SIZE
+                          Materials:
+                            type: object
+                            required:
+                              - Material
+                            properties:
+                              Material:
+                                type: array
+                                items:
+                                  type: object
+                                  required:
+                                    - ChildId
+                                    - Quantity
+                                    - YieldIncl
+                                  properties:
+                                    ChildId:
+                                      description: |
+                                        The identification of the component that is used in the production of the article.
+                                        Leading and trailing spaces are not allowed.
+                                      type: string
+                                      pattern: '^[^\s]+(\s+[^\s]+)*$'
+                                      example: ABC123Z
+                                    Quantity:
+                                      description: |
+                                        The quantity of the component that is used in the production of the article.
+                                      type: number
+                                      format: double
+                                      example: 1.17
+                                    YieldIncl:
+                                      description: |
+                                        Yield included true or false.
+                                      type: boolean
+                                      example: true
       responses:
         '200':
           description: successful operation

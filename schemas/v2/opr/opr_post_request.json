@@ -1,192 +1,72 @@
 {
   "type": "object",
+  "required": [
+    "Articles"
+  ],
   "properties": {
-    "INF": {
-      "description": "Information sheet (INF) details\n",
+    "Articles": {
       "type": "object",
+      "required": [
+        "Article"
+      ],
       "properties": {
-        "INFId": {
-          "description": "INF Identification Nr of the Outward Processing (OPR) component movement.\nThis is an unique number\n",
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 60
-        },
-        "LicenseNumber": {
-          "description": "License number if applicable for the general Outward Processing allowance as provided by Customs Authorities. \n",
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 34
-        },
-        "IssueDate": {
-          "description": "Publication Date the Information sheet (INF) as published on the European Customs Trader portal. \n",
-          "type": "string",
-          "format": "date"
-        },
-        "ExpirationDate": {
-          "description": "Expiration Date of the Information sheet (INF) as published on the European Customs Trader portal. \n",
-          "type": "string",
-          "format": "date"
-        },
-        "Component": {
-          "type": "object",
-          "description": "Component(s) that are named in the INF document\n",
-          "properties": {
-            "ComponentId": {
-              "description": "Unique component Identification of the product that has been exported in order to be Outward Processed \n",
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 250
-            },
-            "Taric": {
-              "description": "Taric code of the component exported for outward processing\n",
-              "type": "string",
-              "minLength": 8,
-              "maxLength": 10
-            },
-            "Description": {
-              "description": "Component description",
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 250
-            },
-            "INFQuantity": {
-              "description": "The total quantity as requested in the INF per component.",
-              "type": "number",
-              "format": "double",
-              "minimum": -1.7976931348623157e+308,
-              "maximum": 1.7976931348623157e+308
-            },
-            "UoM": {
-              "description": "Unit of Measure of the component. \n- PC - Pieces\n- MTR - Meters\n- M2 - Square meters\nThe UoM should be equal to the UoM as mentioned on the OPR allowance.\n",
-              "type": "string",
-              "maxLength": 20,
-              "enum": [
-                "PC",
-                "MTR",
-                "M2"
-              ]
-            },
-            "INFValue": {
-              "description": "The total value for which the INF is request per component.",
-              "type": "number",
-              "format": "double",
-              "minimum": -1.7976931348623157e+308,
-              "maximum": 1.7976931348623157e+308
-            },
-            "CurrencyCode": {
-              "description": "Code indicating the currency in which the statisticalValue at export is expressed\nISO 4217\n",
-              "type": "string",
-              "minLength": 3,
-              "maxLength": 3
-            },
-            "YieldPercentage": {
-              "description": "Yield as agreed either in Outward processing allowance and/or mentioned on INF2 document.\nExample: 10% = 10.00\n",
-              "type": "number"
-            },
-            "ProcessedProduct": {
-              "type": "array",
-              "items": {
+        "Article": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "ParentId",
+              "Materials"
+            ],
+            "properties": {
+              "ParentId": {
+                "description": "The identification that the owner uses for the SKU. This is usually a logical Id.\nMany owners use the combination of STYLE+COLOUR+SIZE as a logical Id.\nIf the identification contains letters, they must be in uppercase. WMS interface limited to A24\nLeading and trailing spaces are not allowed.\n",
+                "type": "string",
+                "pattern": "^[^\\s]+(\\s+[^\\s]+)*$",
+                "maxLength": 24
+              },
+              "Materials": {
                 "type": "object",
-                "properties": {
-                  "ArticleId": {
-                    "description": "The article-id of the resulting processed product. This should be prior notified by SKU.\nIf the ArticleId is not known at Modexpress the INF message will be rejected. \n",
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 24
-                  },
-                  "Taric": {
-                    "description": "The Taric of the resulting processed product.\nMust match with SKU data. \n",
-                    "type": "string",
-                    "minLength": 10,
-                    "maxLength": 10
-                  },
-                  "QuantityConsumedComponent": {
-                    "description": "The quantity of components used in a single processed product expressed in the UoM of the component. \n",
-                    "type": "number",
-                    "format": "double",
-                    "minimum": -1.7976931348623157e+308,
-                    "maximum": 1.7976931348623157e+308
-                  }
-                },
                 "required": [
-                  "ArticleId",
-                  "Taric",
-                  "QuantityConsumedComponent"
-                ]
-              }
-            },
-            "Exports": {
-              "type": "array",
-              "description": "Component export details (EU > non-EU facility)\n",
-              "items": {
-                "type": "object",
+                  "Material"
+                ],
                 "properties": {
-                  "ExportMRN": {
-                    "description": "The identification of the export document\n",
-                    "type": "string",
-                    "minLength": 18,
-                    "maxLength": 18
-                  },
-                  "ExportDate": {
-                    "description": "The ExportDate of the original export of the component \n",
-                    "type": "string",
-                    "format": "date"
-                  },
-                  "QuantityExported": {
-                    "description": "The QuantityExported of the original component, in the UoM as mentioned of the component. \n",
-                    "type": "number",
-                    "format": "double",
-                    "minimum": -1.7976931348623157e+308,
-                    "maximum": 1.7976931348623157e+308
-                  },
-                  "StatisticalValueExport": {
-                    "description": "Statistical value at export of component as reported in ExportMRN \n",
-                    "type": "number",
-                    "format": "double",
-                    "minimum": -1.7976931348623157e+308,
-                    "maximum": 1.7976931348623157e+308
-                  },
-                  "ExchangeRate": {
-                    "description": "Exchange rate at exit <> EUR\nIf Currency <> EUR then Exchange rate (against EUR) at date of export must be registered.\nThis because there can be months between the original export and the return of the final product. \nThe calculations are always made based on currency=EUR.\n\nExample: Currency used is DKK, then the exchange rate EUR/DKK should be used.  \nEUR/DKK = 7.44 at the time of export, so that is the value that should be populated in this field.\n\nDKK 7,44 = EUR 1 \nExchange rate as defined by Customs Authorities: https://ec.europa.eu/info/funding-tenders/procedures-guidelines-tenders/information-contractors-and-beneficiaries/exchange-rate-inforeuro_nl \n",
-                    "type": "number",
-                    "format": "double",
-                    "minimum": -1.7976931348623157e+308,
-                    "maximum": 1.7976931348623157e+308
+                  "Material": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "ChildId",
+                        "Quantity",
+                        "YieldIncl"
+                      ],
+                      "properties": {
+                        "ChildId": {
+                          "description": "The identification of the component that is used in the production of the article.\nLeading and trailing spaces are not allowed.\n",
+                          "type": "string",
+                          "pattern": "^[^\\s]+(\\s+[^\\s]+)*$"
+                        },
+                        "Quantity": {
+                          "description": "The quantity of the component that is used in the production of the article.\n",
+                          "type": "number",
+                          "format": "double",
+                          "minimum": -1.7976931348623157e+308,
+                          "maximum": 1.7976931348623157e+308
+                        },
+                        "YieldIncl": {
+                          "description": "Yield included true or false.\n",
+                          "type": "boolean"
+                        }
+                      }
+                    }
                   }
-                },
-                "required": [
-                  "ExportDate",
-                  "QuantityExported",
-                  "StatisticalValueExport",
-                  "ExchangeRate"
-                ]
+                }
               }
             }
-          },
-          "required": [
-            "ComponentId",
-            "Taric",
-            "Description",
-            "INFQuantity",
-            "UoM",
-            "INFValue",
-            "CurrencyCode",
-            "YieldPercentage",
-            "ProcessedProduct",
-            "Exports"
-          ]
+          }
         }
-      },
-      "required": [
-        "INFId",
-        "IssueDate",
-        "ExpirationDate",
-        "Component"
-      ]
+      }
     }
   },
-  "required": [
-    "INF"
-  ],
   "$schema": "http://json-schema.org/draft-04/schema#"
 }
