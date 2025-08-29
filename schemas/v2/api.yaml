@@ -1802,6 +1802,70 @@ paths:
                   message:
                     type: object
                     nullable: true
+    delete:
+      tags:
+        - RCP
+      summary: Delete Receipt Order
+      description: Delete a receipt order by its ID
+      operationId: deleteReceiptOrder
+      responses:
+        '200':
+          description: Receipt order successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  result:
+                    type: object
+                    properties:
+                      Message:
+                        type: object
+                        properties:
+                          status:
+                            type: boolean
+                            example: true
+                          result:
+                            type: object
+                            properties:
+                              Id:
+                                type: string
+                          error:
+                            type: object
+                            properties:
+                              Code:
+                                type: string
+                              en:
+                                type: string
+                              nl:
+                                type: string
+                              de:
+                                type: string
+                              fr:
+                                type: string
+                          message:
+                            type: string
+                            nullable: true
+                        xml:
+                          name: Message
+                  message:
+                    type: object
+                    nullable: true
+        '404':
+          description: Order not found in the Modexpress system
+          content:
+            application/json:
+              example:
+                status: false
+                result: null
+                error:
+                  properties:
+                    code: order_id_fail
+                    en: Order ID invalid
+                    nl: ''
+                    de: ''
   /shp:
     post:
       tags:

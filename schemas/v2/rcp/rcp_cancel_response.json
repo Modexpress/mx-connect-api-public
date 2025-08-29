@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "boolean"
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "Message": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "result": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "string"
+                }
+              }
+            },
+            "error": {
+              "type": "object",
+              "properties": {
+                "Code": {
+                  "type": "string"
+                },
+                "en": {
+                  "type": "string"
+                },
+                "nl": {
+                  "type": "string"
+                },
+                "de": {
+                  "type": "string"
+                },
+                "fr": {
+                  "type": "string"
+                }
+              }
+            },
+            "message": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "message": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}
