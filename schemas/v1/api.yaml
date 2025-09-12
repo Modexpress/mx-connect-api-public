@@ -1398,8 +1398,8 @@ paths:
                   type: string
                   description: |
                     Indication whether the shipment may be delivered in parts:
-                    - DIRECT; the order may be delivered in parts and incomplete delivery is permitted (is also linked to 'BackorderIndication' on line level)
-                    - ONDELIVERYDATE; the order may not be delivered in parts, but incomplete delivery is permitted. The reference moment for this is the order release for the delivery date. The order is then cancelled for the part not to be delivered and will only be executed for the part to be delivered. , - NEVER; the order may not be delivered in parts and incomplete delivery is not permitted. The reference moment for this is the order release for the delivery date. The entire order is cancelled if the full order cannot be delivered in one delivery."
+                    - ONDELIVERYDATE; the order may not be delivered in parts, but incomplete delivery is permitted. The reference moment for this is the order release for the delivery date. The order is then cancelled for the part not to be delivered and will only be executed for the part to be delivered.
+                    - NEVER; the order may not be delivered in parts and incomplete delivery is not permitted. The reference moment for this is the order release for the delivery date. The entire order is cancelled if the full order cannot be delivered in one delivery."
                   maxLength: 14
                   enum:
                     - ONDELIVERYDATE
@@ -1551,8 +1551,6 @@ paths:
                             type: string
                             description: |
                               A type of party/address that applies to the order:
-                              - BuyerId; buyer, (known to Modexpress as a business relation based on **Id** or **ExternId** of the party, only for the placeOrder operation)
-                              - ReceiverId; receiver/recipient/consignee, (known to Modexpress as a business relation based on 'Id' of the party, only for the placeOrder operation)
                               - ReceiverAddress; receiver/recipient/consignee address,
                               - SellerAddress; Seller/Shipper address (only for the placeOrder operation)
                               - BuyerAddress; buyer address (only for the placeOrder operation)
@@ -1726,7 +1724,7 @@ paths:
                               Indication of the instruction by means of a code:
                               - In case of VAS an example code is 10 (= remove price label F,GOH)
                               - In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')
-                              - In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**
+                              - In case of HANDLING the specific codes in use are **SOURCE**, **PICK** and **CONTENTLBL**
                               - In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**, **EXTDOC**
                               - In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**
                               - In case of COVERPRT the specific codes in use are **TYNOTE**, **TEMPLATE**
@@ -1921,7 +1919,7 @@ paths:
                                         Indication of the instruction by means of a code:
                                         - In case of VAS an example code is 10 (= remove price label F,GOH)
                                         - In case of VAS the code **COD** is used to indicate a Cash On Delivery form has to be printed (also necessary OrderLine,Price type 'Sale' and if necessary Order,FinInfo type 'CodSurcharge')
-                                        - In case of HANDLING the specific codes in use are **SOURCE** and **PACKINGSLP**
+                                        - In case of HANDLING the specific codes in use are **SOURCE**, **PICK** and **CONTENTLBL**
                                         - In case of FILE the specific codes in use are **PRICELABEL**, **INVOICE**, **THXNOTE**, **EXTDOC**
                                         - In case of TEXT the specific codes in use are **VATNUMBER**, **COCNUMBER**, **CEONAME**
                                         - In case of COVERPRT the specific codes in use are **TYNOTE**, **TEMPLATE**
