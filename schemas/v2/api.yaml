@@ -279,7 +279,6 @@ paths:
                                       description: The value that applies to the SKU for the specified type of information.
                                       type: string
                                       minLength: 1
-                                      maxLength: 250
                                   required:
                                     - Type
                                     - Value
@@ -322,6 +321,8 @@ paths:
                                         - SIZE2
                                         - SEASON
                                         - TARIC
+                                        - GENDER
+                                        - AGE_GROUP
                                     Value:
                                       description: |
                                         The value that applies to the SKU for the specified type:
@@ -332,6 +333,8 @@ paths:
                                         - SEASON (**maximum length**: 35); the season of the SKU
                                         - TARIC (**maximum length**: 10); the TARIC of the SKU (part of it is the HS code), The TARIC is 10 positions or 8 positions supplemented with '00'.
                                           A 10 positions Taric is mandatory for Customs enabled customers.
+                                        - GENDER: Required for Customs enabled customers if applicable to the item.
+                                        - AGE_GROUP: Required for Customs enabled customers if applicable to the item.
                                       type: string
                                       minLength: 1
                                       maxLength: 70
