@@ -9,6 +9,10 @@ $Date: 2024-03-07 10:00:00 +0200 $
 	<xs:simpleType name="Text">
 		<xs:restriction base="xs:normalizedString"/>
 	</xs:simpleType>
+	<xs:simpleType name="Text1">
+		<xs:restriction base="xs:normalizedString"/>
+			<xs:minLength value="1"/>
+	</xs:simpleType>
 	<xs:simpleType name="Text2">
 		<xs:restriction base="xs:normalizedString">
 			<xs:minLength value="1"/>

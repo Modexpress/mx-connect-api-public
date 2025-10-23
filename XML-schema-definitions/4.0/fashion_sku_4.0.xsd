@@ -270,12 +270,12 @@ Particularly if the value of the type is a code, it can also be relevant to spec
 Only types agreed in advance with Modexpress can be indicated. An information element is included if it must be indicated in a document or if it is relevant in the operation (for example to display when executing an order related to the SKU).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Value" type="tns:Text250">
+			<xs:element name="Value" type="tns:Text1">
 				<xs:annotation>
 					<xs:documentation>The value that applies to the SKU for the speccified type of information
 
 - MATERIAL - material name (A70)
-- FABRIC - Fabric composition (A250)
+- FABRIC - Fabric composition (-)
 - BRANDNM - Name of the brand (A70)
 - RETPRIJS - Retail price (A70)</xs:documentation>
 				</xs:annotation>
@@ -309,7 +309,9 @@ Only types agreed in advance with Modexpress can be indicated. An information el
 - SIZE2
 - SEASON
 - TARIC
-- CUSTSTYLE</xs:documentation>
+- CUSTSTYLE
+- GENDER
+- AGE_GROUP</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Value" type="tns:Text70">
@@ -321,7 +323,8 @@ Only types agreed in advance with Modexpress can be indicated. An information el
 - SIZE2 (A35); a second size of the SKU (for example measure of length)
 - SEASON (A35); the season of the SKU
 - TARIC (A10); the TARIC of the SKU (part of it is the HS code), The TARIC is 10 positions or 8 positions supplemented with '00'.
-- CUSTSTYLE (A17); the style name/number of the SKU for customs declaration</xs:documentation>
+- GENDER: Required for Customs enabled customers if applicable to the item.
+- AGE_GROUP: Required for Customs enabled customers if applicable to the item.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Description" type="tns:OText240" minOccurs="0">
