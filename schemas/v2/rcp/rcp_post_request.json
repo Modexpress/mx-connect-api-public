@@ -89,12 +89,13 @@
                     "type": "object",
                     "properties": {
                       "Type": {
-                        "description": "Designation of a party/address that applies to the order:\n - SellerAddress; the shipper/seller of the shipment\n - ExporterAddress; the exporter of the shipment (not necessarily the seller)\n (when ExportAddress is not provided SellerAddress is used as ExporterAddress)\n\n Mandatory for Customs enabled Customers.\n \"ShipperAddress\" has been replaced with \"SellerAddress\" in this version of the RCP message. \n",
+                        "description": "Designation of a party/address that applies to the order:\n - SellerAddress; the shipper/seller of the shipment\n - ExporterAddress; the exporter of the shipment (not necessarily the seller)\n (when ExportAddress is not provided SellerAddress is used as ExporterAddress)\n - FactoryAddress; the factory/address where the goods are produced. \n\n Mandatory for Customs enabled Customers.\n \"ShipperAddress\" has been replaced with \"SellerAddress\" in this version of the RCP message. \n",
                         "type": "string",
                         "maxLength": 20,
                         "enum": [
                           "SellerAddress",
-                          "ExporterAddress"
+                          "ExporterAddress",
+                          "FactoryAddress"
                         ]
                       },
                       "ExternalId": {

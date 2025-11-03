@@ -689,6 +689,7 @@ paths:
                                        - SellerAddress; the shipper/seller of the shipment
                                        - ExporterAddress; the exporter of the shipment (not necessarily the seller)
                                        (when ExportAddress is not provided SellerAddress is used as ExporterAddress)
+                                       - FactoryAddress; the factory/address where the goods are produced. 
 
                                        Mandatory for Customs enabled Customers.
                                        "ShipperAddress" has been replaced with "SellerAddress" in this version of the RCP message. 
@@ -697,6 +698,7 @@ paths:
                                     enum:
                                       - SellerAddress
                                       - ExporterAddress
+                                      - FactoryAddress
                                   ExternalId:
                                     description: The Id that is used as the identification of the party/address.
                                     type: string
