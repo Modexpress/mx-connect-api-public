@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2020 (x64) (http://www.altova.com) by Bruno Chaves (Modexpress B.V.) -->
-<!--  $Revision: 240306-1 $
-$Date: 2024-03-06 16:00:00 +0200$
+<!--  $Revision: 251103 $
+$Date: 2025-11-03 09:30:00 +0200$
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
@@ -13,6 +13,7 @@ $Date: 2024-03-06 16:00:00 +0200$
 			<xs:maxLength value="20"/>
 			<xs:enumeration value="SellerAddress"/>
 			<xs:enumeration value="ExporterAddress"/>
+			<xs:enumeration value="FactoryAddress"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="FinInfoType">
