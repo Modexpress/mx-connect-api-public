@@ -1106,6 +1106,7 @@ paths:
                                       BI - Bin
                                       SW - Shrink Packaging
                                       PK - Packaging
+                                      XX - Dummy package (to work around the API validation, it needs to be manually corrected in the mxconnect portal!)
 
                                       PP should only be used to denote Hanging Goods.
                                       Other types may be added at a later stage. 
