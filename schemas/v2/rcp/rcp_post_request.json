@@ -502,7 +502,8 @@
                           "PX",
                           "BI",
                           "SW",
-                          "PK"
+                          "PK",
+                          "XX"
                         ]
                       },
                       "Quantity": {
