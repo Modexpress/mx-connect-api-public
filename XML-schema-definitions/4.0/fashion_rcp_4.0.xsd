@@ -172,6 +172,11 @@ N - Received goods will be directly cleared into EU by arrival at Modexpress.
 Only applicable for Customs enabled Customers.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Trackings" type="tns:Trackings" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Trackings that apply to the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Parties" type="tns:Parties" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The parties/addresses that apply to the order.</xs:documentation>
@@ -187,6 +192,29 @@ Examples of an instruction include 'remove price tag' or 'remove security tag'.<
 			<xs:element name="PurchaseOrderLines" type="tns:PurchaseOrderLines">
 				<xs:annotation>
 					<xs:documentation>The lines of the purchase order (PO/RMA).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Trackings">
+		<xs:sequence>
+			<xs:element name="Tracking" type="tns:Tracking" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A Tracking that applies to the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Tracking">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Tracking number of the order package</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Url" type="tns:Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tracking URL of the order package</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
