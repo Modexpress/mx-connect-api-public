@@ -675,6 +675,24 @@ paths:
                           enum:
                             - 'Y'
                             - 'N'
+                        Trackings:
+                          type: object
+                          properties:
+                            Tracking:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Id:
+                                    description: |
+                                      Tracking Number of the incoming package, this allows Modexpress to identify the package by scanning the tracking number on the package. 
+                                    type: string
+                                  Url:
+                                    description: |
+                                      Tracking URL of the incoming package, this allows Modexpress to trace the incoming package. 
+                                    type: string
+                                required:
+                                  - Id
                         Parties:
                           type: object
                           properties:
