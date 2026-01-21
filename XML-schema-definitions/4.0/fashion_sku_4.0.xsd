@@ -112,6 +112,11 @@ NOTE: Set is not to be confused with a PrePack that is a SKU composed of multipl
 Default behaviour when this field is not populated is that REGULAR is used for articles without composition, and PREPACK for articles with composition.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="DigitalProductPassportUrl" type="tns:Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Url of the digital product passport</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Owner" type="tns:Relation"/>
 			<xs:element name="Identifications" type="tns:Identifications" minOccurs="0">
 				<xs:annotation>
