@@ -115,6 +115,9 @@ paths:
                               - SET
                               - COMPONENT
                             example: REGULAR
+                          DigitalProductPassportUrl:
+                            description: Url of the digital product passport.
+                            type: string
                           Owner:
                             type: object
                             minProperties: 2
