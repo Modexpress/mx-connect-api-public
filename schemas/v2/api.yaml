@@ -678,6 +678,17 @@ paths:
                           enum:
                             - 'Y'
                             - 'N'
+                        ForceConceptStatus:
+                          description: |
+                            This parameter overrules the configuration of inbound orders, if populated with: 
+                            Y, then the inbound order will be placed on Concept status and can be modified on the MX Connect portal before final submission. 
+                            N, then the order will be automatically submitted (status New).  
+                            If this parameter is not populated, the default value set in the MX Connect portal will be used. 
+                          type: string
+                          maxLength: 1
+                          enum:
+                            - 'Y'
+                            - 'N'
                         Trackings:
                           type: object
                           properties:

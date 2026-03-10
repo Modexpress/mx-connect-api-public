@@ -80,6 +80,15 @@
                 "N"
               ]
             },
+            "ForceConceptStatus": {
+              "description": "This parameter overrules the configuration of inbound orders, if populated with: \nY, then the inbound order will be placed on Concept status and can be modified on the MX Connect portal before final submission. \nN, then the order will be automatically submitted (status New).  \nIf this parameter is not populated, the default value set in the MX Connect portal will be used. \n",
+              "type": "string",
+              "maxLength": 1,
+              "enum": [
+                "Y",
+                "N"
+              ]
+            },
             "Trackings": {
               "type": "object",
               "properties": {
