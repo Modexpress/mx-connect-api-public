@@ -581,6 +581,16 @@ paths:
       externalDocs:
         url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/rcp/rcp_post_request.json'
         description: Request body **JSON schema**
+      parameters:
+        - in: query
+          name: push_rabbitmq
+          schema:
+            type: boolean
+          description: |
+            This parameter overrules the configuration of inbound orders, if populated with: 
+            0, then the inbound order will be placed on Concept status and can be modified on the MX Connect portal before final submission. 
+            1, then the order will be automatically submitted (status New) (default behaviour).  
+            This requires the backend "supplier_order_concept_force" to be set to 0 (disabled).
       requestBody:
         description: The receipt order request body
         content:
