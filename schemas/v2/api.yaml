@@ -585,7 +585,10 @@ paths:
         - in: query
           name: push_rabbitmq
           schema:
-            type: boolean
+            type: integer
+            enum:
+              - 0
+              - 1
           description: |
             This parameter overrules the configuration of inbound orders, if populated with: 
             0, then the inbound order will be placed on Concept status and can be modified on the MX Connect portal before final submission. 
