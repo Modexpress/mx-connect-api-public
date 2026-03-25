@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 220412 $ 
-$Date: 2022-04-22 16:30:00 +0200 (Tue, 12 Apr 2022) $
+<!--  $Revision: 260325 $ 
+$Date: 2026-03-26 12:30:00 +0200 (Wed, 26 Mar 2026) $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_confirm_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_confirm_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
@@ -83,7 +83,7 @@ The XDOCKLOT orders are reported as PURCHASE.</xs:documentation>
 In case of an automatically created return order the subtype will be 'AUTOMATISCH'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Reference" type="tns:OText20" minOccurs="0">
+			<xs:element name="Reference" type="tns:OText50" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Reference for the order used by the ordering party.
 
