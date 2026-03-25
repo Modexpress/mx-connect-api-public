@@ -645,9 +645,11 @@ paths:
                           type: string
                           maxLength: 20
                         Reference:
-                          description: Reference for the order used by the ordering party.
+                          description: |
+                            Reference for the order used by the ordering party.
+                            This reference is visible on WMS, but can't be used on the receipt process (scanning).
                           type: string
-                          maxLength: 20
+                          maxLength: 50
                         SenderInternalId:
                           description: |
                             Identification of the party that delivers the goods for the order. The party must be known to Modexpress by the relevant Id. 
@@ -1533,10 +1535,9 @@ paths:
                               Reference for the order used by the ordering party.
                               In the case of an automatically created return order, this
                               refers to the shipment (SHP) for which the return order was created.
-                              The reference is to the Order.Id (SHP 3-1-01). However, this is only
-                              possible when the format of the Order.Id is a maximum of A20.
+                              The reference is to the Order.Id (SHP 3-1-01).
                             type: string
-                            maxLength: 20
+                            maxLength: 50
                           SenderInternalId:
                             type: integer
                             minimum: 1

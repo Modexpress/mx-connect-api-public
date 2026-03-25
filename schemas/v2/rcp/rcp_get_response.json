@@ -38,9 +38,9 @@
               "maxLength": 20
             },
             "Reference": {
-              "description": "Reference for the order used by the ordering party.\nIn the case of an automatically created return order, this\nrefers to the shipment (SHP) for which the return order was created.\nThe reference is to the Order.Id (SHP 3-1-01). However, this is only\npossible when the format of the Order.Id is a maximum of A20.\n",
+              "description": "Reference for the order used by the ordering party.\nIn the case of an automatically created return order, this\nrefers to the shipment (SHP) for which the return order was created.\nThe reference is to the Order.Id (SHP 3-1-01).\n",
               "type": "string",
-              "maxLength": 20
+              "maxLength": 50
             },
             "SenderInternalId": {
               "type": "integer",

@@ -40,9 +40,9 @@
               "maxLength": 20
             },
             "Reference": {
-              "description": "Reference for the order used by the ordering party.",
+              "description": "Reference for the order used by the ordering party.\nThis reference is visible on WMS, but can't be used on the receipt process (scanning).\n",
               "type": "string",
-              "maxLength": 20
+              "maxLength": 50
             },
             "SenderInternalId": {
               "description": "Identification of the party that delivers the goods for the order. The party must be known to Modexpress by the relevant Id. \n**Note**: Id assigned by Modexpress\n",
