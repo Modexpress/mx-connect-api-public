@@ -582,6 +582,13 @@ $Date: 2024-03-07 10:00:00 +0200 $
 			<xs:enumeration value="CUSTSTYLE"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="SizeType">
+		<xs:restriction base="xs:normalizedString">
+			<xs:maxLength value="10"/>
+			<xs:enumeration value="SIZE"/>
+			<xs:enumeration value="SIZE2"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="StorageType">
 		<xs:restriction base="xs:normalizedString">
 			<xs:maxLength value="3"/>
