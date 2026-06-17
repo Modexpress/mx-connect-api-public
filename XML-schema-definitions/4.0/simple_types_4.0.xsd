@@ -582,11 +582,12 @@ $Date: 2024-03-07 10:00:00 +0200 $
 			<xs:enumeration value="CUSTSTYLE"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="SizeType">
+	<xs:simpleType name="LabelType">
 		<xs:restriction base="xs:normalizedString">
-			<xs:maxLength value="10"/>
-			<xs:enumeration value="SIZE"/>
-			<xs:enumeration value="SIZE2"/>
+			<xs:maxLength value="35"/>
+			<xs:enumeration value="REGIONAL_SIZE"/>
+			<xs:enumeration value="REGIONAL_SIZE2"/>
+			<xs:enumeration value="REGIONAL_COLOURNAME"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="StorageType">

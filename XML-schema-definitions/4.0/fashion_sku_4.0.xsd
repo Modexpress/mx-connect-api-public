@@ -140,7 +140,7 @@ These values are not visible on our frontend systems (such as customer portal) a
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Characteristics" type="tns:Characteristics" minOccurs="0"/>
-			<xs:element name="Sizes" type="tns:Sizes" minOccurs="0"/>
+			<xs:element name="Labels" type="tns:Labels" minOccurs="0"/>
 			<xs:element name="Composition" type="tns:Composition" minOccurs="0"/>
 			<xs:element name="Prices" type="tns:Prices" minOccurs="0"/>
 			<xs:element name="PackagingUnits" type="tns:PackagingUnits" minOccurs="0"/>
@@ -354,36 +354,38 @@ If there are several size groups in use, the sortingnumber must be unique for th
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="Sizes">
+	<xs:complexType name="Labels">
 		<xs:annotation>
-			<xs:documentation>Size attributes of the SKU. </xs:documentation>
+			<xs:documentation>attributes of the SKU. </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Size" type="tns:Size" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="Label" type="tns:Label" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Size attribute of the SKU.</xs:documentation>
+					<xs:documentation>attribute of the SKU.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="Size">
+	<xs:complexType name="Label">
 		<xs:annotation>
 			<xs:documentation>Size attribute of the SKU.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Type" type="tns:SizeType">
+			<xs:element name="Type" type="tns:LabelType">
 				<xs:annotation>
-					<xs:documentation>Size characteristic that is relevant for the SKU.
-- SIZE
-- SIZE2
+					<xs:documentation>The type of label/display attribute. Agreed types with Modexpress, example:
+- REGIONAL_SIZE: Regional size code variant
+- REGIONAL_SIZE2: Secondary regional size code length variant
+- REGIONAL_COLOURNAME: Localised colour name per region
+
+Only types agreed in advance with Modexpress can be used.
+
 </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Value" type="tns:Text35">
+			<xs:element name="Value" type="tns:Text">
 				<xs:annotation>
-					<xs:documentation>The value that applies to the SKU for the specified type:
-- SIZE (A35); the size of the SKU (the size code)
-- SIZE2 (A35); a second size of the SKU (for example measure of length)</xs:documentation>
+					<xs:documentation>The value that applies to the SKU of the specified type.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 
@@ -395,9 +397,9 @@ In case of type SIZE/SIZE2 the sortingnumber of the size codes (in attribute val
 If there are several size groups in use, the sortingnumber must be unique for the size codes within the size group. However the size group is not known in the Modexpress SKU registration, so for the packing slip the SKU style is used to determine the size codes that have to be used on the packing slip. The sortingnumber is used to determine the order of the size codes on the packing slip.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="RegionCode" type="tns:Text2">
+			<xs:element name="RegionCode" type="tns:Text2" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Region or country identification code, where the size code is valid on. </xs:documentation>
+					<xs:documentation>Region or country identification code, where the size code is valid on. Required for REGIONAL% Types</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
