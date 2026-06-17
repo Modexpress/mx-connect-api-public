@@ -336,38 +336,38 @@
                 },
                 "additionalProperties": false
               },
-              "Sizes": {
+              "Labels": {
                 "type": "object",
                 "properties": {
-                  "Size": {
+                  "Label": {
                     "type": "array",
                     "items": {
                       "type": "object",
                       "properties": {
                         "Type": {
-                          "description": "A characteristic that is relevant for the SKU.",
+                          "description": "The type of label/display attribute. Agreed types with Modexpress, f.e.:\n- REGIONAL_SIZE: Regional size code variant\n- REGIONAL_SIZE2: Secondary regional size code length variant\n- REGIONAL_COLOURNAME: Localised colour name per region\n\nOnly types agreed in advance with Modexpress can be used.\n",
                           "type": "string",
                           "minLength": 1,
-                          "maxLength": 10,
+                          "maxLength": 35,
                           "enum": [
-                            "SIZE",
-                            "SIZE2"
+                            "REGIONAL_SIZE",
+                            "REGIONAL_SIZE2",
+                            "REGIONAL_COLOURNAME"
                           ]
                         },
                         "Value": {
-                          "description": "The value that applies to the SKU for the specified type:\n- SIZE (A35); the size of the SKU (the size code)\n- SIZE2 (A35); a second size of the SKU (for example measure of length)\n",
+                          "description": "The value that applies to the SKU for the specified type.\n",
                           "type": "string",
-                          "minLength": 1,
-                          "maxLength": 35
+                          "minLength": 1
                         },
                         "SortingNumber": {
-                          "description": "A number that specifies the sequence of the size codes (relevant for type SIZE/SIZE2). The number is used to specify the display order on documents.\\r\\n\\r\\nIn case of type SIZE/SIZE2 the sortingnumber of the size codes (in attribute value) is particularly relevant if the size codes cannot be logically sorted. For example in case of size codes like XS, X, M, XXL.\\r\\nIf there are several size groups in use, the sortingnumber must be unique for the size codes within the size group. However the size group is not known in the Modexpress SKU registration, so for the document the SKU style is used to determine the size codes that have to be used on the document. The sortingnumber is used to determine the order of the size codes on the packing slip.\n",
+                          "description": "A number that specifies the sequence of the size codes (relevant for type REGIONAL_SIZE/REGIONAL_SIZE2). The number is used to specify the display order on documents.\\r\\n\\r\\nIn case of type SIZE/SIZE2 the sortingnumber of the size codes (in attribute value) is particularly relevant if the size codes cannot be logically sorted. For example in case of size codes like XS, X, M, XXL.\\r\\nIf there are several size groups in use, the sortingnumber must be unique for the size codes within the size group. However the size group is not known in the Modexpress SKU registration, so for the document the SKU style is used to determine the size codes that have to be used on the document. The sortingnumber is used to determine the order of the size codes on the packing slip.\n",
                           "type": "integer",
                           "minimum": 0,
                           "maximum": 9999
                         },
                         "RegionCode": {
-                          "description": "Region or country identification code, where the size code is valid on. \n",
+                          "description": "Region or country identification code, where the size code is valid on. \nRequired for REGIONAL% Types\n",
                           "type": "string",
                           "minLength": 2,
                           "maxLength": 2
@@ -375,8 +375,7 @@
                       },
                       "required": [
                         "Type",
-                        "Value",
-                        "RegionCode"
+                        "Value"
                       ]
                     }
                   }
