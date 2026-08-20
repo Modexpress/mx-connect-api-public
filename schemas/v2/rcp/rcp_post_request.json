@@ -554,7 +554,7 @@
                     "type": "object",
                     "properties": {
                       "Type": {
-                        "description": "Indication of the type of documents.\n\n- PL: PackingList -> N721\n- BL: BillOfLading (Sea)->N705\n- AWB: AirWayBill (Air)->N740\n- CMR: Convention relative au Contrat de Transport International de Marchandises par Route (Road)->N730\n- CIM: Contrat de Transport International ferroviaire des Marchandises (Rail) -> N720\n- HWB: House(air)WayBill (in case of consolidation, Master (Air)Way Bill is applicable) -> N703\n\nBL, AWB,  CIM or HWB is mandatory for Sea, Air and Rail transport modes + PL for inbound shipments coming from abroad (outside NL)\n",
+                        "description": "Indication of the type of documents.\n\n- PL: PackingList -> N721\n- BL: BillOfLading (Sea)->N705\n- AWB: AirWayBill (Air)->N740\n- CMR: Convention relative au Contrat de Transport International de Marchandises par Route (Road)->N730\n- CIM: Contrat de Transport International ferroviaire des Marchandises (Rail) -> N720\n- HWB: House(air)WayBill (in case of consolidation, Master (Air)Way Bill is applicable) -> N703\n- STM_DOC: Supporting document containing a preferential origin statement issued by the manufacturer (rather than the supplier), used when the supplier is not the manufacturer itself. In such cases, the manufacturer may include an \"invoice statement\" on their own accompanying documentation to the supplier, which is then passed along as proof of preferential origin.\nBL, AWB,  CIM or HWB is mandatory for Sea, Air and Rail transport modes + PL for inbound shipments coming from abroad (outside NL)\n",
                         "type": "string",
                         "maxLength": 30,
                         "enum": [
@@ -563,7 +563,8 @@
                           "AWB",
                           "CMR",
                           "CIM",
-                          "HWB"
+                          "HWB",
+                          "STM_DOC"
                         ]
                       },
                       "Identification": {

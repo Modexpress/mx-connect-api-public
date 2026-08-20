@@ -1233,7 +1233,7 @@ paths:
                                       - CMR: Convention relative au Contrat de Transport International de Marchandises par Route (Road)->N730
                                       - CIM: Contrat de Transport International ferroviaire des Marchandises (Rail) -> N720
                                       - HWB: House(air)WayBill (in case of consolidation, Master (Air)Way Bill is applicable) -> N703
-
+                                      - STM_DOC: Supporting document containing a preferential origin statement issued by the manufacturer (rather than the supplier), used when the supplier is not the manufacturer itself. In such cases, the manufacturer may include an "invoice statement" on their own accompanying documentation to the supplier, which is then passed along as proof of preferential origin.
                                       BL, AWB,  CIM or HWB is mandatory for Sea, Air and Rail transport modes + PL for inbound shipments coming from abroad (outside NL)
                                     type: string
                                     maxLength: 30
@@ -1244,6 +1244,7 @@ paths:
                                       - CMR
                                       - CIM
                                       - HWB
+                                      - STM_DOC
                                   Identification:
                                     description: |
                                       Document identification
