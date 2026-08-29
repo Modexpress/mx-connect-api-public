@@ -73,34 +73,6 @@
               "type": "array",
               "minItems": 2,
               "description": "Must include at least one ExporterAddress and one ConsigneeAddress. SupplierAddress is optional and may additionally be included.\n",
-              "allOf": [
-                {
-                  "contains": {
-                    "type": "object",
-                    "required": [
-                      "Type"
-                    ],
-                    "properties": {
-                      "Type": {
-                        "const": "ExporterAddress"
-                      }
-                    }
-                  }
-                },
-                {
-                  "contains": {
-                    "type": "object",
-                    "required": [
-                      "Type"
-                    ],
-                    "properties": {
-                      "Type": {
-                        "const": "ConsigneeAddress"
-                      }
-                    }
-                  }
-                }
-              ],
               "items": {
                 "type": "object",
                 "required": [
@@ -179,7 +151,9 @@
                     "type": "string",
                     "anyOf": [
                       {
-                        "const": ""
+                        "enum": [
+                          ""
+                        ]
                       },
                       {
                         "minLength": 3,
@@ -193,7 +167,9 @@
                     "type": "string",
                     "anyOf": [
                       {
-                        "const": ""
+                        "enum": [
+                          ""
+                        ]
                       },
                       {
                         "minLength": 4,
@@ -201,27 +177,6 @@
                         "pattern": "^[A-Za-z0-9]+$"
                       }
                     ]
-                  }
-                },
-                "if": {
-                  "properties": {
-                    "Type": {
-                      "const": "ExporterAddress"
-                    }
-                  }
-                },
-                "then": {
-                  "required": [
-                    "EoriNumber",
-                    "VatNumber"
-                  ],
-                  "properties": {
-                    "EoriNumber": {
-                      "minLength": 3
-                    },
-                    "VatNumber": {
-                      "minLength": 4
-                    }
                   }
                 }
               }
@@ -276,19 +231,6 @@
                     "description": "Base64-encoded document content.\n",
                     "type": "string"
                   }
-                },
-                "if": {
-                  "properties": {
-                    "InfoType": {
-                      "const": "Invoice"
-                    }
-                  }
-                },
-                "then": {
-                  "required": [
-                    "Description",
-                    "Date"
-                  ]
                 }
               }
             }
