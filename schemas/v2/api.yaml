@@ -1234,7 +1234,8 @@ paths:
                                       - CIM: Contrat de Transport International ferroviaire des Marchandises (Rail) -> N720
                                       - HWB: House(air)WayBill (in case of consolidation, Master (Air)Way Bill is applicable) -> N703
                                       - STM_DOC: Supporting document containing a preferential origin statement issued by the manufacturer (rather than the supplier), used when the supplier is not the manufacturer itself. In such cases, the manufacturer may include an "invoice statement" on their own accompanying documentation to the supplier, which is then passed along as proof of preferential origin.
-                                      BL, AWB,  CIM or HWB is mandatory for Sea, Air and Rail transport modes + PL for inbound shipments coming from abroad (outside NL)
+                                      BL, AWB,  CIM or HWB is mandatory for Sea, Air and Rail transport modes + PL for inbound shipments coming from abroad (outside NL).
+                                      Each document type may only be used once per RCP.
                                     type: string
                                     maxLength: 30
                                     enum:
@@ -4168,7 +4169,7 @@ paths:
       responses:
         '200':
           description: successful operation
-  /opr:
+  /opr_bom:
     post:
       tags:
         - OPR
@@ -4176,7 +4177,7 @@ paths:
       operationId: outwardProcessingFormData
       description: The request to register an Outward Processing component
       externalDocs:
-        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/opr/opr_post_request.json'
+        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/opr_bom/opr_bom_post_request.json'
         description: Request body **JSON schema**
       requestBody:
         description: The Outward Processing Bill of Material data request body
@@ -4243,6 +4244,504 @@ paths:
                                         Yield included true or false.
                                       type: boolean
                                       example: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  result:
+                    type: object
+                    properties:
+                      Id:
+                        type: string
+                  message:
+                    type: string
+                    nullable: true
+  /opr_export:
+    post:
+      tags:
+        - OPR
+      summary: OPR Export MRN POST request
+      operationId: outwardProcessingExportMrnFormData
+      description: The request to register the Export MRN data for an Outward Processing movement
+      externalDocs:
+        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/opr_export/opr_export_post_request.json'
+        description: Request body **JSON schema**
+      requestBody:
+        description: The Outward Processing Export MRN data request body
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Export
+              properties:
+                Export:
+                  type: object
+                  required:
+                    - ExportMrn
+                    - OprAllowance
+                    - InfDocument
+                    - TimeDelivery
+                    - Sender
+                    - Parties
+                    - AdditionalFinInfo
+                    - Documents
+                    - ExportLines
+                  properties:
+                    ExportMrn:
+                      description: |
+                        Movement Reference Number (MRN) of the export declaration.
+                      type: string
+                      minLength: 18
+                      maxLength: 18
+                      example: 22ITQL002000000123
+                    OprAllowance:
+                      description: |
+                        Reference of the customs authorisation w.r.t. OPR.
+                      type: string
+                      minLength: 5
+                      maxLength: 35
+                      example: BEOPOBE000703-2021-XPV12345
+                    InfDocument:
+                      description: |
+                        Reference to the customs INF (information sheet) document.
+                      type: string
+                      minLength: 5
+                      maxLength: 20
+                      example: INF-IDENTIFICATION
+                    TimeDelivery:
+                      description: |
+                        Date of export, as mentioned on the MRN of the Export of the material(s).
+                      type: string
+                      format: date
+                    Sender:
+                      type: object
+                      required:
+                        - Name
+                        - EORI
+                      properties:
+                        Name:
+                          description: |
+                            The EU supplier of the materials, as stated on the invoice w.r.t. materials.
+                          type: string
+                          minLength: 1
+                          maxLength: 80
+                        EORI:
+                          description: |
+                            EORI number of the EU supplier. Letters and digits only, no spaces, underscores or other separators.
+                          type: string
+                          minLength: 3
+                          maxLength: 17
+                          pattern: '^[A-Za-z0-9]+$'
+                    Parties:
+                      type: object
+                      required:
+                        - Party
+                      properties:
+                        Party:
+                          type: array
+                          minItems: 2
+                          description: |
+                            Must include at least one ExporterAddress and one ConsigneeAddress. SupplierAddress is optional and may additionally be included.
+                          allOf:
+                            - contains:
+                                type: object
+                                required:
+                                  - Type
+                                properties:
+                                  Type:
+                                    const: ExporterAddress
+                            - contains:
+                                type: object
+                                required:
+                                  - Type
+                                properties:
+                                  Type:
+                                    const: ConsigneeAddress
+                          items:
+                            type: object
+                            required:
+                              - Type
+                              - Name1
+                              - AddressLine1
+                              - PostalCode
+                              - City
+                              - Country
+                              - ExternalId
+                            properties:
+                              Type:
+                                type: string
+                                enum:
+                                  - ExporterAddress
+                                  - ConsigneeAddress
+                                  - SupplierAddress
+                              Name1:
+                                description: |
+                                  Full name of the party.
+                                type: string
+                                minLength: 1
+                              Name2:
+                                type: string
+                              AddressLine1:
+                                type: string
+                                minLength: 1
+                                maxLength: 50
+                              AddressLine2:
+                                description: |
+                                  Optional additional line in case addressline exceeds 50 char.
+                                type: string
+                                maxLength: 50
+                              HouseNumber:
+                                description: |
+                                  Optional when the house number is already part of AddressLine1.
+                                type: integer
+                                minimum: 1
+                                maximum: 999999
+                              HouseNumberExtension:
+                                description: |
+                                  The house number addition that applies to the party.
+                                type: string
+                                maxLength: 10
+                              PostalCode:
+                                description: |
+                                  The postal code / ZIP code that applies to the party.
+                                type: string
+                                maxLength: 20
+                              City:
+                                description: |
+                                  The town/city that applies to the party.
+                                type: string
+                                minLength: 1
+                              Country:
+                                description: |
+                                  The country that applies to the party according to ISO 3166 ALPHA-2 country code.
+                                type: string
+                                minLength: 2
+                                maxLength: 2
+                                example: NL
+                              ExternalId:
+                                type: string
+                                minLength: 1
+                              MidCode:
+                                description: |
+                                  Optional.
+                                type: string
+                              EoriNumber:
+                                description: |
+                                  Mandatory for ExporterAddress. Optional for ConsigneeAddress and SupplierAddress, since these may (theoretically) be based outside the EU. When present: letters and digits only (no spaces, underscores or other separators), length 3-17. Left as an empty string when not applicable.
+                                type: string
+                                anyOf:
+                                  - const: ''
+                                  - minLength: 3
+                                    maxLength: 17
+                                    pattern: '^[A-Za-z0-9]+$'
+                              VatNumber:
+                                description: |
+                                  Mandatory for ExporterAddress. Optional for ConsigneeAddress and SupplierAddress, since these may (theoretically) be based outside the EU. When present: letters and digits only (no spaces, underscores or other separators), length 4-17. Left as an empty string when not applicable.
+                                type: string
+                                anyOf:
+                                  - const: ''
+                                  - minLength: 4
+                                    maxLength: 17
+                                    pattern: '^[A-Za-z0-9]+$'
+                            if:
+                              properties:
+                                Type:
+                                  const: ExporterAddress
+                            then:
+                              required:
+                                - EoriNumber
+                                - VatNumber
+                              properties:
+                                EoriNumber:
+                                  minLength: 3
+                                VatNumber:
+                                  minLength: 4
+                    AdditionalFinInfo:
+                      type: object
+                      required:
+                        - FinInfo
+                      properties:
+                        FinInfo:
+                          type: array
+                          minItems: 1
+                          items:
+                            type: object
+                            required:
+                              - InfoType
+                              - Amount
+                              - CurrencyCode
+                            properties:
+                              InfoType:
+                                description: |
+                                  Indication of the type of financial information e.g. Invoice, Freightcost.
+                                type: string
+                                enum:
+                                  - Invoice
+                                  - Freightcost
+                                  - Insurancecost
+                              Description:
+                                description: |
+                                  The unique document number as stated on the document.
+                                  Mandatory for infotyp Invoice, optional for other infotypes
+                                type: string
+                              Date:
+                                description: |
+                                  The date of issue of the document as stated on the document.
+                                  Mandatory for infotyp Invoice, optional for other infotypes
+                                type: string
+                                format: date
+                              Amount:
+                                type: number
+                              CurrencyCode:
+                                description: |
+                                  ISO 4217 currency code.
+                                type: string
+                                minLength: 3
+                                maxLength: 3
+                                example: EUR
+                              Docdata:
+                                description: |
+                                  Base64-encoded document content.
+                                type: string
+                            if:
+                              properties:
+                                InfoType:
+                                  const: Invoice
+                            then:
+                              required:
+                                - Description
+                                - Date
+                    Documents:
+                      type: object
+                      required:
+                        - Document
+                      properties:
+                        Document:
+                          type: array
+                          minItems: 2
+                          description: |
+                            At least 1 document of Type 'PL' is expected, plus 1 of the following: BL, AWB, CMR, CIM or HWB.
+                          items:
+                            type: object
+                            required:
+                              - Type
+                              - Identification
+                              - Docdata
+                            properties:
+                              Type:
+                                description: |
+                                  Indication of the type of documents belonging to the export.
+                                  - PL: PackingList -> N721
+                                  - BL: BillOfLading (Sea) -> N705
+                                  - AWB: AirWayBill (Air) -> N740
+                                  - CMR: Convention relative au Contrat de Transport International de Marchandises par Route (Road) -> N730
+                                  - CIM: Contrat de Transport International ferroviaire des Marchandises (Rail) -> N720
+                                  - HWB: House(air)WayBill (in case of consolidation, Master (Air)Way Bill is applicable) -> N703
+                                  Each documenttype may only be used once per Export.
+                                  EUR.1 for a EUR1Certificate in case applicable and/or CVO for a certificate of origin.
+                                type: string
+                                enum:
+                                  - PL
+                                  - BL
+                                  - AWB
+                                  - CMR
+                                  - CIM
+                                  - HWB
+                                  - EUR.1
+                                  - CVO
+                              Identification:
+                                type: string
+                                minLength: 1
+                              Docdata:
+                                description: |
+                                  Base64-encoded document content
+                                type: string
+                    ExportLines:
+                      type: object
+                      required:
+                        - ExportLine
+                      properties:
+                        ExportLine:
+                          type: array
+                          minItems: 1
+                          items:
+                            type: object
+                            required:
+                              - LineId
+                              - Article
+                              - Quantity
+                              - UnitOfMeasure
+                              - YieldPercentage
+                              - Amount
+                              - CurrencyCode
+                              - InvoiceDescription
+                            properties:
+                              LineId:
+                                description: |
+                                  Line_id reference of the Export MRN
+                                type: integer
+                                minimum: 1
+                              Article:
+                                type: object
+                                required:
+                                  - Id
+                                properties:
+                                  Id:
+                                    description: |
+                                      The identification that the supplier uses for the Material.
+                                      If the identification contains letters, they must be in uppercase.
+                                      Leading and trailing spaces are not allowed.
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 35
+                              Quantity:
+                                description: |
+                                  The quantity as stated on the proofing documents Invoice and/or Packlist
+                                type: number
+                                minimum: 0
+                                exclusiveMinimum: true
+                              UnitOfMeasure:
+                                type: string
+                                enum:
+                                  - PCE
+                                  - MTR
+                                  - SQM
+                              YieldPercentage:
+                                description: |
+                                  Yield Percentage as agreed with customs.
+                                type: number
+                                minimum: 0
+                                maximum: 100
+                              Amount:
+                                type: number
+                              CurrencyCode:
+                                description: |
+                                  ISO 4217 currency code.
+                                type: string
+                                minLength: 3
+                                maxLength: 3
+                                example: EUR
+                              InvoiceDescription:
+                                description: |
+                                  Reference to the applicable invoice for this ExportMRN. This InvoiceDescription must match with at least one of the Invoice descriptions mentioned at AdditionalFinInfo node.
+                                type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  result:
+                    type: object
+                    properties:
+                      Id:
+                        type: string
+                  message:
+                    type: string
+                    nullable: true
+  /opr_material:
+    post:
+      tags:
+        - OPR
+      summary: OPR Material POST request
+      operationId: outwardProcessingMaterialFormData
+      description: The request to register the Material master data used in an Outward Processing movement
+      externalDocs:
+        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/opr_material/opr_material_post_request.json'
+        description: Request body **JSON schema**
+      requestBody:
+        description: The Outward Processing Material data request body
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Articles
+              properties:
+                Articles:
+                  type: object
+                  required:
+                    - Article
+                  properties:
+                    Article:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - Id
+                          - Fabric
+                          - HSCode
+                          - UnitOfMeasure
+                          - Weight
+                          - CountryOfOrigin
+                        properties:
+                          Id:
+                            description: |
+                              The identification that the supplier uses for the Material. This is usually a logical Id.
+                              If the identification contains letters, they must be in uppercase.
+                              Leading and trailing spaces are not allowed.
+                            type: string
+                            minLength: 1
+                            maxLength: 35
+                          Description:
+                            description: |
+                              The description of the SKU.
+                            type: string
+                            minLength: 1
+                            maxLength: 60
+                          Fabric:
+                            description: |
+                              The composition of the material, defined by percentage per composite (f.e. '100% Brass' or '98% cotton, 2% elastane').
+                            type: string
+                            minLength: 1
+                            example: '98% cotton, 2% elastane'
+                          HSCode:
+                            description: |
+                              The description of the SKU.
+                            type: string
+                            minLength: 10
+                            maxLength: 10
+                          UnitOfMeasure:
+                            description: |
+                              Indication of the way the default Unit of Measure, typical for the material PCE: pieces, MTR:meter, SQM: squaremeter
+                            type: string
+                            minLength: 1
+                            maxLength: 3
+                            enum:
+                              - PCE
+                              - MTR
+                              - SQM
+                          Width:
+                            description: |
+                              The width of the Material expressed in millimetres.
+                              required to convert MTR into SQM if required
+                            type: number
+                          Weight:
+                            description: |
+                              The weight of the Material per Unit of Measure.
+                            type: number
+                          CountryOfOrigin:
+                            description: |
+                              The country of origin of the Material. Use ISO-2 country code.
+                            type: string
+                            minLength: 2
+                            maxLength: 2
+                            example: NL
       responses:
         '200':
           description: successful operation
