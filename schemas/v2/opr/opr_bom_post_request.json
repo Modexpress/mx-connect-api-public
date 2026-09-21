@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "required": [
+    "Articles"
+  ],
+  "properties": {
+    "Articles": {
+      "type": "object",
+      "required": [
+        "Article"
+      ],
+      "properties": {
+        "Article": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "ParentId",
+              "Materials"
+            ],
+            "properties": {
+              "ParentId": {
+                "description": "The identification that the owner uses for the SKU. This is usually a logical Id.\nMany owners use the combination of STYLE+COLOUR+SIZE as a logical Id.\nIf the identification contains letters, they must be in uppercase. WMS interface limited to A24\nLeading and trailing spaces are not allowed.\n",
+                "type": "string",
+                "pattern": "^[^\\s]+(\\s+[^\\s]+)*$",
+                "maxLength": 24
+              },
+              "Materials": {
+                "type": "object",
+                "required": [
+                  "Material"
+                ],
+                "properties": {
+                  "Material": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "ChildId",
+                        "Quantity",
+                        "YieldIncl"
+                      ],
+                      "properties": {
+                        "ChildId": {
+                          "description": "The identification of the component that is used in the production of the article.\nLeading and trailing spaces are not allowed.\n",
+                          "type": "string",
+                          "pattern": "^[^\\s]+(\\s+[^\\s]+)*$"
+                        },
+                        "Quantity": {
+                          "description": "The quantity of the component that is used in the production of the article.\n",
+                          "type": "number",
+                          "format": "double",
+                          "minimum": -1.7976931348623157e+308,
+                          "maximum": 1.7976931348623157e+308
+                        },
+                        "YieldIncl": {
+                          "description": "Yield included true or false.\n",
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

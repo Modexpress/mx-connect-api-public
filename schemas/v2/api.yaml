@@ -4169,7 +4169,7 @@ paths:
       responses:
         '200':
           description: successful operation
-  /opr_bom:
+  /opr/bom:
     post:
       tags:
         - OPR
@@ -4177,7 +4177,7 @@ paths:
       operationId: outwardProcessingFormData
       description: The request to register an Outward Processing component
       externalDocs:
-        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/opr_bom/opr_bom_post_request.json'
+        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/opr/opr_bom_post_request.json'
         description: Request body **JSON schema**
       requestBody:
         description: The Outward Processing Bill of Material data request body
@@ -4263,7 +4263,7 @@ paths:
                   message:
                     type: string
                     nullable: true
-  /opr_export:
+  /opr/export:
     post:
       tags:
         - OPR
@@ -4271,7 +4271,7 @@ paths:
       operationId: outwardProcessingExportMrnFormData
       description: The request to register the Export MRN data for an Outward Processing movement
       externalDocs:
-        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/opr_export/opr_export_post_request.json'
+        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/opr/opr_export_post_request.json'
         description: Request body **JSON schema**
       requestBody:
         description: The Outward Processing Export MRN data request body
@@ -4619,7 +4619,7 @@ paths:
                   message:
                     type: string
                     nullable: true
-  /opr_material:
+  /opr/material:
     post:
       tags:
         - OPR
@@ -4627,7 +4627,7 @@ paths:
       operationId: outwardProcessingMaterialFormData
       description: The request to register the Material master data used in an Outward Processing movement
       externalDocs:
-        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/opr_material/opr_material_post_request.json'
+        url: 'https://github.com/Modexpress/mx-connect-api-public/blob/main/schemas/v2/opr/opr_material_post_request.json'
         description: Request body **JSON schema**
       requestBody:
         description: The Outward Processing Material data request body

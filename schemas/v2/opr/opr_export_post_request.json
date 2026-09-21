@@ -1,0 +1,367 @@
+{
+  "type": "object",
+  "required": [
+    "Export"
+  ],
+  "properties": {
+    "Export": {
+      "type": "object",
+      "required": [
+        "ExportMrn",
+        "OprAllowance",
+        "InfDocument",
+        "TimeDelivery",
+        "Sender",
+        "Parties",
+        "AdditionalFinInfo",
+        "Documents",
+        "ExportLines"
+      ],
+      "properties": {
+        "ExportMrn": {
+          "description": "Movement Reference Number (MRN) of the export declaration.\n",
+          "type": "string",
+          "minLength": 18,
+          "maxLength": 18
+        },
+        "OprAllowance": {
+          "description": "Reference of the customs authorisation w.r.t. OPR.\n",
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 35
+        },
+        "InfDocument": {
+          "description": "Reference to the customs INF (information sheet) document.\n",
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 20
+        },
+        "TimeDelivery": {
+          "description": "Date of export, as mentioned on the MRN of the Export of the material(s).\n",
+          "type": "string",
+          "format": "date"
+        },
+        "Sender": {
+          "type": "object",
+          "required": [
+            "Name",
+            "EORI"
+          ],
+          "properties": {
+            "Name": {
+              "description": "The EU supplier of the materials, as stated on the invoice w.r.t. materials.\n",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            },
+            "EORI": {
+              "description": "EORI number of the EU supplier. Letters and digits only, no spaces, underscores or other separators.\n",
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 17,
+              "pattern": "^[A-Za-z0-9]+$"
+            }
+          }
+        },
+        "Parties": {
+          "type": "object",
+          "required": [
+            "Party"
+          ],
+          "properties": {
+            "Party": {
+              "type": "array",
+              "minItems": 2,
+              "description": "Must include at least one ExporterAddress and one ConsigneeAddress. SupplierAddress is optional and may additionally be included.\n",
+              "items": {
+                "type": "object",
+                "required": [
+                  "Type",
+                  "Name1",
+                  "AddressLine1",
+                  "PostalCode",
+                  "City",
+                  "Country",
+                  "ExternalId"
+                ],
+                "properties": {
+                  "Type": {
+                    "type": "string",
+                    "enum": [
+                      "ExporterAddress",
+                      "ConsigneeAddress",
+                      "SupplierAddress"
+                    ]
+                  },
+                  "Name1": {
+                    "description": "Full name of the party.\n",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "Name2": {
+                    "type": "string"
+                  },
+                  "AddressLine1": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 50
+                  },
+                  "AddressLine2": {
+                    "description": "Optional additional line in case addressline exceeds 50 char.\n",
+                    "type": "string",
+                    "maxLength": 50
+                  },
+                  "HouseNumber": {
+                    "description": "Optional when the house number is already part of AddressLine1.\n",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 999999
+                  },
+                  "HouseNumberExtension": {
+                    "description": "The house number addition that applies to the party.\n",
+                    "type": "string",
+                    "maxLength": 10
+                  },
+                  "PostalCode": {
+                    "description": "The postal code / ZIP code that applies to the party.\n",
+                    "type": "string",
+                    "maxLength": 20
+                  },
+                  "City": {
+                    "description": "The town/city that applies to the party.\n",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "Country": {
+                    "description": "The country that applies to the party according to ISO 3166 ALPHA-2 country code.\n",
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 2
+                  },
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "MidCode": {
+                    "description": "Optional.\n",
+                    "type": "string"
+                  },
+                  "EoriNumber": {
+                    "description": "Mandatory for ExporterAddress. Optional for ConsigneeAddress and SupplierAddress, since these may (theoretically) be based outside the EU. When present: letters and digits only (no spaces, underscores or other separators), length 3-17. Left as an empty string when not applicable.\n",
+                    "type": "string",
+                    "anyOf": [
+                      {
+                        "enum": [
+                          ""
+                        ]
+                      },
+                      {
+                        "minLength": 3,
+                        "maxLength": 17,
+                        "pattern": "^[A-Za-z0-9]+$"
+                      }
+                    ]
+                  },
+                  "VatNumber": {
+                    "description": "Mandatory for ExporterAddress. Optional for ConsigneeAddress and SupplierAddress, since these may (theoretically) be based outside the EU. When present: letters and digits only (no spaces, underscores or other separators), length 4-17. Left as an empty string when not applicable.\n",
+                    "type": "string",
+                    "anyOf": [
+                      {
+                        "enum": [
+                          ""
+                        ]
+                      },
+                      {
+                        "minLength": 4,
+                        "maxLength": 17,
+                        "pattern": "^[A-Za-z0-9]+$"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "AdditionalFinInfo": {
+          "type": "object",
+          "required": [
+            "FinInfo"
+          ],
+          "properties": {
+            "FinInfo": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "InfoType",
+                  "Amount",
+                  "CurrencyCode"
+                ],
+                "properties": {
+                  "InfoType": {
+                    "description": "Indication of the type of financial information e.g. Invoice, Freightcost.\n",
+                    "type": "string",
+                    "enum": [
+                      "Invoice",
+                      "Freightcost",
+                      "Insurancecost"
+                    ]
+                  },
+                  "Description": {
+                    "description": "The unique document number as stated on the document.\nMandatory for infotyp Invoice, optional for other infotypes\n",
+                    "type": "string"
+                  },
+                  "Date": {
+                    "description": "The date of issue of the document as stated on the document.\nMandatory for infotyp Invoice, optional for other infotypes\n",
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "Amount": {
+                    "type": "number"
+                  },
+                  "CurrencyCode": {
+                    "description": "ISO 4217 currency code.\n",
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 3
+                  },
+                  "Docdata": {
+                    "description": "Base64-encoded document content.\n",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Documents": {
+          "type": "object",
+          "required": [
+            "Document"
+          ],
+          "properties": {
+            "Document": {
+              "type": "array",
+              "minItems": 2,
+              "description": "At least 1 document of Type 'PL' is expected, plus 1 of the following: BL, AWB, CMR, CIM or HWB.\n",
+              "items": {
+                "type": "object",
+                "required": [
+                  "Type",
+                  "Identification",
+                  "Docdata"
+                ],
+                "properties": {
+                  "Type": {
+                    "description": "Indication of the type of documents belonging to the export.\n- PL: PackingList -> N721\n- BL: BillOfLading (Sea) -> N705\n- AWB: AirWayBill (Air) -> N740\n- CMR: Convention relative au Contrat de Transport International de Marchandises par Route (Road) -> N730\n- CIM: Contrat de Transport International ferroviaire des Marchandises (Rail) -> N720\n- HWB: House(air)WayBill (in case of consolidation, Master (Air)Way Bill is applicable) -> N703\nEach documenttype may only be used once per Export.\nEUR.1 for a EUR1Certificate in case applicable and/or CVO for a certificate of origin.\n",
+                    "type": "string",
+                    "enum": [
+                      "PL",
+                      "BL",
+                      "AWB",
+                      "CMR",
+                      "CIM",
+                      "HWB",
+                      "EUR.1",
+                      "CVO"
+                    ]
+                  },
+                  "Identification": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "Docdata": {
+                    "description": "Base64-encoded document content\n",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ExportLines": {
+          "type": "object",
+          "required": [
+            "ExportLine"
+          ],
+          "properties": {
+            "ExportLine": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "LineId",
+                  "Article",
+                  "Quantity",
+                  "UnitOfMeasure",
+                  "YieldPercentage",
+                  "Amount",
+                  "CurrencyCode",
+                  "InvoiceDescription"
+                ],
+                "properties": {
+                  "LineId": {
+                    "description": "Line_id reference of the Export MRN\n",
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "Article": {
+                    "type": "object",
+                    "required": [
+                      "Id"
+                    ],
+                    "properties": {
+                      "Id": {
+                        "description": "The identification that the supplier uses for the Material.\nIf the identification contains letters, they must be in uppercase.\nLeading and trailing spaces are not allowed.\n",
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 35
+                      }
+                    }
+                  },
+                  "Quantity": {
+                    "description": "The quantity as stated on the proofing documents Invoice and/or Packlist\n",
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "UnitOfMeasure": {
+                    "type": "string",
+                    "enum": [
+                      "PCE",
+                      "MTR",
+                      "SQM"
+                    ]
+                  },
+                  "YieldPercentage": {
+                    "description": "Yield Percentage as agreed with customs.\n",
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "Amount": {
+                    "type": "number"
+                  },
+                  "CurrencyCode": {
+                    "description": "ISO 4217 currency code.\n",
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 3
+                  },
+                  "InvoiceDescription": {
+                    "description": "Reference to the applicable invoice for this ExportMRN. This InvoiceDescription must match with at least one of the Invoice descriptions mentioned at AdditionalFinInfo node.\n",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}
