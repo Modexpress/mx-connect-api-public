@@ -266,7 +266,7 @@ Mandatory for Customs enabled Customers.
 					<xs:documentation>The parties 'For attention of'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AddressLine1" type="tns:OText50" minOccurs="0">
+			<xs:element name="AddressLine1" type="tns:OText70" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The street that applies to the party.</xs:documentation>
 				</xs:annotation>
