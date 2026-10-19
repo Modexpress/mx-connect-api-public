@@ -807,7 +807,7 @@ paths:
                                   AddressLine1:
                                     description: The street that applies to the party.
                                     type: string
-                                    maxLength: 50
+                                    maxLength: 70
                                   HouseNumber:
                                     description: The house number that applies to the party.
                                     type: integer
