@@ -738,6 +738,24 @@ paths:
                           enum:
                             - 'Y'
                             - 'N'
+                        PackagesPreAdvised:
+                          description: |
+                            Indicates whether the content of the receipt is pre-advised per package (carton level), or whether the goods are received as loose pieces.
+
+                            - Y: Packages are pre-advised. The Packages segment is mandatory and must specify the content of each incoming package.
+                            - N: Packages are not pre-advised. The goods are received as loose pieces (default behaviour). The Packages segment must not be provided.
+
+                            Value Y is only allowed for Type = PURCHASE. It is not allowed for return orders (subtypes RETURN and RETURN_NOQA).
+
+                            The receipt order is rejected when:
+                            - PackagesPreAdvised = Y and the Packages segment is missing, or
+                            - PackagesPreAdvised = N (or not provided) and the Packages segment is present.
+                          type: string
+                          maxLength: 1
+                          default: 'N'
+                          enum:
+                            - 'Y'
+                            - 'N'
                         Trackings:
                           type: object
                           properties:
@@ -999,6 +1017,100 @@ paths:
                                   - Id
                                   - Quantity
                                   - Article
+                        Packages:
+                          description: |
+                            Inbound order pre-advised packages.
+                            This segment is used to specify goods that will be received at Modexpress in full packages (e.g. cartons or pallets).
+
+                            Rules:
+                            - Only send this segment if PackagesPreAdvised = Y. If it is sent while PackagesPreAdvised = N, the receipt order is rejected.
+                            - Only supported for PURCHASE orders. Not supported for RETURN orders, or for PURCHASE orders with Subtype RETURN or RETURN_NOQA.
+                            - The total number of items across all packages must match the quantity on the purchase order lines.
+                            - If the quantities in a package are incorrect, the package will not be received in WMS. The ordering party must send a new purchase order for the unknown items.
+                            - Each package Id must be unique. Modexpress serves multiple customers and the package Id is used as a carrier identifier, so it must come from a unique range.
+                          type: object
+                          properties:
+                            Package:
+                              type: array
+                              minItems: 1
+                              items:
+                                type: object
+                                properties:
+                                  Id:
+                                    description: |
+                                      The identification of the pre-advised package. This identification must be visible on the physical package.
+                                      Each package must have a unique carton number across the environment.
+
+                                      **Note**: the package number may be overridden by Modexpress.
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 35
+                                  Volume:
+                                    description: 'The volume of the package, in litres (N11,2).'
+                                    type: number
+                                    format: double
+                                    minimum: 0
+                                    maximum: 999999999.99
+                                  Weight:
+                                    description: 'The weight of the package, in kilograms (N12,3).'
+                                    type: number
+                                    format: double
+                                    minimum: 0
+                                    maximum: 999999999.999
+                                  Length:
+                                    description: 'The length of the package, in millimetres (N11,2).'
+                                    type: number
+                                    format: double
+                                    minimum: 0
+                                    maximum: 999999999.99
+                                  Width:
+                                    description: 'The width of the package, in millimetres (N11,2).'
+                                    type: number
+                                    format: double
+                                    minimum: 0
+                                    maximum: 999999999.99
+                                  Height:
+                                    description: 'The height of the package, in millimetres (N11,2).'
+                                    type: number
+                                    format: double
+                                    minimum: 0
+                                    maximum: 999999999.99
+                                  PackageContent:
+                                    description: The content of the package.
+                                    type: object
+                                    properties:
+                                      PackageContentItem:
+                                        type: array
+                                        minItems: 1
+                                        items:
+                                          type: object
+                                          properties:
+                                            ArticleId:
+                                              description: The identification that the owner uses for the SKU to be received. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 24
+                                            PurchaseOrderLineId:
+                                              description: Reference to the PurchaseOrderLine (Id) that this article belongs to.
+                                              type: string
+                                              minLength: 1
+                                              maxLength: 250
+                                            Quantity:
+                                              description: The number of items of the article in this package.
+                                              type: integer
+                                              minimum: 1
+                                              maximum: 999999999
+                                          required:
+                                            - ArticleId
+                                            - PurchaseOrderLineId
+                                            - Quantity
+                                    required:
+                                      - PackageContentItem
+                                required:
+                                  - Id
+                                  - PackageContent
+                          required:
+                            - Package
                       required:
                         - Type
                         - PurchaseOrderLines
@@ -1884,6 +1996,88 @@ paths:
                                     - QuantityReceived
                                     - Article
                                     - Owner
+                          Packages:
+                            description: |
+                              The packages (e.g. cartons or pallets) received for the order.
+                              Only applicable for receipt orders with pre-advised packages (PackagesPreAdvised = Y in the RCP message).
+                            type: object
+                            properties:
+                              Package:
+                                type: array
+                                minItems: 1
+                                items:
+                                  type: object
+                                  properties:
+                                    Id:
+                                      description: |
+                                        The identification of the received package.
+                                        This can differ from the package Id pre-advised in the RCP message, because Modexpress may override the package number.
+                                        In that case, the pre-advised Id is returned in OriginalPackageId.
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 35
+                                    OriginalPackageId:
+                                      description: |
+                                        The package Id as pre-advised in the RCP message (Packages.Package.Id).
+                                        Only populated when Modexpress has overridden the package number.
+                                      type: string
+                                      maxLength: 35
+                                    PackageContent:
+                                      description: The received content of the package.
+                                      type: object
+                                      properties:
+                                        PackageContentItem:
+                                          type: array
+                                          items:
+                                            type: object
+                                            properties:
+                                              ArticleId:
+                                                description: |
+                                                  The identification that the owner uses for the received SKU. This is usually a logical Id.
+                                                  Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.
+                                                type: string
+                                                minLength: 1
+                                                maxLength: 24
+                                              PurchaseOrderLineId:
+                                                description: |
+                                                  Reference to the order line (Id) submitted in the RCP message that this article belongs to.
+                                                type: string
+                                                minLength: 1
+                                                maxLength: 250
+                                              Quantity:
+                                                description: The number of items of the article that were received in this package.
+                                                type: integer
+                                                minimum: 0
+                                                maximum: 999999999
+                                              StockType:
+                                                description: |
+                                                  Designation of the type of stock that was received. Using the stock type, it is possible to differentiate
+                                                  according to different types of stock that must be maintained separately for an article
+                                                  (both in the operation and administratively).
+
+                                                  The standard stock types are (other types are possible):
+                                                  - RGL - regular or A-choice stock (received in pick area)
+                                                  - RGLRJC - regular reject or B-choice stock
+                                                  - INN - regular or A-choice stock (received in inbound area)
+                                                  - INNRJC - regular reject or B-choice stock (received in inbound area)
+                                                  - INR - regular or A-choice stock (received in return inbound area)
+                                                  - INRRJC - regular reject or B-choice stock (received in return inbound area)
+
+                                                  Other types are assigned by Modexpress.
+                                                type: string
+                                                maxLength: 10
+                                            required:
+                                              - ArticleId
+                                              - PurchaseOrderLineId
+                                              - Quantity
+                                              - StockType
+                                      required:
+                                        - PackageContentItem
+                                  required:
+                                    - Id
+                                    - PackageContent
+                            required:
+                              - Package
                         required:
                           - Type
                           - OrderLines

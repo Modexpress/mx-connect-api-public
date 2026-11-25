@@ -80,6 +80,16 @@
                 "N"
               ]
             },
+            "PackagesPreAdvised": {
+              "description": "Indicates whether the content of the receipt is pre-advised per package (carton level), or whether the goods are received as loose pieces.\n\n- Y: Packages are pre-advised. The Packages segment is mandatory and must specify the content of each incoming package.\n- N: Packages are not pre-advised. The goods are received as loose pieces (default behaviour). The Packages segment must not be provided.\n\nValue Y is only allowed for Type = PURCHASE. It is not allowed for return orders (subtypes RETURN and RETURN_NOQA).\n\nThe receipt order is rejected when:\n- PackagesPreAdvised = Y and the Packages segment is missing, or\n- PackagesPreAdvised = N (or not provided) and the Packages segment is present.\n",
+              "type": "string",
+              "maxLength": 1,
+              "default": "N",
+              "enum": [
+                "Y",
+                "N"
+              ]
+            },
             "Trackings": {
               "type": "object",
               "properties": {
@@ -358,6 +368,110 @@
                   }
                 }
               }
+            },
+            "Packages": {
+              "description": "Inbound order pre-advised packages.\nThis segment is used to specify goods that will be received at Modexpress in full packages (e.g. cartons or pallets).\n\nRules:\n- Only send this segment if PackagesPreAdvised = Y. If it is sent while PackagesPreAdvised = N, the receipt order is rejected.\n- Only supported for PURCHASE orders. Not supported for RETURN orders, or for PURCHASE orders with Subtype RETURN or RETURN_NOQA.\n- The total number of items across all packages must match the quantity on the purchase order lines.\n- If the quantities in a package are incorrect, the package will not be received in WMS. The ordering party must send a new purchase order for the unknown items.\n- Each package Id must be unique. Modexpress serves multiple customers and the package Id is used as a carrier identifier, so it must come from a unique range.\n",
+              "type": "object",
+              "properties": {
+                "Package": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Id": {
+                        "description": "The identification of the pre-advised package. This identification must be visible on the physical package.\nEach package must have a unique carton number across the environment.\n\n**Note**: the package number may be overridden by Modexpress.\n",
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 35
+                      },
+                      "Volume": {
+                        "description": "The volume of the package, in litres (N11,2).",
+                        "type": "number",
+                        "format": "double",
+                        "minimum": 0,
+                        "maximum": 999999999.99
+                      },
+                      "Weight": {
+                        "description": "The weight of the package, in kilograms (N12,3).",
+                        "type": "number",
+                        "format": "double",
+                        "minimum": 0,
+                        "maximum": 999999999.999
+                      },
+                      "Length": {
+                        "description": "The length of the package, in millimetres (N11,2).",
+                        "type": "number",
+                        "format": "double",
+                        "minimum": 0,
+                        "maximum": 999999999.99
+                      },
+                      "Width": {
+                        "description": "The width of the package, in millimetres (N11,2).",
+                        "type": "number",
+                        "format": "double",
+                        "minimum": 0,
+                        "maximum": 999999999.99
+                      },
+                      "Height": {
+                        "description": "The height of the package, in millimetres (N11,2).",
+                        "type": "number",
+                        "format": "double",
+                        "minimum": 0,
+                        "maximum": 999999999.99
+                      },
+                      "PackageContent": {
+                        "description": "The content of the package.",
+                        "type": "object",
+                        "properties": {
+                          "PackageContentItem": {
+                            "type": "array",
+                            "minItems": 1,
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "ArticleId": {
+                                  "description": "The identification that the owner uses for the SKU to be received. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.",
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 24
+                                },
+                                "PurchaseOrderLineId": {
+                                  "description": "Reference to the PurchaseOrderLine (Id) that this article belongs to.",
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 250
+                                },
+                                "Quantity": {
+                                  "description": "The number of items of the article in this package.",
+                                  "type": "integer",
+                                  "minimum": 1,
+                                  "maximum": 999999999
+                                }
+                              },
+                              "required": [
+                                "ArticleId",
+                                "PurchaseOrderLineId",
+                                "Quantity"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "PackageContentItem"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "Id",
+                      "PackageContent"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "Package"
+              ]
             }
           },
           "required": [
