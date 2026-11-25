@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2020 (x64) (http://www.altova.com) by Bruno Chaves (Modexpress B.V.) -->
-<!--  $Revision: 260325 $ 
-$Date: 2026-03-26 12:30:00 +0200 (Wed, 26 Mar 2026) $
+<!--  $Revision: 261125 $
+$Date: 2026-11-25 12:00:00 +0100 (Wed, 25 Nov 2026) $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
@@ -172,6 +172,20 @@ N - Received goods will be directly cleared into EU by arrival at Modexpress.
 Only applicable for Customs enabled Customers.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="PackagesPreAdvised" type="tns:Indication" minOccurs="0" default="N">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the content of the receipt is pre-advised per package (carton level), or whether the goods are received as loose pieces.
+
+Y - Packages are pre-advised. The Packages segment is mandatory and must specify the content of each incoming package.
+N - Packages are not pre-advised. The goods are received as loose pieces (default behaviour). The Packages segment must not be provided.
+
+Value Y is only allowed for Type = PURCHASE. It is not allowed for return orders (subtypes RETURN and RETURN_NOQA).
+
+The receipt order is rejected when:
+- PackagesPreAdvised = Y and the Packages segment is missing, or
+- PackagesPreAdvised = N (or not provided) and the Packages segment is present.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Trackings" type="tns:Trackings" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The Trackings that apply to the order.</xs:documentation>
@@ -192,6 +206,19 @@ Examples of an instruction include 'remove price tag' or 'remove security tag'.<
 			<xs:element name="PurchaseOrderLines" type="tns:PurchaseOrderLines">
 				<xs:annotation>
 					<xs:documentation>The lines of the purchase order (PO/RMA).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Packages" type="tns:Packages" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Inbound order pre-advised packages.
+This segment is used to specify goods that will be received at Modexpress in full packages (e.g. cartons or pallets).
+
+Rules:
+- Only send this segment if PackagesPreAdvised = Y. If it is sent while PackagesPreAdvised = N, the receipt order is rejected.
+- Only supported for PURCHASE orders. Not supported for RETURN orders, or for PURCHASE orders with Subtype RETURN or RETURN_NOQA.
+- The total number of items across all packages must match the quantity on the purchase order lines.
+- If the quantities in a package are incorrect, the package will not be received in WMS. The ordering party must send a new purchase order for the unknown items.
+- Each package Id must be unique. Modexpress serves multiple customers and the package Id is used as a carrier identifier, so it must come from a unique range.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -416,6 +443,85 @@ If no StockType is indicated the receipt is assumed to be regular stock (RGL).</
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Owner" type="tns:Relation"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Packages">
+		<xs:sequence>
+			<xs:element name="Package" type="tns:Package" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A pre-advised package (e.g. carton or pallet) that will be received for the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Package">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text35">
+				<xs:annotation>
+					<xs:documentation>The identification of the pre-advised package. This identification must be visible on the physical package.
+Each package must have a unique carton number across the environment.
+
+Note: the package number may be overridden by Modexpress.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Volume" type="tns:ONum11.2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The volume of the package, in litres (N11,2).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Weight" type="tns:ONum12.3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The weight of the package, in kilograms (N12,3).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Length" type="tns:ONum11.2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The length of the package, in millimetres (N11,2).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Width" type="tns:ONum11.2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The width of the package, in millimetres (N11,2).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Height" type="tns:ONum11.2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The height of the package, in millimetres (N11,2).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PackageContent" type="tns:PackageContent">
+				<xs:annotation>
+					<xs:documentation>The content of the package.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackageContent">
+		<xs:sequence>
+			<xs:element name="PackageContentItem" type="tns:PackageContentItem" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>An article and its quantity in the package.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackageContentItem">
+		<xs:sequence>
+			<xs:element name="ArticleId" type="tns:TypSkuId">
+				<xs:annotation>
+					<xs:documentation>The identification that the owner uses for the SKU to be received. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PurchaseOrderLineId" type="tns:Text250">
+				<xs:annotation>
+					<xs:documentation>Reference to the PurchaseOrderLine (Id) that this article belongs to.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article in this package.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Shipment">

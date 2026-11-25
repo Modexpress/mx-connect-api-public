@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  $Revision: 260325 $ 
-$Date: 2026-03-26 12:30:00 +0200 (Wed, 26 Mar 2026) $
+<!--  $Revision: 261125 $
+$Date: 2026-11-25 12:00:00 +0100 (Wed, 25 Nov 2026) $
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_confirm_4.0.xsd" targetNamespace="https://raw.githubusercontent.com/Modexpress/mx-connect-api-public/main/XML-schema-definitions/4.0/fashion_rcp_confirm_4.0.xsd" elementFormDefault="qualified">
 	<xs:include schemaLocation="simple_types_4.0.xsd"/>
@@ -138,6 +138,12 @@ The status field is only included if the distinction between the first and final
 					<xs:documentation>The lines of the order.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Packages" type="tns:Packages" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The packages (e.g. cartons or pallets) received for the order.
+Only applicable for receipt orders with pre-advised packages (PackagesPreAdvised = Y in the RCP message).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="OrderLines">
@@ -219,6 +225,79 @@ In the RCP-exec file the area of the first receipt is mentioned. The stock movem
 			<xs:element name="QuantityReceived" type="tns:Num9">
 				<xs:annotation>
 					<xs:documentation>The number of items of the article that were actually received for the stock type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Packages">
+		<xs:sequence>
+			<xs:element name="Package" type="tns:Package" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A package (e.g. carton or pallet) received for the order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Package">
+		<xs:sequence>
+			<xs:element name="Id" type="tns:Text35">
+				<xs:annotation>
+					<xs:documentation>The identification of the received package.
+This can differ from the package Id pre-advised in the RCP message, because Modexpress may override the package number. In that case, the pre-advised Id is returned in OriginalPackageId.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginalPackageId" type="tns:OText35" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The package Id as pre-advised in the RCP message (Packages.Package.Id).
+Only populated when Modexpress has overridden the package number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PackageContent" type="tns:PackageContent">
+				<xs:annotation>
+					<xs:documentation>The received content of the package.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackageContent">
+		<xs:sequence>
+			<xs:element name="PackageContentItem" type="tns:PackageContentItem" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>An article, its stock type and the quantity received in the package.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackageContentItem">
+		<xs:sequence>
+			<xs:element name="ArticleId" type="tns:TypSkuId">
+				<xs:annotation>
+					<xs:documentation>The identification that the owner uses for the received SKU. This is usually a logical Id. Many owners use the combination of STYLE+COLOUR+SIZE as a logical Id.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PurchaseOrderLineId" type="tns:Text250">
+				<xs:annotation>
+					<xs:documentation>Reference to the order line (Id) submitted in the RCP message that this article belongs to.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="tns:Num9">
+				<xs:annotation>
+					<xs:documentation>The number of items of the article that were received in this package.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StockType" type="tns:Text10">
+				<xs:annotation>
+					<xs:documentation>Designation of the type of stock that was received. Using the stock type, it is possible to differentiate according to different types of stock that must be maintained separately for an article (both in the operation and administratively).
+
+The standard stock types are (other types are possible):
+- RGL - regular or A-choice stock (received in pick area)
+- RGLRJC - regular reject or B-choice stock
+- INN - regular or A-choice stock (received in inbound area)
+- INNRJC - regular reject or B-choice stock (received in inbound area)
+- INR - regular or A-choice stock (received in return inbound area)
+- INRRJC - regular reject or B-choice stock (received in return inbound area)
+
+Other types are assigned by Modexpress.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
