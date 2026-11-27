@@ -77,7 +77,7 @@ In some cases, an id is specified that Modexpress has assigned itself, namely wh
 The XDOCKLOT orders are reported as PURCHASE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="SubType" type="tns:OText20">
+			<xs:element name="SubType" type="tns:OText20" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>A subdivision of the order type.
 In case of an automatically created return order the subtype will be 'AUTOMATISCH'.</xs:documentation>
