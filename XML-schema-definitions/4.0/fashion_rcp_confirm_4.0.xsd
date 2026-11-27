@@ -90,15 +90,15 @@ In case of an automatically created return order the subtype will be 'AUTOMATISC
 In the case of an automatically created return order, this refers to the shipment (SHP) for which the return order was created. The reference is to the Order.Id (SHP 3-1-01). However, this is only possible when the format of the Order.Id is a maximum of A20.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="SenderInternalId" type="tns:ONum7" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Identification of the party that delivers the goods for the order. The relevant party must be known to Modexpress by the relevant Id.
-Not applicable in case of RETURN.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="SenderExternalId" type="tns:OText20" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Identification of the party that delivers the goods for the order. The relevant party is not known to Modexpress by the relevant Id.
+Not applicable in case of RETURN.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SenderInternalId" type="tns:ONum7" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identification of the party that delivers the goods for the order. The relevant party must be known to Modexpress by the relevant Id.
 Not applicable in case of RETURN.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
